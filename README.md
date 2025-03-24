@@ -16,4 +16,4 @@ Bem-vindo ao repositório do nosso projeto X. Nossa plataforma está sendo desen
 - **Testes Automatizados**:<br>![Selenium](https://img.shields.io/badge/Selenium-43B02A?style=for-the-badge&logo=selenium&logoColor=white) 
 
 ## 🌐 Link para o Google Sites
-<li> <a href="https://sites.google.com/d/1G9G8VEETOc3TmtGBVj5JBDaiBzNxy0DV/p/1HRWjSesDc-KQgNyL7A1xuOYXYoiFwE0u/edit">Google Sites</a> </li>
+<li> <a href="">Google Sites</a> </li>
