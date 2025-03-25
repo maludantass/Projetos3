@@ -19,6 +19,46 @@ Bem-vindo ao repositório do nosso projeto X. Nossa plataforma está sendo desen
 ## 🌐 Link para o Google Sites
 <li> <a href="https://sites.google.com/d/160TZStC0z45z00JOCtXTacXJTA-50Maa/p/1_0ykZFiJkg_7hoWD9UHTHfG7fip96Oay/edit">Google Sites</a> </li>
 
+## 🖥️ SR1
+
+***Links relevantes:***
+<ul>
+    <li> 
+    <a  href=""
+      >Protótipo de Lo-Fi no Figma</a>
+  </li>
+    <li>
+        <a  href=""
+      >Diagrama de atividades</a>
+  </li>
+   <li>
+    <a href="" 
+      >Screencast - Figma</a>
+  </li>
+  <li>
+    <a href=""
+      >Screencast - Azure</a>
+  </li>
+   <li>
+     <a href="">Programação em Par</a>
+   </li>
+  <li>
+    <a href=""
+      >Deployment na Azure</a>
+  </li>
+</ul>
+
+***Histórias:***
+
+<details>
+    <summary>No total fizemos x histórias. 👆</summary>
+
+        - 
+        - 
+    
+</details>
+
+
 ## 🫂 Membros
 
 ### 👨‍💻 Desenvolvedores
