@@ -17,4 +17,4 @@ Bem-vindo ao repositório do nosso projeto X. Nossa plataforma está sendo desen
 - **Testes Automatizados**:<br>![Cypress](https://img.shields.io/badge/Cypress-17202C?style=for-the-badge&logo=cypress&logoColor=white)
 
 ## 🌐 Link para o Google Sites
-<li> <a href="">Google Sites</a> </li>
+<li> <a href="https://sites.google.com/d/160TZStC0z45z00JOCtXTacXJTA-50Maa/p/1_0ykZFiJkg_7hoWD9UHTHfG7fip96Oay/edit">Google Sites</a> </li>
