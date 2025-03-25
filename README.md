@@ -5,7 +5,7 @@ Bem-vindo ao repositório do nosso projeto X. Nossa plataforma está sendo desen
 
 ## ⚙ Tecnologias Utilizadas
 
-- **Linguagem de Programação**:<br>![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)![JavaScript](https://img.shields.io/badge/Java-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+- **Linguagem de Programação**:<br>![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)![Java](https://img.shields.io/badge/Java-F7DF1E?style=for-the-badge&logo=java&logoColor=black)
 
 - **Banco de Dados**:<br>![SQLite](https://img.shields.io/badge/SQLite-003B57?style=for-the-badge&logo=sqlite&logoColor=white)![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
 
