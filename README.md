@@ -18,3 +18,24 @@ Bem-vindo ao repositório do nosso projeto X. Nossa plataforma está sendo desen
 
 ## 🌐 Link para o Google Sites
 <li> <a href="https://sites.google.com/d/160TZStC0z45z00JOCtXTacXJTA-50Maa/p/1_0ykZFiJkg_7hoWD9UHTHfG7fip96Oay/edit">Google Sites</a> </li>
+
+## 🫂 Membros
+
+### 👨‍💻 Desenvolvedores
+<ul>
+  <li>Amanda Montarroios - amo@cesar.school 📩</li>
+  <li>Fabiana Souza Leão - fcsls@cesar.school 📩</li>
+  <li>Malu Dantas - mldt@cesar.school 📩</li>
+  <li>Irvin Almicar - iafbs@cesar.school 📩</li>
+  <li>Júlia Maria Santos Teixeira - jmst@cesar.school 📩</li>
+  <li>Henrique Figueiredo - htf@cesar.school 📩</li>
+  <li>Antônio Trigueiro - actf@cesar.school 📩</li>
+</ul>
+
+### 🎨 Designers
+<ul>
+  <li>Eduardo Della Santa - edsba@cesar.school 📩</li>
+  <li>Rodrigo Mello - rqm@cesar.school 📩</li>
+  <li>Fábio Lins - faol@cesar.school 📩</li>
+  <li>Maria Clara Poggi - mcpc@cesar.school 📩</li>
+</ul>
