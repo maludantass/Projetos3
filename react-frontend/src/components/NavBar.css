@@ -1,0 +1,28 @@
+/*fiz um css basico, pessoal de front melhora*/
+.navbar {
+    background-color: #3b7935;
+    padding: 1rem;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 100;
+  }
+  
+  .navbar ul {
+    display: flex;
+    gap: 1rem;
+    list-style: none;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .navbar a {
+    color: white;
+    text-decoration: none;
+  }
+  
+  .page-content {
+    padding-top: 80px; 
+  }
+  
