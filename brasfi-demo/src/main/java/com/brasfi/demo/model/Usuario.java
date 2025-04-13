@@ -5,8 +5,6 @@ import jakarta.persistence.*;
 @Entity
 public class Usuario {
 
-    //Atributos da classe Usuário:
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -17,9 +15,7 @@ public class Usuario {
 
     private boolean ismembro;
 
-    //Métodos especiais:
 
-    //Construtor para classe usuário, inicializando qualquer pssoa sem ser membro
     public Usuario(String nome, String email, String senha){
 
         this.nome_de_usuario = nome;
