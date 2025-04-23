@@ -1,6 +1,6 @@
 # Projetos 3
 
-Bem-vindo ao repositório do nosso projeto X. Nossa plataforma está sendo desenvolvida como parte da disciplina de Projetos 3, para X. Com o X, você pode X.
+Este é o repositório do projeto desenvolvido para a BRASFI (Aliança Brasileira de Finanças e Investimentos Sustentáveis), como parte da disciplina Projetos 3. Nós temos como objetivo conectar pessoas e organizações engajadas com finanças sustentáveis, oferecendo acesso a conteúdos, eventos e iniciativas que promovem a transformação do mercado financeiro com foco em sustentabilidade.
 <br>
 
 ## ⚙ Tecnologias Utilizadas
