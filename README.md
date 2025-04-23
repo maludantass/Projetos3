@@ -236,7 +236,7 @@ Artigos acessíveis apenas para usuários logados (se necessário).
   <li>Fabiana Souza Leão - fcsls@cesar.school 📩</li>
   <li>Malu Dantas - mldt@cesar.school 📩</li>
   <li>Irvin Almicar - iafbs@cesar.school 📩</li>
-  <li>Júlia Maria Santos Teixeira - jmst@cesar.school 📩</li>
+  <li>Julia Maria Santos Teixeira - jmst@cesar.school 📩</li>
   <li>Henrique Figueiredo - htf@cesar.school 📩</li>
   <li>Antônio Trigueiro - actf@cesar.school 📩</li>
 </ul>
