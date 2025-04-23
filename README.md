@@ -26,7 +26,7 @@ Bem-vindo ao repositório do nosso projeto X. Nossa plataforma está sendo desen
 ***Links relevantes:***
 <ul>
     <li> 
-    <a  href=""
+    <a  href="https://drive.google.com/file/d/1ftLpu_jl8mMVnX_Ai5mpb386w6JnGc4t/view?usp=sharing"
       >Diagrama de classes</a>
   </li>
     <li>
