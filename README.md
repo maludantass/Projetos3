@@ -33,6 +33,10 @@ Este é o repositório do projeto desenvolvido para a BRASFI (Aliança Brasileir
         <a  href="https://trello.com/invite/b/67b4c28442361217803e2a1e/ATTI279baead7a54fb8b9f89acd5e6d63bf84EEA9025/projetos-3-g9"
       >Quadro sprint 1 iniciada</a>
   </li>
+   <li> 
+    <a  href="https://docs.google.com/document/d/1fa0CU0w8M1z9IWZuKyWLGj5ydTSOoC5iEtDpIZ_YJcw/edit?usp=sharing"
+      >Plano de programação em pares</a>
+  </li>
 </ul>
 
 ***Histórias:***
