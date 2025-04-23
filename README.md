@@ -38,10 +38,66 @@ Bem-vindo ao repositório do nosso projeto X. Nossa plataforma está sendo desen
 ***Histórias:***
 
 <details>
-    <summary>No total fizemos x histórias. 👆</summary>
+    <summary>No total fizemos 16 histórias. 👆</summary>
 
-        - 
-        - 
+        - 1. Conhecer a BRASFI
+*Como* visitante do site
+
+*Quero* acessar uma página com informações sobre o que é a BRASFI
+
+*Para* entender melhor seu propósito e atuação
+
+*Critérios de Aceitação:*
+A página deve conter uma explicação clara e objetiva sobre o que é a BRASFI e seus principais objetivos.
+A página deve ser facilmente acessível a partir do menu principal do site.
+
+        - 2. Conhecer os Membros da BRASFI
+*Como* visitante do site
+
+*Quero* acessar uma página com informações sobre os membros da BRASFI
+
+*Para* conhecer quem faz parte da organização e sua representatividade
+
+*Critérios de Aceitação:*
+A página deve apresentar informações dos membros da BRASFI, incluindo: nome completo, foto e instituição/origem.
+A página deve estar acessível a partir do menu principal do site.
+
+        - 3. Área de Contato
+*Como* potencial parceiro ou interessado na BRASFI
+
+*Quero* ter acesso a formas de contato da empresa, como redes sociais, email e telefone institucional
+
+*Para* poder entrar em contato de forma fácil e rápida
+
+*Critérios de Aceitação:*
+A página deve exibir email institucional, telefone e links para redes sociais.
+Um formulário de contato opcional pode estar disponível.
+Deve estar acessível no rodapé e/ou menu principal.
+
+        - 4. Login de membros
+*Como* membro da BRASFI
+
+*Quero* poder me logar e acessar uma área exclusiva com diversas funcionalidades e abas
+
+*Para* interagir, explorar conteúdos específicos e participar mais ativamente da comunidade BRASFI
+
+*Critérios de Aceitação:*
+Sistema de login com autenticação (email, senha).
+Área exclusiva com conteúdo acessível apenas para membros da BRASFI.
+
+
+        - 5. Cadastro
+*Como* usuario da plataforma 
+
+*Quero* me tornar um membro 
+
+*Para* ter acesso a conteúdos exclusivos 
+
+*Critérios de Aceitação:*
+Sistema de cadastro com autenticação 
+Formulário para informações do usuário  
+
+
     
 </details>
 
