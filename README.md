@@ -19,7 +19,7 @@ Este é o repositório do projeto desenvolvido para a BRASFI (Aliança Brasileir
 ## 🌐 Links importantes
 <li> <a href="https://sites.google.com/d/160TZStC0z45z00JOCtXTacXJTA-50Maa/p/1_0ykZFiJkg_7hoWD9UHTHfG7fip96Oay/edit">Google Sites</a> </li>
 <li> <a href="https://trello.com/invite/b/67b4c28442361217803e2a1e/ATTI279baead7a54fb8b9f89acd5e6d63bf84EEA9025/projetos-3-g9">Trello</a> </li>
-<li> <a href="">Relatório Pair Programming</a> </li>
+<li> <a href="https://docs.google.com/document/d/1fa0CU0w8M1z9IWZuKyWLGj5ydTSOoC5iEtDpIZ_YJcw/edit?usp=sharing"> Plano do Relatório Pair Programming</a> </li>
 
 ## 🖥️ SR1
 
@@ -32,10 +32,6 @@ Este é o repositório do projeto desenvolvido para a BRASFI (Aliança Brasileir
     <li>
         <a  href="https://trello.com/invite/b/67b4c28442361217803e2a1e/ATTI279baead7a54fb8b9f89acd5e6d63bf84EEA9025/projetos-3-g9"
       >Quadro sprint 1 iniciada</a>
-  </li>
-   <li> 
-    <a  href="https://docs.google.com/document/d/1fa0CU0w8M1z9IWZuKyWLGj5ydTSOoC5iEtDpIZ_YJcw/edit?usp=sharing"
-      >Plano de programação em pares</a>
   </li>
 </ul>
 
