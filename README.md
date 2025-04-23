@@ -97,8 +97,134 @@ Sistema de login com autenticação (email, senha).
 Sistema de cadastro com autenticação 
 Formulário para informações do usuário  
 
+        - 6. Acessar o Feed com postagens sobre palestras
+*Como* usuário da plataforma
 
-    
+*Quero* acessar uma aba com um feed de postagens sobre palestras, eventos e outros tópicos relevantes
+
+*Para* me manter atualizado sobre as temáticas discutidas pela BRASFI
+
+*Critérios de Aceitação:*
+Feed com listagem cronológica ou categorizada de postagens.
+Postagens devem conter título, descrição, data e autor.
+Feed acessível apenas a usuários logados.
+
+         - 7. Fazer comentários no feed 
+*Como* usuário da plataforma 
+
+*Quero* poder comentar nas postagens do feed
+
+*Para* expressar minha opinião e trocar ideias 
+
+*Critérios de Aceitação:*
+Espaço de comentários funcional. 
+Botão de envio.
+Interações visíveis apenas para usuários logado. 
+
+         - 8. Visualizar Feed de Postagens
+*Como* usuário da plataforma
+
+*Quero* acessar uma aba com um feed de postagens
+
+*Para* visualizar informações relevantes sobre palestras, eventos e outros tópicos discutidos pela BRASFI
+
+*Critérios de Aceitação:*
+O feed deve estar acessível apenas para usuários logados.
+O feed deve exibir as postagens de forma cronológica ou categorizada.
+
+          - 9. Visualizar Detalhes de uma Postagem
+*Como* usuário logado
+
+*Quero* visualizar detalhes de uma postagem
+
+*Para* entender melhor o conteúdo relacionado ao evento ou tópico compartilhado
+
+*Critérios de Aceitação:*
+Cada postagem deve exibir as informações dela mesma.
+O usuário pode clicar em uma postagem para ver mais detalhes, se aplicável.
+
+          - 10. Curtir uma Postagem do feed
+*Como* usuário logado da plataforma
+
+*Quero* poder curtir uma postagem no feed
+
+*Para* demonstrar meu interesse ou apoio ao conteúdo compartilhado
+
+*Critérios de Aceitação:*
+O botão de "curtir" deve estar visível para usuários logados.
+O usuário pode curtir e descurtir (curtir novamente remove o like).
+A ação de curtir deve ser registrada sem a necessidade de recarregar a página (se possível).
+
+          - 11.  Acesso a palestras ao vivo
+*Como* usuário da plataforma
+
+*Quero* ter acesso a transmissões ao vivo de palestras ministradas por profissionais de uma área específica
+
+*Para* aprender mais sobre temas relevantes e interagir com os palestrantes
+
+*Critérios de Aceitação:*
+Página com calendário de eventos e palestras ao vivo.
+Transmissões ao vivo integradas (por exemplo, via YouTube ou sistema próprio).
+Chat ou canal para envio de perguntas durante as palestras.
+
+          - 12. Criar Categorias no Fórum
+*Como* moderador da plataforma
+
+*Quero* criar e gerenciar categorias de discussão no fórum
+
+*Para* organizar os tópicos por temas como ESG, Finanças Sustentáveis, Eventos, etc.
+
+*Critérios de Aceitação:*
+Moderadores podem criar, editar e excluir categorias.
+As categorias devem ser exibidas de forma clara para os usuários.
+Apenas moderadores têm permissão para essa ação.
+
+          - 13. Moderar Postagens
+*Como* moderador da plataforma
+
+*Quero* editar comentários e tópicos
+
+*Para* garantir que o conteúdo do fórum siga as diretrizes da comunidade
+
+*Critérios de Aceitação:*
+Moderadores podem editar ou excluir postagens inadequadas.
+
+          - 14. Acessar o Fórum de Discussão
+*Como* usuário logado
+
+*Quero* acessar o fórum de discussão
+
+*Para* ler tópicos e acompanhar os debates da comunidade
+
+*Critérios de Aceitação:*
+O fórum deve ser acessível apenas para usuários logados.
+Tópicos e categorias devem estar organizados e visíveis.
+
+
+          - 15. Seção de Perguntas Frequentes (FAQ)
+*Como* visitante do site
+
+*Quer*o acessar uma seção de perguntas frequentes
+
+*Para* esclarecer dúvidas rapidamente sem precisar entrar em contato com a equipe
+
+*Critérios de Aceitação:*
+Página com listagem de perguntas e respostas organizadas por tema.
+Deve ser de fácil acesso no menu ou rodapé.
+Deve permitir busca por palavra-chave.
+
+          - 16.  Acesso a artigos sobre ESG e Finanças Sustentáveis
+*Como* usuário da plataforma
+
+*Quero* acessar uma biblioteca ou seção com artigos sobre ESG e Finanças Sustentáveis
+
+*Para* me aprofundar nos conteúdos e ampliar meu conhecimento
+
+*Critérios de Aceitação:*
+Página com listagem de artigos (título, resumo, autor, data).
+Possibilidade de filtrar por tema ou autor.
+Artigos acessíveis apenas para usuários logados (se necessário).
+   
 </details>
 
 
