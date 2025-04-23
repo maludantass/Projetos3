@@ -121,6 +121,7 @@ Formulário para informações do usuário
   <li>Rodrigo Mello - rqm@cesar.school 📩</li>
   <li>Fábio Lins - faol@cesar.school 📩</li>
   <li>Maria Clara Poggi - mcpc@cesar.school 📩</li>
+  <li>Pedro Mota - pom2@cesar.school 📩</li>
 </ul>
 
 
