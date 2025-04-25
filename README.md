@@ -26,7 +26,7 @@ Este é o repositório do projeto desenvolvido para a BRASFI (Aliança Brasileir
 ***Links relevantes:***
 <ul>
     <li> 
-    <a  href="https://drive.google.com/file/d/1WRTulq2YWdHZnGZLy0ylW9DsWQnmm2wN/view?usp=sharing"
+    <a  href="https://drive.google.com/file/d/1Ya-YTmxrK1-yGmiM4k1w_avOJq8NaSF3/view?usp=sharing"
       >Diagrama de classes</a>
   </li>
     <li>
