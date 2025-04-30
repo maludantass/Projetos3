@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-function Cadastro() {
-  const [formData, setFormData] = useState({
-    username: "",
-    email: "",
-    password: ""
-  });
+function Login({ setIsLoggedIn }) {
+  const [formData, setFormData] = useState({ username: "", password: "" });
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -15,30 +13,25 @@ function Cadastro() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:8080/api/auth/register", formData);
-      alert("Usuário cadastrado com sucesso!");
+      // Aqui seria o axios.post pro login real (backend precisa do endpoint de login)
+      // Vamos simular que o login deu certo por enquanto:
+      console.log("Login feito:", formData);
+      setIsLoggedIn(true); // marca como logado
+      navigate("/feed"); // manda para o feed
     } catch (error) {
-      alert("Erro ao cadastrar: " + error.response.data.message);
+      alert("Erro no login!");
     }
   };
 
   return (
     <div>
-      <h2>Cadastro</h2>
+      <h2>Login</h2>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
           name="username"
           placeholder="Usuário"
           value={formData.username}
-          onChange={handleChange}
-          required
-        /><br />
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={formData.email}
           onChange={handleChange}
           required
         /><br />
@@ -50,10 +43,10 @@ function Cadastro() {
           onChange={handleChange}
           required
         /><br />
-        <button type="submit">Cadastrar</button>
+        <button type="submit">Entrar</button>
       </form>
     </div>
   );
 }
 
-export default Cadastro;
+export default Login;
