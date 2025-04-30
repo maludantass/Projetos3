@@ -3,8 +3,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 function Login({ setIsLoggedIn }) {
-  const [formData, setFormData] = useState({ username: "", password: "" });
-  const navigate = useNavigate();
+    const [formData, setFormData] = useState({ email: "", password: "" });
+    const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -13,11 +13,9 @@ function Login({ setIsLoggedIn }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Aqui seria o axios.post pro login real (backend precisa do endpoint de login)
-      // Vamos simular que o login deu certo por enquanto:
       console.log("Login feito:", formData);
-      setIsLoggedIn(true); // marca como logado
-      navigate("/feed"); // manda para o feed
+      setIsLoggedIn(true);
+      navigate("/feed"); 
     } catch (error) {
       alert("Erro no login!");
     }
@@ -27,13 +25,13 @@ function Login({ setIsLoggedIn }) {
     <div>
       <h2>Login</h2>
       <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="username"
-          placeholder="Usuário"
-          value={formData.username}
-          onChange={handleChange}
-          required
+      <input
+        type="email"
+        name="email"
+        placeholder="Email"
+        value={formData.email}
+        onChange={handleChange}
+        required
         /><br />
         <input
           type="password"

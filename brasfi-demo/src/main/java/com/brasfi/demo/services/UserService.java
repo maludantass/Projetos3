@@ -18,10 +18,11 @@ public class UserService {
     }
 
     public User registerUser(User user) {
-        if (userRepository.existsByUsername(user.getUsername())) {
-            throw new RuntimeException("Username already taken");
+        if (userRepository.existsByEmail(user.getEmail())) {
+            throw new RuntimeException("Email already taken");
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
+    
 }

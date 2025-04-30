@@ -7,7 +7,7 @@ import com.brasfi.demo.services.UserService;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = "*") // Permitir chamadas do React (ou configure direito depois)
+@CrossOrigin(origins = "*") //chama o react-geralzao
 public class AuthController {
 
     private final UserService userService;

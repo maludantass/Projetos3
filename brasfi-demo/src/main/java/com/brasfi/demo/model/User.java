@@ -18,19 +18,15 @@ public class User {
     private String password;
     private String email;
 
-    // Construtor vazio (obrigatório para JPA)
     public User() {
     }
 
-    // Construtor com todos os campos (opcional)
     public User(Long id, String username, String password, String email) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.email = email;
     }
-
-    // Getters e Setters
 
     public Long getId() {
         return id;
