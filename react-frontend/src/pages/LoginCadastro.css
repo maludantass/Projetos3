@@ -25,7 +25,7 @@
     width: 100%;
     padding: 7px;
     margin: 8px 0;
-    border: 1px solid #7ab877;
+    border: 1px solid #868f7ba4;
     border-radius: 5px;
   }
   
@@ -33,7 +33,7 @@
     width: 100%;
     padding: 10px;
     margin-top: 12px;
-    background-color: #4f9d48;
+    background-color: #868f7ba4;
     color: white;
     border: none;
     border-radius: 5px;
@@ -41,7 +41,7 @@
   }
   
   .login-cadastro-box button:hover {
-    background-color: #699f64;
+    background-color: #868f7ba4;
   }
   
   .login-cadastro-box p {

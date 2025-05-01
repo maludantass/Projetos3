@@ -25,7 +25,7 @@ function LoginCadastro({ setIsLoggedIn }) {
         setIsLogin(true);
       }
     } catch (error) {
-      alert("Erro: " + (error.response?.data?.message || "Algo deu errado"));
+      alert("Erro: " + (error.response?.data?.message || "email já registrado."));
     }
   };
 

@@ -1,6 +1,6 @@
 /*fiz um css basico, pessoal de front melhora*/
 .navbar {
-    background-color: #3b7935;
+    background-color: #868f7ba4;
     padding: 1rem;
     position: fixed;
     width: 100%;
@@ -18,7 +18,7 @@
   }
   
   .navbar a {
-    color: white;
+    color: #000;
     text-decoration: none;
   }
   
