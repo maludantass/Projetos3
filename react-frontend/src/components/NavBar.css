@@ -1,28 +1,50 @@
-/*fiz um css basico, pessoal de front melhora*/
+/*fiz um css basico, pessoal de front melhora (atualização de irvin: precisei mexer um pouco pra adicionar o botão de perfil!!, mas deu bom funcionou)*/
 .navbar {
-    background-color: #868f7ba4;
-    padding: 1rem;
-    position: fixed;
-    width: 100%;
-    top: 0;
-    z-index: 100;
-  }
-  
-  .navbar ul {
-    display: flex;
-    gap: 1rem;
-    list-style: none;
-    justify-content: center;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .navbar a {
-    color: #000;
-    text-decoration: none;
-  }
-  
-  .page-content {
-    padding-top: 80px; 
-  }
+  background-color: #868f7ba4;
+  padding: 1rem;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between; /* Isso vai garantir que os itens fiquem bem alinhados nas extremidades */
+  align-items: center;
+}
+
+.navbar-center {
+  display: flex;
+  justify-content: center;
+  flex: 1;
+}
+
+.navbar-center ul {
+  display: flex;
+  gap: 1rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar a {
+  color: #000;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center; /* Alinha os itens da navbar-right verticalmente */
+  gap: 1rem;
+  margin-right: 50px; /* Espaçamento entre o botão "Perfil" e o botão de logout, caso você queira mais espaço */
+}
+
+.navbar-right a {
+  padding: 0.5rem 1rem; /* Ajuste no padding para tornar o botão de logout mais espaçoso, caso necessário */
+  border-radius: 5px; /* Para dar um arredondamento ao botão */
+  background-color: #ddd; /* Cor de fundo para o botão */
+}
+
+.navbar-right a:hover {
+  background-color: #ccc; /* Efeito de hover */
+}
   

@@ -8,10 +8,10 @@ import Foruns from "./pages/Foruns";
 import Eventos from "./pages/Eventos";
 import Ajuda from "./pages/Ajuda";
 import LoginCadastro from "./pages/LoginCadastro";
-
+import Perfil from "./pages/Perfil";
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false); 
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   return (
     <Router>
@@ -23,7 +23,11 @@ function App() {
           <Route path="/foruns" element={<Foruns />} />
           <Route path="/eventos" element={<Eventos />} />
           <Route path="/ajuda" element={<Ajuda />} />
-          <Route path="/auth" element={<LoginCadastro setIsLoggedIn={setIsLoggedIn} />} />
+          <Route
+            path="/auth"
+            element={<LoginCadastro setIsLoggedIn={setIsLoggedIn} />}
+          />
+          {isLoggedIn && <Route path="/perfil" element={<Perfil setIsLoggedIn={setIsLoggedIn} />} />}
         </Routes>
       </div>
     </Router>
@@ -31,5 +35,3 @@ function App() {
 }
 
 export default App;
-
-
