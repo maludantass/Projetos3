@@ -5,13 +5,13 @@ import Navbar from "./components/NavBar";
 import About from "./pages/About";
 import Feed from "./pages/Feed";
 import Foruns from "./pages/Foruns";
-import Cadastro from "./pages/Cadastro";
 import Eventos from "./pages/Eventos";
 import Ajuda from "./pages/Ajuda";
-import Login from "./pages/Login"; // vamos criar o Login.jsx também
+import LoginCadastro from "./pages/LoginCadastro";
+
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // controle de login
+  const [isLoggedIn, setIsLoggedIn] = useState(false); 
 
   return (
     <Router>
@@ -21,10 +21,9 @@ function App() {
           <Route path="/sobre" element={<About />} />
           <Route path="/feed" element={<Feed />} />
           <Route path="/foruns" element={<Foruns />} />
-          <Route path="/cadastro" element={<Cadastro />} />
           <Route path="/eventos" element={<Eventos />} />
           <Route path="/ajuda" element={<Ajuda />} />
-          <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
+          <Route path="/auth" element={<LoginCadastro setIsLoggedIn={setIsLoggedIn} />} />
         </Routes>
       </div>
     </Router>

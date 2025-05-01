@@ -1,0 +1,65 @@
+/*css basico, a galera do front vai trabalhar*/
+.login-cadastro-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f2f2f2;
+  }
+  
+  .login-cadastro-box {
+    background-color: #fff;
+    padding: 40px 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 355px;
+    text-align: center;
+  }
+  
+  .login-cadastro-box h2 {
+    margin-bottom: 20px;
+    color: #000000;
+  }
+  
+  .login-cadastro-box input {
+    width: 100%;
+    padding: 7px;
+    margin: 8px 0;
+    border: 1px solid #7ab877;
+    border-radius: 5px;
+  }
+  
+  .login-cadastro-box button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 12px;
+    background-color: #4f9d48;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .login-cadastro-box button:hover {
+    background-color: #699f64;
+  }
+  
+  .login-cadastro-box p {
+    margin-top: 22px;
+    font-size: 16px;
+  }
+  
+  .login-cadastro-box p button {
+    background: none;
+    border: none;
+    color: #000000;
+    cursor: pointer;
+    text-decoration: underline;
+    font-size: 14px;
+    padding: 0;
+  }
+  
+  .login-cadastro-box p button:hover {
+    color: #000000;
+  }
+  
