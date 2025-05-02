@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import "./Navbar.css";
+import profileUser from '../images/profile-user.png';
 
 const Navbar = ({ isLoggedIn }) => {
   return (
@@ -23,9 +24,11 @@ const Navbar = ({ isLoggedIn }) => {
         </ul>
       </div>
       {isLoggedIn && (
-        <div className="navbar-right">
-          <Link to="/perfil">Perfil</Link>
-        </div>
+         <div className="navbar-right">
+         <Link to="/perfil">
+           <img src={profileUser} alt="Perfil" className="profile-image" />
+         </Link>
+       </div>
       )}
     </nav>
   );

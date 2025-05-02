@@ -7,7 +7,7 @@
   top: 0;
   z-index: 100;
   display: flex;
-  justify-content: space-between; /* Isso vai garantir que os itens fiquem bem alinhados nas extremidades */
+  justify-content: space-between; 
   align-items: center;
 }
 
@@ -33,18 +33,29 @@
 
 .navbar-right {
   display: flex;
-  align-items: center; /* Alinha os itens da navbar-right verticalmente */
+  align-items: center;
   gap: 1rem;
-  margin-right: 50px; /* Espaçamento entre o botão "Perfil" e o botão de logout, caso você queira mais espaço */
+  margin-right: 50px; 
 }
 
 .navbar-right a {
-  padding: 0.5rem 1rem; /* Ajuste no padding para tornar o botão de logout mais espaçoso, caso necessário */
-  border-radius: 5px; /* Para dar um arredondamento ao botão */
-  background-color: #ddd; /* Cor de fundo para o botão */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.3rem;
+  border-radius: 50%;
+  background-color: transparent; 
 }
 
 .navbar-right a:hover {
-  background-color: #ccc; /* Efeito de hover */
+  background-color: #ccc; 
+}
+
+.profile-image {
+  width: 35px; 
+  height: 35px;
+  border-radius: 50%; 
+  object-fit: cover; 
+  cursor: pointer;
 }
   
