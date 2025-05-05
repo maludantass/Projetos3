@@ -1,5 +1,5 @@
 import React from "react";
-import Faq from "./Faq"; // Importa o componente de FAQ
+import Faq from "./Faq"; //componente de FAQ
 
 const Ajuda = () => {
     return (
