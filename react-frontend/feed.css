@@ -1,0 +1,179 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 20px;
+}
+
+.feed-container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.post-card {
+    background-color: #e0e0e0;
+    border-radius: 10px;
+    padding: 16px;
+    margin-bottom: 20px;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.user-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #000;
+    margin-right: 10px;
+}
+
+.post-image {
+    width: 100%;
+    height: 350px;
+    background-color: #aaa;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.actions {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+}
+
+.actions-left,
+.actions-right{
+    display: flex;
+    gap: 10px;
+}
+
+.action-icon {
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.comment-block {
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.comment-block strong {
+    font-weight: bold;
+}
+
+.show-comments {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #333;
+    cursor: pointer;
+}
+
+.refresh {
+    text-align: center;
+    font-size: 24px;
+    margin-top: 40px;
+    cursor: pointer;
+}
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #f0f0f0;
+    padding: 10px 20px;
+  }
+  
+  .navbar .logo {
+    font-weight: bold;
+  }
+  
+  .navbar nav a {
+    margin: 0 10px;
+    text-decoration: none;
+    color: black;
+  }
+  
+  .navbar .user-icon {
+    font-size: 24px;
+  }
+  .search-bar {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 10px 20px;
+    background: #f2f2f2;
+  }
+  
+  .search-box {
+    display: flex;
+    align-items: center;
+    background-color: #d3d3d3;
+    padding: 3px 8px;
+    border-radius: 20px;
+    width: 200px;
+    margin-right: 10px;
+  }
+  
+  .search-icon {
+    font-size: 14px;
+    color: black;
+  }
+  
+  
+  .search-box input {
+    border: none;
+    background: transparent;
+    outline: none;
+    width: 100%;
+    font-size: 14px;
+  }
+  
+  .dropdown {
+    position: relative;
+  }
+  
+  .dropdown-btn {
+    background-color: #c0bdbd;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    top: 35px;
+    right: 0;
+    background-color: #ddd;
+    box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
+    min-width: 100px;
+    z-index: 1;
+    border-radius: 6px;
+  }
+  
+  .dropdown-content a {
+    padding: 8px 12px;
+    display: block;
+    text-decoration: none;
+    color: black;
+    border-bottom: 1px solid #000000;
+    font-size: 14px;
+  }
+  
+  .dropdown-content a:last-child {
+    border-bottom: none;
+  }
+  
+  .dropdown-content a:hover {
+    background-color: #9a0990;
+  }
+  
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
