@@ -35,7 +35,6 @@ const Feed = () => {
   return (
     <div>
       <br />
-      <br />
       <SearchBar />
 
       <div className="feed-container">
