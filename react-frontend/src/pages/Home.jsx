@@ -1,7 +1,9 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
- import { faFacebook, faInstagram, faLinkedin, faYoutube } from "@fortawesome/free-brands-svg-icons";
- import React, { useState } from "react";
- import "./Home.css";
+import { faFacebook, faInstagram, faLinkedin, faYoutube } from "@fortawesome/free-brands-svg-icons";
+import React, { useState } from "react";
+import "./Home.css";
+import { Link } from "react-router-dom";
+
  
  const Home = () => {
    const [videoIndex, setVideoIndex] = useState(0);
@@ -34,19 +36,19 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
          </div>
  
          <div className="navbar-center">
-           <ul className="nav-links">
-             <li><a href="#">Sobre</a></li>
-             <li><a href="#">Feed</a></li>
-             <li><a href="#">Fóruns</a></li>
-             <li><a href="#">Eventos & Biblioteca</a></li>
-             <li><a href="#">Ajuda & FAQ's</a></li>
-           </ul>
-         </div>
+         <ul className="nav-links">
+          <li><Link to="/sobre">Sobre</Link></li>
+          <li><Link to="/feed">Feed</Link></li>
+          <li><Link to="/foruns">Fóruns</Link></li>
+          <li><Link to="/eventos">Eventos & Biblioteca</Link></li>
+          <li><Link to="/ajuda">Ajuda & FAQ's</Link></li>
+        </ul>
+        </div>
  
-         <div className="navbar-right">
-   <button className="btn-signin">Login</button>
-   <button className="btn-signup">Cadastre-se</button>
- </div>
+        <div className="navbar-right">
+          <Link to="/auth"><button className="btn-signin">Login</button></Link>
+          <Link to="/auth"><button className="btn-signup">Cadastre-se</button></Link>
+        </div>
  
        </nav>
  
