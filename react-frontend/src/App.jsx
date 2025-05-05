@@ -10,7 +10,7 @@ import Ajuda from "./pages/Ajuda";
 import LoginCadastro from "./pages/LoginCadastro";
 import Perfil from "./pages/Perfil";
 import Faq from "./pages/Faq";
-
+import Home from "./pages/Home"; // <-- ADICIONADO
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -20,18 +20,23 @@ function App() {
       <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
       <div className="page-content">
         <Routes>
+          <Route path="/" element={<Home />} /> {/* <-- NOVA ROTA */}
           <Route path="/sobre" element={<About />} />
           <Route path="/feed" element={<Feed />} />
           <Route path="/foruns" element={<Foruns />} />
           <Route path="/eventos" element={<Eventos />} />
           <Route path="/ajuda" element={<Ajuda />} />
           <Route path="/faq" element={<Faq />} />
-
           <Route
             path="/auth"
             element={<LoginCadastro setIsLoggedIn={setIsLoggedIn} />}
           />
-          {isLoggedIn && <Route path="/perfil" element={<Perfil setIsLoggedIn={setIsLoggedIn} />} />}
+          {isLoggedIn && (
+            <Route
+              path="/perfil"
+              element={<Perfil setIsLoggedIn={setIsLoggedIn} />}
+            />
+          )}
         </Routes>
       </div>
     </Router>
