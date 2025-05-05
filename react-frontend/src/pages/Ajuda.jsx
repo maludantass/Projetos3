@@ -10,7 +10,7 @@ const Ajuda = () => {
             <hr style={{ margin: "20px 0" }} />
             <h2>Perguntas Frequentes</h2>
 
-            <Faq /> {/* Aqui a FAQ aparece dentro da página de ajuda */}
+            <Faq /> {/* aqui FAQ aparece dentro da página de ajuda*/}
         </div>
     );
 };
