@@ -9,6 +9,8 @@ import Eventos from "./pages/Eventos";
 import Ajuda from "./pages/Ajuda";
 import LoginCadastro from "./pages/LoginCadastro";
 import Perfil from "./pages/Perfil";
+import Faq from "./pages/Faq";
+
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -23,6 +25,8 @@ function App() {
           <Route path="/foruns" element={<Foruns />} />
           <Route path="/eventos" element={<Eventos />} />
           <Route path="/ajuda" element={<Ajuda />} />
+          <Route path="/faq" element={<Faq />} />
+
           <Route
             path="/auth"
             element={<LoginCadastro setIsLoggedIn={setIsLoggedIn} />}
