@@ -10,18 +10,20 @@ import Ajuda from "./pages/Ajuda";
 import LoginCadastro from "./pages/LoginCadastro";
 import Perfil from "./pages/Perfil";
 import Faq from "./pages/Faq";
-import Home from "./pages/Home"; // <-- ADICIONADO
+import Home from "./pages/Home"; // <-- Página inicial (Home)
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   return (
     <Router>
+      {/* Navbar com estado de login */}
       <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
       <div className="page-content">
+        {/* Definição das rotas */}
         <Routes>
-          <Route path="/" element={<Home />} /> {/* <-- NOVA ROTA */}
-          <Route path="/sobre" element={<About />} />
+          <Route path="/" element={<Home />} /> {/* Página inicial */}
+          <Route path="/sobre" element={<Home />} /> {/* Página Sobre */}
           <Route path="/feed" element={<Feed />} />
           <Route path="/foruns" element={<Foruns />} />
           <Route path="/eventos" element={<Eventos />} />
