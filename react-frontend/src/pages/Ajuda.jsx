@@ -4,8 +4,6 @@ import Faq from "./Faq"; //componente de FAQ
 const Ajuda = () => {
     return (
         <div className="ajuda-container">
-            <h1>Ajuda e FAQ´s</h1>
-            <p>Conteúdo de ajuda</p>
 
             <hr style={{ margin: "20px 0" }} />
             <h2>Perguntas Frequentes</h2>
