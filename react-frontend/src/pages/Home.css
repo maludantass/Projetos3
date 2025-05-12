@@ -13,7 +13,7 @@
   
   
   .top-bar {
-    background-color: #dcdcdc;
+    background-color: #7fd28a;
     height: 24px;
     display: flex;
     align-items: center;
@@ -193,11 +193,15 @@
   }
   
   .thumb {
-    width: 200px;
-    height: 200px;
-    background-color: #bbb;
+    width: 500px;
+    height: 90px;
+    background-image: url("/static/images/comeco.png");
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px; /* opcional */
     flex-shrink: 0;
   }
+
   
   
   .text {
@@ -222,27 +226,67 @@
     gap: 40px;
   }
   
-  .large-thumb {
-    width: 100%;
-    height: 280px;  /* altura intermediária, visual confortável */
-    background-color: #bbb;
-    margin-bottom: 32px;
-  }
-  
+.large-thumb {
+  width: 70%;                    /* reduz largura */
+  height: 330px;                /* altura mais confortável */
+  background-image: url("/static/images/juntos.jpeg");
+  background-size: cover;       /* cobre a área mantendo proporção */
+  background-repeat: no-repeat;
+  background-position: center 80%;
+  margin: 0 auto 32px auto;     /* centraliza horizontalmente e aplica margem inferior */
+  border-radius: 12px;          /* opcional: cantos arredondados */
+}
+
   
   .depoimento {
     display: flex;
     align-items: center;
     gap: 32px;
   }
-  
-  .depo-thumb {
-    width: 140px;
+  .partner-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px; /* espaço entre imagem e texto */
+}
+
+.partner-label {
+  font-size: 14px;
+  text-align: center;
+  color: black;
+  text-decoration: none;
+}
+
+.depo-thumb1 {
+  width: 300px;
+  height: 180px;
+  background-image: url("/static/images/membros.jpeg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+    .depo-thumb2 {
+    width: 250px;
     height: 140px;
-    background-color: #aaa;
+    background-image: url("/static/images/valores.png");
+    background-size: contain;
     border-radius: 4px;
     flex-shrink: 0;
   }
+.depo-thumb3 {
+  width: 300px;
+  height: 180px;              /* aumente um pouco a altura */
+  background-image: url("/static/images/missao.png");
+  background-size: cover;     /* cobre tudo */
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
   
   .texto-esquerda {
     text-align: left;
@@ -279,16 +323,59 @@
     background-color: #eee;
   }
   
-  .partner-logo {
-    width: 160px;
-    height: 80px;
-    background-color: #ccc;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 500;
-  }
-  
+.partner-logo1 {
+  width: 120px;
+  height: 120px;
+  background-image: url("/static/images/parceiro1.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+}
+
+.partner-logo2 {
+  width: 130px;
+  height: 120px;
+  background-image: url("/static/images/parceiro2.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+}
+.partner-logo3 {
+  width: 120px;
+  height: 120px;
+  background-image: url("/static/images/parceiro3.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+}
+.partner-logo4 {
+  width: 120px;
+  height: 120px;
+  background-image: url("/static/images/parceiro4.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+}
   /* Call to action */
   .call-to-action {
     background-color: #ddd;
@@ -370,7 +457,7 @@
   
   
   .bottom-bar {
-    background-color: #dcdcdc;
+    background-color: #7fd28a;
     height: 24px;
     display: flex;
     align-items: center;
@@ -380,4 +467,12 @@
     color: #000;
     width: 100%;
   }
-  
+  .social-icons a {
+  color: inherit;       /* herda a cor do pai */
+  text-decoration: none; /* remove sublinhado */
+}
+
+/* opcional: muda a cor ao passar o mouse */
+.social-icons a:hover {
+  color: #e1306c; /* por exemplo, rosa do Instagram */
+}

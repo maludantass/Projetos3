@@ -59,7 +59,8 @@ const Home = () => {
       <section className="highlight">
         <div className="thumb"></div>
         <p className="text">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.
+          A BRASFI surgiu quando nossa fundadora, Viviane Torinelli, percebeu a ausência de brasileiros 
+          nas discussões sobre finanças e investimentos sustentáveis em conferências internacionais.
         </p>
       </section>
 
@@ -68,39 +69,49 @@ const Home = () => {
         <div className="large-thumb"></div>
 
         <div className="depoimento linha-esquerda">
-          <div className="depo-thumb"></div>
+          <div className="depo-thumb1"></div>
           <p className="texto-esquerda">
-            “Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-            exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.”
+            “Os membros da BRASFI vêm de diversas áreas, incluindo os setores público e privado, pesquisadores, 
+            estudantes de diferentes níveis acadêmicos e profissionais do mercado corporativo, formando uma comunidade multidisciplinar.”
           </p>
         </div>
 
         <div className="depoimento linha-direita">
           <p className="texto-direita">
-            “Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-            exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.”
+            “Transformamos o futuro com inovação sustentável, excelência em cada ação, colaboração contínua e um compromisso ético sólido.”
           </p>
-          <div className="depo-thumb"></div>
+          <div className="depo-thumb2"></div>
         </div>
 
         <div className="depoimento linha-esquerda">
-          <div className="depo-thumb"></div>
+          <div className="depo-thumb3"></div>
           <p className="texto-esquerda">
-            “Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-            exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.”
+            “Com a nova estruturação de 2023, a BRASFI tem como visão se tornar uma referência no 
+            desenvolvimento de líderes e soluções em finanças e investimentos sustentáveis até 2026. 
+            Além disso, nossa missão é inspirar uma geração de profissionais capazes de impulsionar a transformação positiva, 
+            contribuindo para o avanço sustentável do país.”
           </p>
         </div>
       </section>
 
       {/* Parceiros */}
       <section className="partners">
-        <div className="partner-logo">Parceiro 1</div>
-        <div className="partner-logo">Parceiro 2</div>
-        <div className="partner-logo">Parceiro 3</div>
-        <div className="partner-logo">Parceiro 4</div>
+  <div className="partner-card">
+    <div className="partner-logo1"></div>
+    <a className="partner-label">Co-Fundadora</a>
+  </div>
+          <div className="partner-card">
+    <div className="partner-logo2"></div>
+    <a className="partner-label">Apresentadora</a>
+  </div>
+                  <div className="partner-card">
+    <div className="partner-logo3"></div>
+    <a className="partner-label">Diretor</a>
+  </div>
+                  <div className="partner-card">
+    <div className="partner-logo4"></div>
+    <a className="partner-label">Voluntário no Hub de Projetos</a>
+  </div>
       </section>
 
       {/* Call to Action */}
@@ -118,11 +129,17 @@ const Home = () => {
         <div className="footer-right">
           <p>Nos conheça!</p>
           <div className="social-icons">
-            <FontAwesomeIcon icon={faFacebook} />
-            <FontAwesomeIcon icon={faInstagram} />
-            <FontAwesomeIcon icon={faLinkedin} />
-            <FontAwesomeIcon icon={faYoutube} />
+          <a href="https://www.instagram.com/brasfi_/" target="_blank" rel="noopener noreferrer">
+    <FontAwesomeIcon icon={faInstagram} />
+    </a>
+          <a href="https://www.linkedin.com/company/brasfi/" target="_blank" rel="noopener noreferrer">
+      <FontAwesomeIcon icon={faLinkedin} />
+    </a>
+          <a href="https://www.youtube.com/@brasfi1976/featured" target="_blank" rel="noopener noreferrer">
+      <FontAwesomeIcon icon={faYoutube} />
+    </a>
           </div>
+
         </div>
       </footer>
 

@@ -89,9 +89,9 @@ const Feed = () => {
               <strong>
                 {index === 0 ? 'amandamontarroios' : 'username'}
               </strong>{' '}
-              AFF que vibe boa galeraaa<br />
+              Loren ipsum<br />
               <br />
-              <span>majudantas:</span> eca feia
+              <span>majudantas:</span> Loren Ipsum
             </div>
           </div>
         ))}

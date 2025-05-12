@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./LoginCadastro.css";
 
+
 function LoginCadastro({ setIsLoggedIn }) {
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({ username: "", email: "", password: "" });
