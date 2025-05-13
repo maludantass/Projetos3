@@ -1,10 +1,15 @@
 import { Link } from "react-router-dom";
 import "./Navbar.css";
 import profileUser from '../images/profile-user.png';
+import logo from "../images/logo.png";
+
 
 const Navbar = ({ isLoggedIn }) => {
   return (
     <nav className="navbar">
+  <div className="navbar-left">
+      <img src={logo} alt="Logo" className="logo-image" />
+  </div>
       <div className="navbar-center">
         <ul>
           <li><Link to="/sobre">Sobre</Link></li>

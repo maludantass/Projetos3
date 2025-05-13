@@ -13,7 +13,7 @@
   
   
   .top-bar {
-    background-color: #7fd28a;
+    background-color: #436447;
     height: 24px;
     display: flex;
     align-items: center;
@@ -21,7 +21,7 @@
     padding: 0 24px;
     font-size: 11px;
     font-weight: 500;
-    color: #000;
+    color: #ffffff;
     position: fixed;
     top: 0;
     left: 0;
@@ -457,14 +457,14 @@
   
   
   .bottom-bar {
-    background-color: #7fd28a;
+    background-color: #436447;
     height: 24px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 11px;
     font-weight: 500;
-    color: #000;
+    color: #ffffff;
     width: 100%;
   }
   .social-icons a {

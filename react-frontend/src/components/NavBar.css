@@ -1,14 +1,24 @@
-/*fiz um css basico, pessoal de front melhora (atualização de irvin: precisei mexer um pouco pra adicionar o botão de perfil!!, mas deu bom funcionou)*/
 .navbar {
-  background-color: #868f7ba4;
-  padding: 1rem;
-  position: fixed;
-  width: 100%;
-  top: 0;
-  z-index: 100;
   display: flex;
-  justify-content: space-between; 
   align-items: center;
+  justify-content: space-between;
+  height: 60px;
+  padding: 0 20px;
+  background-color: #fff;
+  overflow: hidden;
+}
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.logo-image {
+  max-height: 100%;
+  transform: scale(1.6);
+  transform-origin: left center;
+  object-fit: contain;
 }
 
 .navbar-center {
