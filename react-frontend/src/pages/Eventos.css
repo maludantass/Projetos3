@@ -174,3 +174,50 @@ h2, h3 {
 }
 
 }
+
+/*botao de adicionar evento*/
+.modal-overlay {
+   position: fixed;
+   top: 0;
+   left: 0;
+   width: 100vw;
+   height: 100vh;
+   background-color: rgba(0, 0, 0, 0.5);
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   z-index: 1000;
+}
+
+.modal {
+   background-color: white;
+   padding: 2rem;
+   border-radius: 8px;
+   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+   width: 90%;
+   max-width: 500px;
+}
+
+.modal input,
+.modal textarea {
+   display: block;
+   width: 100%;
+   margin-bottom: 1rem;
+   padding: 0.5rem;
+   border: 1px solid #ccc;
+   border-radius: 4px;
+   font-size: 1rem;
+}
+
+.modal-actions {
+   display: flex;
+   justify-content: space-between;
+   gap: 1rem;
+}
+
+.modal-actions button {
+   flex: 1;
+   padding: 0.5rem;
+   font-size: 1rem;
+   cursor: pointer;
+}

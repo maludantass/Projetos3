@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Eventos.css'; // Importa o arquivo CSS
 
 
@@ -75,12 +75,84 @@ function SecaoEventos({ titulo }) {
 
 
 function Eventos() {
+   const [mostrarModal, setMostrarModal] = useState(false);
+   const [form, setForm] = useState({
+      titulo: '',
+      dataInicio: '',
+      dataFim: '',
+      detalhe: ''
+   });
+
+   const handleChange = (e) => {
+      setForm({ ...form, [e.target.name]: e.target.value });
+   };
+
+   const handleSubmit = async (e) => {
+      e.preventDefault();
+      try {
+         await fetch('http://localhost:8080/api/eventos', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(form)
+            });
+         setMostrarModal(false);
+      } catch (error) {
+         console.error('Erro ao criar evento', error);
+      }
+   };
+
    return (
-       <main>
-           <SecaoEventos titulo="Eventos próximos" />
-           <SecaoEventos titulo="Eventos gravados" />
-           <SecaoArtigos />
-       </main>
+      <main>
+         <div className="top-bar-eventos">
+            <button className="add-event-btn" onClick={() => setMostrarModal(true)}>+</button>
+         </div>
+
+         <SecaoEventos titulo="Eventos próximos" />
+         <SecaoEventos titulo="Eventos gravados" />
+
+         {mostrarModal && (
+            <div className="modal-overlay">
+               <div className="modal">
+                  <h3>Novo Evento</h3>
+                  <form onSubmit={handleSubmit}>
+                     <input
+                        type="text"
+                        name="titulo"
+                        placeholder="Título"
+                        value={form.titulo}
+                        onChange={handleChange}
+                        required
+                     />
+                     <input
+                        type="date"
+                        name="dataInicio"
+                        value={form.dataInicio}
+                        onChange={handleChange}
+                        required
+                     />
+                     <input
+                        type="date"
+                        name="dataFim"
+                        value={form.dataFim}
+                        onChange={handleChange}
+                        required
+                     />
+                     <textarea
+                        name="detalhe"
+                        placeholder="Detalhes"
+                        value={form.detalhe}
+                        onChange={handleChange}
+                        required
+                     />
+                     <div className="modal-actions">
+                        <button type="submit">Salvar</button>
+                        <button type="button" onClick={() => setMostrarModal(false)}>Cancelar</button>
+                     </div>
+                  </form>
+               </div>
+            </div>
+         )}
+      </main>
    );
 }
 
