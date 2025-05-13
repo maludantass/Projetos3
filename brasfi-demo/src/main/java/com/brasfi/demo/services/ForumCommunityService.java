@@ -3,7 +3,9 @@ package com.brasfi.demo.service;
 import com.brasfi.demo.dto.ForumCommunityDto;
 import com.brasfi.demo.exceptions.ForumException;
 import com.brasfi.demo.model.ForumCommunity;
+import com.brasfi.demo.model.User;
 import com.brasfi.demo.repository.ForumCommunityRepository;
+import com.brasfi.demo.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -14,20 +16,23 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
+@AllArgsConstructor 
 @Slf4j
 public class ForumCommunityService {
 
     private final ForumCommunityRepository communityRepository;
-    private final AuthService authService; // Assumindo que você tem um serviço para informações de autenticação
+    private final UserRepository userRepository;
 
     @Transactional
-    public ForumCommunityDto save(ForumCommunityDto communityDto) {
+    public ForumCommunityDto save(ForumCommunityDto communityDto, String userEmail) {
+        User user = userRepository.findByEmail(userEmail)
+                .orElseThrow(() -> new ForumException("User not found with email - " + userEmail));
+
         ForumCommunity community = ForumCommunity.builder()
                 .name(communityDto.getName())
                 .description(communityDto.getDescription())
                 .createdDate(Instant.now())
-                .user(authService.getCurrentUser()) // Obtém o usuário logado
+                .user(user)
                 .build();
         ForumCommunity savedCommunity = communityRepository.save(community);
         communityDto.setId(savedCommunity.getId());
@@ -54,7 +59,6 @@ public class ForumCommunityService {
                 .id(community.getId())
                 .name(community.getName())
                 .description(community.getDescription())
-                .numberOfPosts(community.getPosts() != null ? community.getPosts().size() : 0)
                 .build();
     }
 }

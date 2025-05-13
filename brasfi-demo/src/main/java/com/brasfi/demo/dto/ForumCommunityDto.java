@@ -14,5 +14,4 @@ public class ForumCommunityDto {
     private Long id;
     private String name;
     private String description;
-    private Integer numberOfPosts; 
 }
