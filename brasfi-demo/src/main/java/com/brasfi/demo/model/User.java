@@ -1,9 +1,15 @@
 package com.brasfi.demo.model;
 
+import java.util.List;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -17,6 +23,21 @@ public class User {
     private String username;
     private String password;
     private String email;
+
+    // Modificações para parte do feed:
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Post> posts;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Likes> likes;
+
+    @ManyToMany
+    @JoinTable(
+    name = "user_saved_posts",
+    joinColumns = @JoinColumn(name = "user_id"),
+    inverseJoinColumns = @JoinColumn(name = "post_id")
+)
+private List<Post> savedPosts;
 
     public User() {
     }
@@ -58,5 +79,30 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    // Novos métodos getters e setters (parte do feed):
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
+    }
+
+    public List<Likes> getLikes() {
+        return likes;
+    }
+
+    public void setLikes(List<Likes> likes) {
+        this.likes = likes;
+    }
+
+    public List<Post> getSavedPosts() {
+        return savedPosts;
+    }
+
+    public void setSavedPosts(List<Post> savedPosts) {
+        this.savedPosts = savedPosts;
     }
 }
