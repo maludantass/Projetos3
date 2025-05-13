@@ -1,0 +1,176 @@
+body {
+   font-family: sans-serif;
+   margin: 0;
+   padding: 20px;
+   background-color: #f4f4f4;
+   color: #333;
+}
+
+
+.top-bar {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   margin-bottom: 30px;
+   padding: 10px 20px; 
+   background-color: #fff; 
+   border-bottom: 1px solid #eee;
+}
+
+
+.left-icons span {
+   margin-right: 15px;
+   font-size: 20px;
+   color: #555;
+   cursor: pointer;
+}
+
+
+.left-icons svg {
+   width: 20px;
+   height: 20px;
+   fill: #555;
+}
+
+
+.search-bar {
+   display: flex;
+   align-items: center;
+   background-color: #ddd;
+   border-radius: 5px;
+   padding: 5px 10px;
+}
+
+
+.search-bar input[type="text"] {
+   border: none;
+   background: transparent;
+   padding: 8px;
+   width: 200px;
+   outline: none;
+}
+
+
+.filter-icon {
+   background-color: #aaa;
+   color: white;
+   padding: 8px;
+   border-radius: 5px;
+   cursor: pointer;
+}
+
+
+main {
+   padding: 20px;
+}
+
+
+.events, .articles {
+   margin-bottom: 40px;
+   background-color: #fff;
+   padding: 20px;
+   border-radius: 8px;
+   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+
+h2, h3 {
+   color: #333;
+   margin-bottom: 15px;
+   border-bottom: 2px solid #eee; 
+   padding-bottom: 8px;
+}
+
+
+.grid-container {
+   display: grid;
+   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+   gap: 15px;
+   margin-bottom: 15px;
+}
+
+
+.grid-container .item {
+   background-color: #e0e0e0;
+   height: 120px; 
+   border-radius: 5px;
+}
+
+
+.topic ul {
+   list-style: none;
+   padding: 0;
+   margin-bottom: 15px;
+}
+
+
+.topic li {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   padding: 12px 0; 
+   border-bottom: 1px solid #eee;
+}
+
+
+.topic li:last-child {
+   border-bottom: none;
+}
+
+
+.topic li span {
+   display: inline-block;
+   background-color: #bbb;
+   height: 10px;
+   margin-right: 10px;
+   border-radius: 3px;
+}
+
+
+.topic li span:nth-child(1) { width: 80%; }
+.topic li span:nth-child(2) { width: 60%; }
+.topic li span:nth-child(3) { width: 40%; }
+
+
+.topic li span:nth-child(4) { width: 75%; }
+.topic li span:nth-child(5) { width: 30%; }
+
+
+.topic li svg {
+   width: 20px;
+   height: 20px;
+   fill: #777;
+}
+
+
+.view-more {
+   background: none;
+   border: none;
+   color: #555;
+   cursor: pointer;
+   padding: 10px 0;
+   display: flex;
+   align-items: center;
+   gap: 5px;
+   font-weight: bold;
+}
+
+
+.view-more svg {
+   width: 16px;
+   height: 16px;
+   fill: #555;
+}
+
+
+.articles .topic {
+   margin-bottom: 30px;
+   padding-bottom: 20px;
+   border-bottom: 1px solid #ccc;
+}
+
+
+.articles .topic:last-child {
+   border-bottom: none;
+}
+
+}
