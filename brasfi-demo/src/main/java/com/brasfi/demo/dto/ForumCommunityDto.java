@@ -1,5 +1,7 @@
 package com.brasfi.demo.dto;
 
+import java.time.Instant;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,4 +16,7 @@ public class ForumCommunityDto {
     private Long id;
     private String name;
     private String description;
+    private Integer numberOfPosts;
+    private Instant createdDate;
+    private String createdByUsername;
 }

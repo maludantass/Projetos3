@@ -1,21 +1,19 @@
 package com.brasfi.demo.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
+import lombok.*; 
 
 import java.time.Instant;
 import java.util.List;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
+@Getter 
+@Setter 
+@ToString(exclude = {"posts", "user"}) 
+@NoArgsConstructor 
+@AllArgsConstructor 
+@Builder 
 @Entity
-@Table(name = "communities") 
+@Table(name = "forum_communities")
 public class ForumCommunity {
 
     @Id
@@ -25,17 +23,30 @@ public class ForumCommunity {
     @Column(nullable = false, unique = true)
     private String name;
 
+    @Lob
     @Column(nullable = false)
     private String description;
 
-    @CreationTimestamp
     @Column(nullable = false, updatable = false)
     private Instant createdDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private User user; 
+    private User user;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "community")
+    @OneToMany(mappedBy = "forumCommunity", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<ForumPost> posts;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ForumCommunity that = (ForumCommunity) o;
+        return id != null && id.equals(that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : System.identityHashCode(this);
+    }
 }
