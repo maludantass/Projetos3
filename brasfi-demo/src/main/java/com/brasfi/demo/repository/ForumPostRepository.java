@@ -19,7 +19,4 @@ public interface ForumPostRepository extends JpaRepository<ForumPost, Long> {
     List<ForumPost> findAllByUser_Id(Long userId);
 
     Page<ForumPost> findAllByUser_Id(Long userId, Pageable pageable);
-
-    // Spring Data JPA fornece automaticamente os métodos básicos CRUD
-    // Podemos adicionar mais métodos de consulta personalizados conforme necessário.
 }
