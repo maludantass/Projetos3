@@ -52,7 +52,7 @@ function SecaoArtigos() {
    );
 }
 
-
+//certo
 function SecaoEventos({ titulo }) {
    return (
        <section className="events">
