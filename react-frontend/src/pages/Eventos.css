@@ -221,3 +221,23 @@ h2, h3 {
    font-size: 1rem;
    cursor: pointer;
 }
+
+.add-event-btn {
+  font-size: 20px; 
+  width: 30px;
+  height: 30px;
+  border-radius: 0; 
+  border: none;
+  background-color: #1a1f2460; 
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  transition: background-color 0.3s;
+}
+
+.add-event-btn:hover {
+  background-color: #000000;
+}
