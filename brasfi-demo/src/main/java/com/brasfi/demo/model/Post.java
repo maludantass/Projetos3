@@ -23,29 +23,34 @@ public class Post {
     private String content;
 
     @Column(name = "created_at", nullable = false, updatable = false)
-    private LocalDateTime createdAt = LocalDateTime.now();
+    private LocalDateTime createdAt;
 
     @Column(name = "expires_at", nullable = false)
     private LocalDateTime expiresAt;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Likes> likes;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Comment> comments;
 
-    @ManyToMany(mappedBy = "savedPosts")
+    @ManyToMany(mappedBy = "savedPosts", fetch = FetchType.LAZY)
     private List<User> usersSaving;
 
     public Post() {
-        this.expiresAt = LocalDateTime.now().plusHours(24);
+        // Construtor padrão
     }
 
     public Post(User user, String postType, String content) {
         this.user = user;
         this.postType = postType;
         this.content = content;
-        this.expiresAt = LocalDateTime.now().plusHours(24);
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+        this.expiresAt = this.createdAt.plusHours(24);
     }
 
     //Métodos getters/setters
