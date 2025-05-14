@@ -78,11 +78,13 @@ function Eventos() {
 
     const [mostrarModal, setMostrarModal] = useState(false);
    const [form, setForm] = useState({
-      titulo: '',
-      dataInicio: '',
-      dataFim: '',
-      detalhe: ''
-   });
+        titulo: '',
+        dataInicio: '',
+        dataFim: '',
+        detalhe: '',
+        link: '',
+        gravado: false
+        });
 
    const handleChange = (e) => {
       setForm({ ...form, [e.target.name]: e.target.value });
@@ -144,6 +146,44 @@ function Eventos() {
                                     onChange={handleChange}
                                     required
                                 />
+                                <input
+                                    type="text"
+                                    name="link"
+                                    placeholder="Link do evento"
+                                    value={form.link}
+                                    onChange={handleChange}
+                                    />
+
+                                    <div>
+                                        <label style={{ display: "block", marginBottom: "8px", fontWeight: "500" }}>
+                                            Evento será gravado?
+                                        </label>
+
+                                        <div style={{ display: "flex", gap: "24px", alignItems: "center", marginBottom: "16px" }}>
+                                            <label style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                                            <input
+                                                type="radio"
+                                                name="gravado"
+                                                value="true"
+                                                checked={form.gravado === true}
+                                                onChange={() => setForm({ ...form, gravado: true })}
+                                            />
+                                            Sim
+                                            </label>
+
+                                            <label style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                                            <input
+                                                type="radio"
+                                                name="gravado"
+                                                value="false"
+                                                checked={form.gravado === false}
+                                                onChange={() => setForm({ ...form, gravado: false })}
+                                            />
+                                            Não
+                                            </label>
+                                        </div>
+                                    </div>
+
                                 <div className="modal-actions">
                                     <button type="submit">Salvar</button>
                                     <button type="button" onClick={() => setMostrarModal(false)}>Cancelar</button>
