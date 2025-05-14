@@ -17,9 +17,9 @@ public class Evento {
     
     private String link;
 
-    private boolean gravado; // true = Sim, false = Não
+    private boolean gravado; 
+    private String emailUsuario;
 
-    // Getters e Setters
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
@@ -41,5 +41,13 @@ public class Evento {
 
     public boolean isGravado() { return gravado; }
     public void setGravado(boolean gravado) { this.gravado = gravado; }
+
+    public String getEmailUsuario() {
+        return emailUsuario;
+    }
+
+    public void setEmailUsuario(String emailUsuario) {
+        this.emailUsuario = emailUsuario;
+    }
 }
 

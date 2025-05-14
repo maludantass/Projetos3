@@ -83,26 +83,35 @@ function Eventos() {
         dataFim: '',
         detalhe: '',
         link: '',
-        gravado: false
-        });
+        gravado: false,
+        emailUsuario: localStorage.getItem('email') || ''
+    });
 
    const handleChange = (e) => {
       setForm({ ...form, [e.target.name]: e.target.value });
    };
 
    const handleSubmit = async (e) => {
-      e.preventDefault();
-      try {
-         await fetch('http://localhost:8080/api/eventos', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(form)
+        e.preventDefault();
+
+        const user = JSON.parse(localStorage.getItem("user"));
+        const email = user?.email || "sem-email";
+        const eventoComEmail = { ...form, emailUsuario: email };
+
+        console.log("Dados enviados:", eventoComEmail); 
+
+        try {
+            await fetch('http://localhost:8080/api/eventos', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(eventoComEmail)
             });
-         setMostrarModal(false);
-      } catch (error) {
-         console.error('Erro ao criar evento', error);
-      }
-   };
+            setMostrarModal(false);
+        } catch (error) {
+            console.error('Erro ao criar evento', error);
+        }
+    };
+
     return (
             <main>
                     <div className="top-bar-eventos">
