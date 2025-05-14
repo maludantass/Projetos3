@@ -134,6 +134,7 @@ function Eventos() {
                                     onChange={handleChange}
                                     required
                                 />
+                                <h5>Data de início</h5>
                                 <input
                                     type="date"
                                     name="dataInicio"
@@ -141,6 +142,7 @@ function Eventos() {
                                     onChange={handleChange}
                                     required
                                 />
+                                <h5>Data de término</h5>
                                 <input
                                     type="date"
                                     name="dataFim"
