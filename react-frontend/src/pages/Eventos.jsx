@@ -94,6 +94,18 @@ function Eventos() {
    const handleSubmit = async (e) => {
         e.preventDefault();
 
+        const hoje = new Date().toISOString().split("T")[0];
+
+        if (form.dataInicio < hoje) {
+            alert("A data de início deve ser igual ou posterior a hoje.");
+            return;
+        }
+
+        if (form.dataFim < form.dataInicio) {
+            alert("A data de término não pode ser anterior à data de início.");
+            return;
+        }
+
         const user = JSON.parse(localStorage.getItem("user"));
         const email = user?.email || "sem-email";
         const eventoComEmail = { ...form, emailUsuario: email };
@@ -106,11 +118,25 @@ function Eventos() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(eventoComEmail)
             });
-            setMostrarModal(false);
+            fecharModal();
         } catch (error) {
             console.error('Erro ao criar evento', error);
         }
     };
+
+    const fecharModal = () => {
+        setMostrarModal(false);
+        setForm({
+            titulo: '',
+            dataInicio: '',
+            dataFim: '',
+            detalhe: '',
+            link: '',
+            gravado: false,
+            emailUsuario: localStorage.getItem('email') || ''
+        });
+    };
+
 
     return (
             <main>
@@ -139,7 +165,16 @@ function Eventos() {
                                     type="date"
                                     name="dataInicio"
                                     value={form.dataInicio}
-                                    onChange={handleChange}
+                                    onChange={(e) => {
+                                        const novaDataInicio = e.target.value;
+                                        setForm({ ...form, dataInicio: novaDataInicio });
+
+                                        //impede que a data do fim seja maior que a do inicio
+                                        if (form.dataFim && form.dataFim < novaDataInicio) {
+                                            setForm(prev => ({ ...prev, dataFim: "" }));
+                                        }
+                                    }}
+                                    min={new Date().toISOString().split("T")[0]} // hoje
                                     required
                                 />
                                 <h5>Data de término</h5>
@@ -148,6 +183,7 @@ function Eventos() {
                                     name="dataFim"
                                     value={form.dataFim}
                                     onChange={handleChange}
+                                    min={form.dataInicio || new Date().toISOString().split("T")[0]}
                                     required
                                 />
                                 <textarea
@@ -197,7 +233,7 @@ function Eventos() {
 
                                 <div className="modal-actions">
                                     <button type="submit">Salvar</button>
-                                    <button type="button" onClick={() => setMostrarModal(false)}>Cancelar</button>
+                                    <button type="button" onClick={fecharModal}>Cancelar</button>
                                 </div>
                             </form>
                         </div>
