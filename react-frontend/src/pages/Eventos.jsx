@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import './Eventos.css'; // Importa o arquivo CSS
+import './Eventos.css'; 
 
-// Componente para exibir os detalhes do evento no modal
 function ModalDetalhesEvento({ evento, onClose }) {
     if (!evento) {
         return null;
     }
 
     return (
-        <div className="modal-overlay">
+        <div className="modal-overlay-detalhe-evento">
             <div className="modal">
                 <h3>Detalhes do Evento</h3>
                 <h4>{evento.titulo}</h4>
@@ -91,19 +90,13 @@ function SecaoEventos({ titulo, eventos, onEventoClick }) {
                     const evento = eventosIniciais[i];
                     return (
                         <div className="item" key={i} onClick={() => evento && onEventoClick(evento)} style={{ cursor: 'pointer' }}>
-                            {evento ? (
-                                <>
-                                    <h4>{evento.titulo}</h4>
-                                    <p>{evento.dataInicio} - {evento.dataFim}</p>
-                                    <p>{evento.detalhe && evento.detalhe.substring(0, 50)}...</p> {/* Exibe um resumo */}
-                                    {evento.link && (
-                                        <a href={evento.link} target="_blank" rel="noopener noreferrer">
-                                            Acessar
-                                        </a>
-                                    )}
-                                </>
-                            ) : null}
-                        </div>
+                        {evento ? (
+                          <>
+                            <h4 className="evento-titulo">{evento.titulo}</h4>
+                            <p className="evento-data">{evento.dataInicio} - {evento.dataFim}</p>
+                          </>
+                        ) : null}
+                      </div>
                     );
                 })}
             </div>
@@ -112,14 +105,8 @@ function SecaoEventos({ titulo, eventos, onEventoClick }) {
                 <div className="grid-container extras">
                     {eventosExtras.map((evento, index) => (
                         <div className="item" key={index + 5} onClick={() => onEventoClick(evento)} style={{ cursor: 'pointer' }}>
-                            <h4>{evento.titulo}</h4>
-                            <p>{evento.dataInicio} - {evento.dataFim}</p>
-                            <p>{evento.detalhe && evento.detalhe.substring(0, 50)}...</p> {/* Exibe um resumo */}
-                            {evento.link && (
-                                <a href={evento.link} target="_blank" rel="noopener noreferrer">
-                                    Acessar
-                                </a>
-                            )}
+                            <h4 className="evento-titulo">{evento.titulo}</h4>
+                            <p className="evento-data">{evento.dataInicio} - {evento.dataFim}</p>
                         </div>
                     ))}
                 </div>
