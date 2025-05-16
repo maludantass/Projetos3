@@ -70,7 +70,6 @@ function SecaoEventos({ titulo, eventos }) {
       <h2>{titulo}</h2>
 
       <div className="grid-container">
-        {/* Sempre renderiza 6 espaços */}
         {Array.from({ length: 5 }).map((_, i) => {
           const evento = eventosIniciais[i];
           return (
@@ -92,7 +91,6 @@ function SecaoEventos({ titulo, eventos }) {
         })}
       </div>
 
-      {/* Eventos extras */}
       {mostrarTodos && (
         <div className="grid-container extras">
           {eventosExtras.map((evento, index) => (
@@ -134,18 +132,19 @@ function Eventos() {
     const [mostrarModal, setMostrarModal] = useState(false);
     const [todosEventos, setTodosEventos] = useState([]);
 
+    const buscarEventos = async () => {
+        try {
+        const resposta = await fetch('http://localhost:8080/api/eventos');
+        const dados = await resposta.json();
+        setTodosEventos(dados);
+        } catch (erro) {
+        console.error("Erro ao buscar eventos:", erro);
+        }
+    };
+
     useEffect(() => {
-        const buscarEventos = async () => {
-            try {
-                const resposta = await fetch('http://localhost:8080/api/eventos');
-                const dados = await resposta.json();
-                setTodosEventos(dados);
-            } catch (erro) {
-                console.error("Erro ao buscar eventos:", erro);
-            }
-        };
-        buscarEventos();
-    }, []);
+    buscarEventos();
+  }, []);
 
     const eventosProximos = todosEventos;
     const eventosGravados = todosEventos.filter(ev => ev.gravado);
@@ -186,14 +185,21 @@ function Eventos() {
         console.log("Dados enviados:", eventoComEmail); 
 
         try {
-            await fetch('http://localhost:8080/api/eventos', {
+            const resposta = await fetch('http://localhost:8080/api/eventos', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(eventoComEmail)
             });
-            fecharModal();
+
+            if (resposta.ok) {
+                await buscarEventos(); 
+                fecharModal();        
+            } else {
+                alert("Erro ao salvar evento.");
+            }
         } catch (error) {
             console.error('Erro ao criar evento', error);
+            alert("Erro ao salvar evento.");
         }
     };
 
