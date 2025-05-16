@@ -146,6 +146,7 @@ function Eventos() {
     const [mostrarModalDetalhes, setMostrarModalDetalhes] = useState(false);
     const [eventoSelecionado, setEventoSelecionado] = useState(null);
     const [todosEventos, setTodosEventos] = useState([]);
+    const [filtroTitulo, setFiltroTitulo] = useState(''); 
 
     const buscarEventos = async () => {
         try {
@@ -161,8 +162,17 @@ function Eventos() {
         buscarEventos();
     }, []);
 
-    const eventosProximos = todosEventos;
-    const eventosGravados = todosEventos.filter(ev => ev.gravado);
+    const handleFiltroChange = (e) => {
+        setFiltroTitulo(e.target.value);
+    };
+
+    const eventosProximos = todosEventos.filter(ev =>
+        ev.titulo.toLowerCase().includes(filtroTitulo.toLowerCase())
+    );
+
+    const eventosGravados = todosEventos.filter(ev =>
+        ev.gravado && ev.titulo.toLowerCase().includes(filtroTitulo.toLowerCase())
+    );
 
     const [form, setForm] = useState({
         titulo: '',
@@ -196,8 +206,6 @@ function Eventos() {
         const user = JSON.parse(localStorage.getItem("user"));
         const email = user?.email || "sem-email";
         const eventoComEmail = { ...form, emailUsuario: email };
-
-        console.log("Dados enviados:", eventoComEmail);
 
         try {
             const resposta = await fetch('http://localhost:8080/api/eventos', {
@@ -247,12 +255,42 @@ function Eventos() {
 
     return (
         <main>
-            <div className="top-bar-eventos">
+            <div
+                className="top-bar-eventos"
+                style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    marginBottom: '16px'
+                }}
+            >
                 <button className="add-event-btn" onClick={abrirModalAdicionar}>+</button>
+
+                <input
+                    type="text"
+                    placeholder="Pesquisar por título"
+                    value={filtroTitulo}
+                    onChange={handleFiltroChange}
+                    style={{
+                        padding: '6px 10px',
+                        fontSize: '16px',
+                        borderRadius: '4px',
+                        border: '1px solid #ccc',
+                        width: '250px',
+                    }}
+                />
             </div>
 
-            <SecaoEventos titulo="Eventos próximos" eventos={eventosProximos} onEventoClick={abrirModalDetalhes} />
-            <SecaoEventos titulo="Eventos gravados" eventos={eventosGravados} onEventoClick={abrirModalDetalhes} />
+            <SecaoEventos
+                titulo="Eventos próximos"
+                eventos={eventosProximos}
+                onEventoClick={abrirModalDetalhes}
+            />
+            <SecaoEventos
+                titulo="Eventos gravados"
+                eventos={eventosGravados}
+                onEventoClick={abrirModalDetalhes}
+            />
 
             {mostrarModalAdicionar && (
                 <div className="modal-overlay">
@@ -276,7 +314,7 @@ function Eventos() {
                                     const novaDataInicio = e.target.value;
                                     setForm({ ...form, dataInicio: novaDataInicio });
 
-                                    //impede que a data do fim seja maior que a do inicio
+                                    // Impede que a data do fim seja menor que a do início
                                     if (form.dataFim && form.dataFim < novaDataInicio) {
                                         setForm(prev => ({ ...prev, dataFim: "" }));
                                     }
@@ -347,7 +385,6 @@ function Eventos() {
                 </div>
             )}
 
-            {/* Modal de detalhes do evento */}
             {mostrarModalDetalhes && (
                 <ModalDetalhesEvento evento={eventoSelecionado} onClose={fecharModalDetalhes} />
             )}
