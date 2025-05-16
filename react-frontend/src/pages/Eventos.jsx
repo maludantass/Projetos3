@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Eventos.css'; // Importa o arquivo CSS
 
 
@@ -53,30 +53,99 @@ function SecaoArtigos() {
 }
 
 //certo
-function SecaoEventos({ titulo }) {
-   return (
-       <section className="events">
-           <h2>{titulo}</h2>
-           <div className="grid-container">
-               <div className="item"></div>
-               <div className="item"></div>
-               <div className="item"></div>
-               <div className="item"></div>
-           </div>
-           <button className="view-more">
-               Ver mais
-               <svg viewBox="0 0 24 24">
-                   <path d="M7 10l5 5 5-5z" />
-               </svg>
-           </button>
-       </section>
-   );
+function SecaoEventos({ titulo, eventos }) {
+  const eventosOrdenados = [...eventos].sort((a, b) => new Date(b.dataInicio) - new Date(a.dataInicio));
+
+  const [mostrarTodos, setMostrarTodos] = useState(false);
+
+  const eventosIniciais = eventosOrdenados.slice(0, 5);
+  const eventosExtras = eventosOrdenados.slice(5);
+
+  return (
+    <section className="events">
+      <h2>{titulo}</h2>
+
+      <div className="grid-container">
+        {/* Sempre renderiza 6 espaços */}
+        {Array.from({ length: 5 }).map((_, i) => {
+          const evento = eventosIniciais[i];
+          return (
+            <div className="item" key={i}>
+              {evento ? (
+                <>
+                  <h4>{evento.titulo}</h4>
+                  <p>{evento.dataInicio} - {evento.dataFim}</p>
+                  <p>{evento.detalhe}</p>
+                  {evento.link && (
+                    <a href={evento.link} target="_blank" rel="noopener noreferrer">
+                      Acessar
+                    </a>
+                  )}
+                </>
+              ) : null}
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Eventos extras */}
+      {mostrarTodos && (
+        <div className="grid-container extras">
+          {eventosExtras.map((evento, index) => (
+            <div className="item" key={index + 5}>
+              <h4>{evento.titulo}</h4>
+              <p>{evento.dataInicio} - {evento.dataFim}</p>
+              <p>{evento.detalhe}</p>
+              {evento.link && (
+                <a href={evento.link} target="_blank" rel="noopener noreferrer">
+                  Acessar
+                </a>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
+
+      {eventosExtras.length > 0 && (
+        <button
+          className="view-more"
+          onClick={() => setMostrarTodos(!mostrarTodos)}
+          aria-expanded={mostrarTodos}
+        >
+          {mostrarTodos ? 'Ver menos' : 'Ver mais'}
+          <svg viewBox="0 0 24 24">
+            <path d={mostrarTodos ? "M7 14l5-5 5 5z" : "M7 10l5 5 5-5z"} />
+          </svg>
+        </button>
+      )}
+    </section>
+  );
 }
+
+
 
 
 function Eventos() {
 
     const [mostrarModal, setMostrarModal] = useState(false);
+    const [todosEventos, setTodosEventos] = useState([]);
+
+    useEffect(() => {
+        const buscarEventos = async () => {
+            try {
+                const resposta = await fetch('http://localhost:8080/api/eventos');
+                const dados = await resposta.json();
+                setTodosEventos(dados);
+            } catch (erro) {
+                console.error("Erro ao buscar eventos:", erro);
+            }
+        };
+        buscarEventos();
+    }, []);
+
+    const eventosProximos = todosEventos;
+    const eventosGravados = todosEventos.filter(ev => ev.gravado);
+
    const [form, setForm] = useState({
         titulo: '',
         dataInicio: '',
@@ -144,8 +213,8 @@ function Eventos() {
                         <button className="add-event-btn" onClick={() => setMostrarModal(true)}>+</button>
                     </div>
 
-                    <SecaoEventos titulo="Eventos próximos" />
-                    <SecaoEventos titulo="Eventos gravados" />
+                    <SecaoEventos titulo="Eventos próximos" eventos={eventosProximos} />
+                    <SecaoEventos titulo="Eventos gravados" eventos={eventosGravados} />
 
                     {mostrarModal && (
                         <div className="modal-overlay">
