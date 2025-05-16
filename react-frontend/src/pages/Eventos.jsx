@@ -54,7 +54,11 @@ function SecaoArtigos() {
 
 //certo
 function SecaoEventos({ titulo, eventos }) {
-  const eventosOrdenados = [...eventos].sort((a, b) => new Date(b.dataInicio) - new Date(a.dataInicio));
+  const hoje = new Date().toISOString().split('T')[0];
+
+    const eventosOrdenados = [...eventos]
+    .filter(evento => evento.dataFim >= hoje)
+    .sort((a, b) => new Date(a.dataInicio) - new Date(b.dataInicio));
 
   const [mostrarTodos, setMostrarTodos] = useState(false);
 
