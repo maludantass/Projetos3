@@ -48,18 +48,18 @@ function Faq() {
       <header className="top-bar">
         ALIANÇA BRASILEIRA DE FINANÇAS E INVESTIMENTOS SUSTENTÁVEIS
       </header>
-
-      {/* Navbar */}
-      <nav className="navbar">
-        <div className="navbar-container">
-          <div className="logo">BRASFI</div>
-          <ul className="nav-links">
-            <li><Link to="/sobre">Sobre</Link></li>
-            <li><Link to="/ajuda">Ajuda</Link></li>
-            <li><Link to="/auth">Conecte-se</Link></li>
-          </ul>
-        </div>
-      </nav>
+      
+{/*navbar */}
+    <nav className="navbar">
+  <div className="navbar-container">
+    <div className="logo">BRASFI</div>
+    <ul className="nav-links">
+      <li><Link to="/sobre">Sobre</Link></li>
+      <li><Link to="/ajuda">Ajuda</Link></li>
+      <li><Link to="/auth">Conecte-se</Link></li>
+    </ul>
+  </div>
+</nav>
 
       {/* FAQ */}
       <main className="faq-wrapper">
