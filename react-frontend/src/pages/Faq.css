@@ -68,6 +68,13 @@
     line-height: 1.5;
     animation: aparecer 0.3s ease-in;
 }
+.faq-wrapper {
+  margin-top: 120px; /* abaixo do header e navbar */
+  padding: 40px 10%;
+  background-color: #f7f7f7;
+  min-height: 100vh;
+}
+
 
 @keyframes aparecer {
     from { opacity: 0; transform: translateY(-5px); }
