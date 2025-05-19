@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faInstagram, faLinkedin, faYoutube } from '@fortawesome/free-brands-svg-icons';
-import './Faq.css';
 import { Link } from 'react-router-dom';
+import './Faq.css';
+
+import Navbar from '../components/NavBar'; // ✅ usa a NavBar padronizada
 
 function Faq() {
   const perguntas = [
@@ -44,22 +46,8 @@ function Faq() {
 
   return (
     <div className="ajuda-container">
-      {/* Top Bar */}
-      <header className="top-bar">
-        ALIANÇA BRASILEIRA DE FINANÇAS E INVESTIMENTOS SUSTENTÁVEIS
-      </header>
-      
-{/*navbar */}
-    <nav className="navbar">
-  <div className="navbar-container">
-    <div className="logo">BRASFI</div>
-    <ul className="nav-links">
-      <li><Link to="/sobre">Sobre</Link></li>
-      <li><Link to="/ajuda">Ajuda</Link></li>
-      <li><Link to="/auth">Conecte-se</Link></li>
-    </ul>
-  </div>
-</nav>
+      {/* ✅ NavBar global reaproveitada */}
+      <Navbar />
 
       {/* FAQ */}
       <main className="faq-wrapper">
