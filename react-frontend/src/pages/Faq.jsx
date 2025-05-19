@@ -21,7 +21,7 @@ function Faq() {
         },
         {
             pergunta: 'Estou com dificuldades técnicas. Como proceder?',
-            resposta: 'Em caso de instabilidade ou dificuldades de acesso, orientamos que entre em contato com nossa equipe técnica por meio dos contatosdisponíveis na seção “Home”.'
+            resposta: 'Em caso de instabilidade ou dificuldades de acesso, orientamos que entre em contato com nossa equipe técnica por meio dos contatos disponíveis na seção “Home”.'
         },
         {
             pergunta: 'Como posso me cadastrar na plataforma?',
@@ -29,7 +29,7 @@ function Faq() {
         },
         {
             pergunta: 'Como entrar em contato com o suporte?',
-            resposta: 'Nosso suporte está disponível por e-mail e nos telefones disponíveis na home page.'
+            resposta: 'Nosso suporte está disponível via o botão de contato na página principal'
         }
     ];
 
