@@ -1,65 +1,79 @@
-/*css basico, a galera do front vai trabalhar*/
 .login-cadastro-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f2f2f2;
-  }
-  
-  .login-cadastro-box {
-    background-color: #fff;
-    padding: 40px 30px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 355px;
-    text-align: center;
-  }
-  
-  .login-cadastro-box h2 {
-    margin-bottom: 20px;
-    color: #000000;
-  }
-  
-  .login-cadastro-box input {
-    width: 100%;
-    padding: 7px;
-    margin: 8px 0;
-    border: 1px solid #868f7ba4;
-    border-radius: 5px;
-  }
-  
-  .login-cadastro-box button {
-    width: 100%;
-    padding: 10px;
-    margin-top: 12px;
-    background-color: #868f7ba4;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .login-cadastro-box button:hover {
-    background-color: #868f7ba4;
-  }
-  
-  .login-cadastro-box p {
-    margin-top: 22px;
-    font-size: 16px;
-  }
-  
-  .login-cadastro-box p button {
-    background: none;
-    border: none;
-    color: #000000;
-    cursor: pointer;
-    text-decoration: underline;
-    font-size: 14px;
-    padding: 0;
-  }
-  
-  .login-cadastro-box p button:hover {
-    color: #000000;
-  }
-  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f0f2f5;
+  padding-top: 80px; /* para evitar sobreposição da navbar */
+}
+
+.login-cadastro-box {
+  background-color: #ffffff;
+  padding: 40px 32px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.login-cadastro-box h2 {
+  margin-bottom: 24px;
+  font-size: 26px;
+  color: #1e1e1e;
+  font-weight: 600;
+}
+
+.login-cadastro-box input {
+  width: 100%;
+  padding: 12px 14px;
+  margin: 10px 0;
+  border: 1px solid #cfd4da;
+  border-radius: 6px;
+  font-size: 15px;
+  transition: border 0.3s;
+}
+
+.login-cadastro-box input:focus {
+  border-color: #2E7D32;
+  outline: none;
+}
+
+.login-cadastro-box button[type="submit"] {
+  width: 100%;
+  padding: 12px;
+  margin-top: 16px;
+  background-color: #2E7D32;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.login-cadastro-box button[type="submit"]:hover {
+  background-color: #27692c;
+}
+
+.login-cadastro-box p {
+  margin-top: 20px;
+  font-size: 15px;
+  color: #444;
+}
+
+.login-cadastro-box p button {
+  background: none;
+  border: none;
+  color: #2E7D32;
+  cursor: pointer;
+  text-decoration: underline;
+  font-size: 15px;
+  padding: 0;
+  font-weight: 500;
+}
+
+.login-cadastro-box p button:hover {
+  color: #1b5020;
+}
