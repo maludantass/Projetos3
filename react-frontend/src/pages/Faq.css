@@ -1,10 +1,4 @@
-.Txt-Faq{
-    
-    text-align: center;
-    height: 100vh;
-    background-color: #f0f2f5;
-    font-family: Arial, sans-serif;
-}
+
 .ajuda-container {
     font-family: Arial, sans-serif;
     margin-top: 60px;
@@ -86,77 +80,3 @@ body {
 }
 
 
-.top-bar {
-  background-color: #A8D5BA;
-  height: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 24px;
-  font-size: 11px;
-  font-weight: 500;
-  color: #000;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 1000;
-}
-
-.navbar {
-  background-color: #fff;
-  position: fixed;
-  top: 24px;
-  left: 0;
-  width: 100%;
-  z-index: 999;
-  border-bottom: 1px solid #ddd;
-  padding: 14px 40px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.navbar-container {
-  display: flex;
-  align-items: center;
-  gap: 40px;
-  max-width: 1200px;
-  width: 100%;
-  padding: 0 40px;
-  justify-content: space-between;
-}
-
-.logo {
-  font-size: 22px;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-}
-
-.nav-links {
-  display: flex;
-  align-items: center;
-  list-style: none;
-  gap: 28px;
-  margin: 0;
-  padding: 0;
-  height: 100%;
-}
-
-.nav-links li {
-  display: flex;
-  align-items: center;
-  height: 100%;
-}
-
-.nav-links li a {
-  display: flex;
-  align-items: center;
-  height: 100%;
-  text-decoration: none;
-  color: #000;
-  font-weight: 500;
-  font-size: 16px;
-  padding: 4px 0;
-}
