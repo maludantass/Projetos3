@@ -6,7 +6,7 @@ const Ajuda = () => {
     return (
         <div className= "Txt-Faq">
             <hr style={{ margin: "20px 0" }} />
-            <h2>Perguntas Frequentes</h2>
+            
 
             <Faq /> {}
             </div>
