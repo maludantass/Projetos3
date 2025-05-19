@@ -48,7 +48,7 @@ function Faq() {
       <header className="top-bar">
         ALIANÇA BRASILEIRA DE FINANÇAS E INVESTIMENTOS SUSTENTÁVEIS
       </header>
-
+      
 {/*navbar */}
     <nav className="navbar">
   <div className="navbar-container">
@@ -64,6 +64,7 @@ function Faq() {
       {/* FAQ */}
       <main className="faq-wrapper">
         <div className="faq-container">
+          <h1>Perguntas Frequentes (FAQ)</h1>
           {perguntas.map((item, index) => (
             <div key={index} className="faq-item">
               <button onClick={() => toggleResposta(index)} className="faq-pergunta">
