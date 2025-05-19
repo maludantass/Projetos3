@@ -54,65 +54,66 @@ const Home = () => {
           ></span>
         ))}
       </div>
-
+      <br></br><br></br>
+<div className = "Brasfiverde">
+</div>
       {/* Destaque */}
       <section className="highlight">
         <div className="thumb"></div>
         <p className="text">
-          A BRASFI surgiu quando nossa fundadora, Viviane Torinelli, percebeu a ausência de brasileiros 
-          nas discussões sobre finanças e investimentos sustentáveis em conferências internacionais.
+          A BRASFI é uma aliança brasileira que <br></br>conecta profissionais e acadêmicos <br></br>para impulsionar finanças <br></br>e investimentos sustentáveis.
         </p>
       </section>
+    
 
-      {/* Feedback */}
-      <section className="feedback">
-        <div className="large-thumb"></div>
+{/* Feedback */}
+<section className="feedback">
+  <p className="text2">Nossa Equipe</p>
 
-        <div className="depoimento linha-esquerda">
-          <div className="depo-thumb1"></div>
-          <p className="texto-esquerda">
-            “Os membros da BRASFI vêm de diversas áreas, incluindo os setores público e privado, pesquisadores, 
-            estudantes de diferentes níveis acadêmicos e profissionais do mercado corporativo, formando uma comunidade multidisciplinar.”
-          </p>
-        </div>
-
-        <div className="depoimento linha-direita">
-          <p className="texto-direita">
-            “Transformamos o futuro com inovação sustentável, excelência em cada ação, colaboração contínua e um compromisso ético sólido.”
-          </p>
-          <div className="depo-thumb2"></div>
-        </div>
-
-        <div className="depoimento linha-esquerda">
-          <div className="depo-thumb3"></div>
-          <p className="texto-esquerda">
-            “Com a nova estruturação de 2023, a BRASFI tem como visão se tornar uma referência no 
-            desenvolvimento de líderes e soluções em finanças e investimentos sustentáveis até 2026. 
-            Além disso, nossa missão é inspirar uma geração de profissionais capazes de impulsionar a transformação positiva, 
-            contribuindo para o avanço sustentável do país.”
-          </p>
-        </div>
-      </section>
-
-      {/* Parceiros */}
-      <section className="partners">
-  <div className="partner-card">
-    <div className="partner-logo1"></div>
-    <a className="partner-label">Co-Fundadora</a>
+  <div className="depoimento linha-esquerda">
+    <div className="depo-thumb1"></div>
+    <div className="info-depo">
+      <p className="nome">
+        Ricardo Viana <span className="cargo">CEO</span>
+      </p><br />
+      <p className="texto-esquerda">
+        “Queremos ser referência global em finanças que regeneram,<br />
+        conectam e transformam realidades.”
+      </p>
+    </div>
   </div>
-          <div className="partner-card">
-    <div className="partner-logo2"></div>
-    <a className="partner-label">Apresentadora</a>
+
+  <div className="depoimento linha-direita">
+    <div className="info-depo">
+      <p className="nome">
+        Marina Leal <span className="cargo">Diretora de Inovação</span>
+      </p><br />
+      <p className="texto-direita">
+        “Cada decisão financeira carrega o poder de moldar o futuro. Estamos aqui para garantir que esse futuro seja verde, justo e próspero.”
+      </p>
+    </div>
+    <div className="depo-thumb2"></div>
   </div>
-                  <div className="partner-card">
-    <div className="partner-logo3"></div>
-    <a className="partner-label">Diretor</a>
+
+  <div className="depoimento linha-esquerda">
+    <div className="depo-thumb3"></div>
+    <div className="info-depo">
+      <p className="nome">
+        André Nascimento<span className="cargo">Diretor de Comunicação</span>
+      </p><br />
+      <p className="texto-esquerda">
+        “Valorizamos pessoas que acreditam que o mundo pode ser melhor, e que trabalham para isso todos os dias.”
+      </p>
+    </div>
   </div>
-                  <div className="partner-card">
-    <div className="partner-logo4"></div>
-    <a className="partner-label">Voluntário no Hub de Projetos</a>
-  </div>
-      </section>
+</section>
+
+<div className="partners-container">
+  <img src="/static/images/lab.png" alt="lab" />
+  <img src="/static/images/climate.png" alt="climate" />
+  <img src="/static/images/weesg.png" alt="weesg" />
+  <img src="/static/images/universidade.png" alt="universidade" />
+</div>
 
       {/* Call to Action */}
       <section className="call-to-action">
@@ -124,7 +125,7 @@ const Home = () => {
       <footer className="footer">
         <div className="footer-left">
           <p>Contato</p>
-          <p>Email</p>
+          <p>Política de Privacidade</p>
         </div>
         <div className="footer-right">
           <p>Nos conheça!</p>
@@ -137,6 +138,9 @@ const Home = () => {
     </a>
           <a href="https://www.youtube.com/@brasfi1976/featured" target="_blank" rel="noopener noreferrer">
       <FontAwesomeIcon icon={faYoutube} />
+    </a>
+    <a href="https://www.facebook.com/p/Brasfi-100075647395106/" target="_blank" rel="noopener noreferrer">
+    <FontAwesomeIcon icon={faFacebook} />
     </a>
           </div>
 

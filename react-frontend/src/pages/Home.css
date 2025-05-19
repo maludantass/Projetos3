@@ -13,7 +13,7 @@
   
   
   .top-bar {
-    background-color: #436447;
+    background-color: #A8D5BA;
     height: 24px;
     display: flex;
     align-items: center;
@@ -21,7 +21,7 @@
     padding: 0 24px;
     font-size: 11px;
     font-weight: 500;
-    color: #ffffff;
+    color: #000;
     position: fixed;
     top: 0;
     left: 0;
@@ -192,31 +192,17 @@
     padding: 40px 10%;
   }
   
-  .thumb {
-    width: 500px;
-    height: 90px;
-    background-image: url("/static/images/comeco.png");
-    background-size: cover;
-    background-position: center;
-    border-radius: 10px; /* opcional */
-    flex-shrink: 0;
-  }
-
-  
   
   .text {
-    max-width: 600px;
-    font-size: 16px;
-    line-height: 1.6;
+    font-weight: bold;
+    font-size:30px;
+    text-align: center;
+
   }
-  
+    .text2 {
+    font-weight: bold;
+    font-size:30px;
 
-
-  .large-thumb {
-    width: 100%;
-    height: 220px; /* já ajustado para ficar proporcional */
-    background-color: #bbb;
-    margin-bottom: 32px;
   }
   
   .feedback {
@@ -226,13 +212,13 @@
     gap: 40px;
   }
   
-.large-thumb {
-  width: 70%;                    /* reduz largura */
-  height: 330px;                /* altura mais confortável */
-  background-image: url("/static/images/juntos.jpeg");
+.Brasfiverde {
+  width: 80%;                    /* reduz largura */
+  height: 500px;                /* altura mais confortável */
+  background-image: url("/static/images/brasfi.png");
   background-size: cover;       /* cobre a área mantendo proporção */
   background-repeat: no-repeat;
-  background-position: center 80%;
+  background-position: center;
   margin: 0 auto 32px auto;     /* centraliza horizontalmente e aplica margem inferior */
   border-radius: 12px;          /* opcional: cantos arredondados */
 }
@@ -257,10 +243,28 @@
   text-decoration: none;
 }
 
+.info-depo {
+  max-width: 600px;
+}
+
+.nome {
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+.cargo {
+  font-weight: normal;
+  font-style: italic;
+  margin-left: 5px;
+  color: #555;
+}
+
+
 .depo-thumb1 {
   width: 300px;
   height: 180px;
-  background-image: url("/static/images/membros.jpeg");
+  background-image: url("/static/images/mano1.png");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -268,19 +272,19 @@
   flex-shrink: 0;
 }
 
-    .depo-thumb2 {
-    width: 250px;
-    height: 140px;
-    background-image: url("/static/images/valores.png");
-    background-size: contain;
-    border-radius: 4px;
-    flex-shrink: 0;
-  }
+.depo-thumb2 {
+  width: 300px;
+  height: 180px;
+  background-image: url("/static/images/mana2.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
 .depo-thumb3 {
   width: 300px;
   height: 180px;              /* aumente um pouco a altura */
-  background-image: url("/static/images/missao.png");
-  background-size: cover;     /* cobre tudo */
+  background-image: url("/static/images/mano3.png");
+  background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
   border-radius: 4px;
@@ -291,7 +295,7 @@
   .texto-esquerda {
     text-align: left;
     font-style: italic;
-    font-size: 16px;
+    font-size: 18px;
     line-height: 1.6;
     max-width: 700px;
   }
@@ -299,7 +303,7 @@
   .texto-direita {
     text-align: right;
     font-style: italic;
-    font-size: 16px;
+    font-size: 18px;
     line-height: 1.6;
     max-width: 700px;
   }
@@ -309,76 +313,29 @@
   }
   
   .linha-direita {
+    text-align: right;
     justify-content: flex-end;
   }
-  
-  
-  /* Parceiros */
-  .partners {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 24px;
-    padding: 40px 10%;
-    background-color: #eee;
-  }
-  
-.partner-logo1 {
-  width: 120px;
-  height: 120px;
-  background-image: url("/static/images/parceiro1.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  border-radius: 50%;
+.partners-container {
   display: flex;
-  align-items: center;
   justify-content: center;
-  font-weight: 500;
+  align-items: center;
+  gap: 200px;
+  flex-wrap: wrap;
+  margin: 60px auto;
+  max-width: 1200px;
 }
 
-.partner-logo2 {
-  width: 130px;
-  height: 120px;
-  background-image: url("/static/images/parceiro2.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 500;
+
+.partners-container img {
+  height: 80px;
+  object-fit: contain;
 }
-.partner-logo3 {
-  width: 120px;
-  height: 120px;
-  background-image: url("/static/images/parceiro3.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 500;
-}
-.partner-logo4 {
-  width: 120px;
-  height: 120px;
-  background-image: url("/static/images/parceiro4.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 500;
-}
+
+  
   /* Call to action */
   .call-to-action {
-    background-color: #ddd;
+    background-color: #FEC200;
     padding: 40px 10%;
     display: flex;
     justify-content: space-between;
@@ -401,7 +358,7 @@
 
   /* Footer */
   .footer {
-    background-color: #222;
+    background-color: #2E7D32;
     color: white;
     padding: 32px 10%;
     display: flex;
@@ -457,14 +414,14 @@
   
   
   .bottom-bar {
-    background-color: #436447;
+    background-color: #A8D5BA;
     height: 24px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 11px;
     font-weight: 500;
-    color: #ffffff;
+    color: #000;
     width: 100%;
   }
   .social-icons a {
