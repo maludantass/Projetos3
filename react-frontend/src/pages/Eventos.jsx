@@ -2,27 +2,48 @@ import React, { useState, useEffect } from 'react';
 import './Eventos.css'; 
 
 function ModalDetalhesEvento({ evento, onClose }) {
-    if (!evento) {
-        return null;
-    }
+  return (
+    <div className="modal-overlay-detalhe-evento">
+      <div className="modal">
+        <h3>
+          <button onClick={onClose} className="botao-voltar-modal">
+            ← Voltar
+          </button>
+          <span>Detalhes do Evento</span>
+        </h3>
 
-    return (
-        <div className="modal-overlay-detalhe-evento">
-            <div className="modal">
-                <h3>Detalhes do Evento</h3>
-                <h4>{evento.titulo}</h4>
-                <p>Data de Início: {evento.dataInicio}</p>
-                <p>Data de Fim: {evento.dataFim}</p>
-                <p>Detalhes: {evento.detalhe}</p>
-                {evento.link && (
-                    <p>Link: <a href={evento.link} target="_blank" rel="noopener noreferrer">Acessar</a></p>
-                )}
-                <button onClick={onClose}>Fechar</button>
-            </div>
+        <div className="conteudo-modal">
+          <h4>{evento.titulo}</h4>
+          <p><strong>Organizadores:</strong> Nome do Organizador</p> {/* Adicione essa info ao seu objeto de evento */}
+          
+          <section style={{ marginTop: '16px' }}>
+            <h5>Detalhes e Tópicos:</h5>
+            <p>{evento.detalhe}</p>
+          </section>
         </div>
-    );
-}
 
+        <div className="rodape-modal">
+          <p><strong>Data:</strong> {evento.dataInicio} - {evento.dataFim}</p>
+          {evento.link && (
+            <p>
+              <strong>Link:</strong> <a href={evento.link} target="_blank">{evento.link}</a>
+            </p>
+          )}
+          <button 
+            style={{
+              background: '#2E7D32',
+              color: 'white',
+              padding: '10px 20px',
+              marginTop: '16px'
+            }}
+          >
+            Inscrever-se
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 function SecaoEventos({ titulo, eventos, onEventoClick }) {
     const hoje = new Date().toISOString().split('T')[0];
@@ -33,28 +54,28 @@ function SecaoEventos({ titulo, eventos, onEventoClick }) {
 
     const [mostrarTodos, setMostrarTodos] = useState(false);
 
-    const eventosIniciais = eventosOrdenados.slice(0, 5);
-    const eventosExtras = eventosOrdenados.slice(5);
+    const eventosIniciais = eventosOrdenados.slice(0, 4);
+    const eventosExtras = eventosOrdenados.slice(4);
 
     return (
         <section className="events">
             <h2>{titulo}</h2>
 
-            <div className="grid-container">
-                {Array.from({ length: 5 }).map((_, i) => {
-                    const evento = eventosIniciais[i];
-                    return (
-                        <div className="item" key={i} onClick={() => evento && onEventoClick(evento)} style={{ cursor: 'pointer' }}>
-                        {evento ? (
-                          <>
-                            <h4 className="evento-titulo">{evento.titulo}</h4>
-                            <p className="evento-data">{evento.dataInicio} - {evento.dataFim}</p>
-                          </>
-                        ) : null}
-                      </div>
-                    );
-                })}
-            </div>
+            <div className="grid-container inicial"> {/* Adicione a classe "inicial" */}
+  {Array.from({ length: 4 }).map((_, i) => { // Força 4 slots
+    const evento = eventosIniciais[i];
+    return (
+      <div className="item" key={i} onClick={() => evento && onEventoClick(evento)}>
+        {evento && (
+          <>
+            <h4 className="evento-titulo">{evento.titulo}</h4>
+            <p className="evento-data">{evento.dataInicio} - {evento.dataFim}</p>
+          </>
+        )}
+      </div>
+    );
+  })}
+</div>
 
             {mostrarTodos && (
                 <div className="grid-container extras">
