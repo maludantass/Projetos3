@@ -1,88 +1,84 @@
-///package com.brasfi.demo.services;
+package com.brasfi.demo.services; // Seu pacote de serviços
 
-//import com.brasfi.demo.dto.ForumCommunityDto;
-//import com.brasfi.demo.model.ForumCommunity;
-//import com.brasfi.demo.model.User;
-//import com.brasfi.demo.repository.ForumCommunityRepository;
-//import com.brasfi.demo.repository.UserRepository;
-//import lombok.RequiredArgsConstructor;
-//import org.springframework.security.core.Authentication;
-//import org.springframework.security.core.context.SecurityContextHolder;
-//import org.springframework.security.core.userdetails.UsernameNotFoundException;
-//import org.springframework.stereotype.Service;
-//import org.springframework.transaction.annotation.Transactional;
+import com.brasfi.demo.dto.ForumCommunityRequestDTO;
+import com.brasfi.demo.dto.ForumCommunityResponseDTO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+// Seu UserPrincipal ou a forma como você representa o usuário autenticado
+// import org.springframework.security.core.userdetails.UserDetails;
 
-//import java.time.Instant;
-//import java.util.List;
-//import java.util.stream.Collectors;
+public interface ForumCommunityService {
 
-//@Service
-//@RequiredArgsConstructor 
-//public class ForumCommunityService {
+    /**
+     * Cria uma nova comunidade (tópico) no fórum.
+     * O autor é determinado a partir do usuário autenticado.
+     *
+     * @param requestDTO DTO contendo os dados para a nova comunidade.
+     * @return ForumCommunityResponseDTO da comunidade criada.
+     */
+    ForumCommunityResponseDTO createCommunity(ForumCommunityRequestDTO requestDTO);
 
-    //private final ForumCommunityRepository forumCommunityRepository; 
-    //private final UserRepository userRepository; 
+    /**
+     * Lista todas as comunidades do fórum com paginação.
+     *
+     * @param pageable Objeto de paginação.
+     * @return Uma página de ForumCommunityResponseDTO.
+     */
+    Page<ForumCommunityResponseDTO> getAllCommunities(Pageable pageable);
 
-    //private User getCurrentUser() {
-        //Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        //if (authentication == null || !authentication.isAuthenticated() || "anonymousUser".equals(authentication.getPrincipal())) {
-            //throw new IllegalStateException("Nenhum usuário autenticado encontrado. A criação de comunidade requer autenticação.");
-        //}
-        //String usernameOrEmail = authentication.getName();
-        //return userRepository.findByEmail(usernameOrEmail)
-                //.orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado com email: " + usernameOrEmail));
-    //}
+    /**
+     * Busca uma comunidade específica pelo seu ID.
+     *
+     * @param communityId O ID da comunidade.
+     * @return ForumCommunityResponseDTO da comunidade encontrada.
+     * @throws RuntimeException (ou sua exceção customizada, ex: ResourceNotFoundException) se não encontrada.
+     */
+    ForumCommunityResponseDTO getCommunityById(Long communityId);
 
-    //@Transactional
-    //public ForumCommunityDto createCommunity(ForumCommunityDto forumCommunityDto) {
-        //User currentUser = getCurrentUser();
+    /**
+     * Busca uma comunidade específica pelo seu título.
+     *
+     * @param title O título da comunidade.
+     * @return ForumCommunityResponseDTO da comunidade encontrada.
+     * @throws RuntimeException (ou sua exceção customizada) se não encontrada.
+     */
+    ForumCommunityResponseDTO getCommunityByTitle(String title);
 
-        //if (forumCommunityRepository.findByName(forumCommunityDto.getName()).isPresent()) {
-            //throw new IllegalArgumentException("Uma comunidade com o nome '" + forumCommunityDto.getName() + "' já existe.");
-        //}
+    /**
+     * Pesquisa comunidades cujo título contém a string fornecida.
+     *
+     * @param titleQuery A string para pesquisar no título.
+     * @param pageable Objeto de paginação.
+     * @return Uma página de ForumCommunityResponseDTO.
+     */
+    Page<ForumCommunityResponseDTO> searchCommunitiesByTitle(String titleQuery, Pageable pageable);
 
-        // Usando o Builder da entidade ForumCommunity
-       // ForumCommunity community = ForumCommunity.builder()
-                //.name(forumCommunityDto.getName())
-                //.description(forumCommunityDto.getDescription())
-                //.user(currentUser)
-                //.createdDate(Instant.now())
-                //.build();
+    /**
+     * Lista todas as comunidades criadas por um autor específico (identificado pelo username).
+     *
+     * @param username O username do autor.
+     * @param pageable Objeto de paginação.
+     * @return Uma página de ForumCommunityResponseDTO.
+     */
+    Page<ForumCommunityResponseDTO> getCommunitiesByAuthorUsername(String username, Pageable pageable);
 
-        //ForumCommunity savedCommunity = forumCommunityRepository.save(community);
-        //return mapEntityToDto(savedCommunity);
-    //}
+    /**
+     * Atualiza uma comunidade existente.
+     * Apenas o autor original ou um administrador pode atualizar.
+     *
+     * @param communityId O ID da comunidade a ser atualizada.
+     * @param requestDTO DTO contendo os novos dados.
+     * @return ForumCommunityResponseDTO da comunidade atualizada.
+     * @throws RuntimeException (ou sua exceção customizada) se não encontrada ou sem permissão.
+     */
+    ForumCommunityResponseDTO updateCommunity(Long communityId, ForumCommunityRequestDTO requestDTO);
 
-    //@Transactional(readOnly = true)
-    //public List<ForumCommunityDto> getAllCommunities() {
-        //return forumCommunityRepository.findAll()
-                //.stream()
-                //.map(this::mapEntityToDto)
-                //.collect(Collectors.toList());
-    //}
-
-    //@Transactional(readOnly = true)
-    //public ForumCommunityDto getCommunityById(Long id) {
-       // ForumCommunity community = forumCommunityRepository.findById(id)
-                //.orElseThrow(() -> new RuntimeException("Comunidade não encontrada com o ID: " + id));
-        //return mapEntityToDto(community);
-    //}
-
-    //@Transactional(readOnly = true)
-    //public ForumCommunityDto getCommunityByName(String name) {
-       // ForumCommunity community = forumCommunityRepository.findByName(name)
-               // .orElseThrow(() -> new RuntimeException("Comunidade não encontrada com o nome: " + name));
-       // return mapEntityToDto(community);
-   // }
-
-    //private ForumCommunityDto mapEntityToDto(ForumCommunity community) {
-       // return ForumCommunityDto.builder()
-               // .id(community.getId())
-                //.name(community.getName())
-                //.description(community.getDescription())
-               // .createdDate(community.getCreatedDate())
-               // .createdByUsername(community.getUser() != null ? community.getUser().getUsername() : null)
-                //.numberOfPosts(community.getPosts() != null ? community.getPosts().size() : 0)
-               // .build();
-    //}
-//}
+    /**
+     * Deleta uma comunidade.
+     * Apenas o autor original ou um administrador pode deletar.
+     *
+     * @param communityId O ID da comunidade a ser deletada.
+     * @throws RuntimeException (ou sua exceção customizada) se não encontrada ou sem permissão.
+     */
+    void deleteCommunity(Long communityId);
+}
