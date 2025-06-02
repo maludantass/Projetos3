@@ -5,21 +5,6 @@ import "./Home.css";
 import { Link } from "react-router-dom";
 
 const Home = () => {
-  const [videoIndex, setVideoIndex] = useState(0);
-
-  const videos = [
-    "https://www.youtube.com/embed/w385WQd8nRo?si=_Srr6T4lf-0vwNCX",
-    "https://www.youtube.com/embed/ZHBOpC06A_0?si=n0mh520mTzhB_YS6",
-    "https://www.youtube.com/embed/vyI--5rVn2c?si=NcZPLHJED3Hpyqwi"
-  ];
-
-  const prevVideo = () => {
-    setVideoIndex((prev) => (prev === 0 ? videos.length - 1 : prev - 1));
-  };
-
-  const nextVideo = () => {
-    setVideoIndex((prev) => (prev === videos.length - 1 ? 0 : prev + 1));
-  };
 
   return (
     <div>
@@ -28,43 +13,30 @@ const Home = () => {
         ALIANÇA BRASILEIRA DE FINANÇAS E INVESTIMENTOS SUSTENTÁVEIS
       </header>
 
-      {/* Carrossel de Vídeos */}
-      <section className="carousel-section">
-        <span className="arrow" onClick={prevVideo}>❮</span>
-        <div className="video-box">
-          <iframe
-            src={videos[videoIndex]}
-            title={`Vídeo ${videoIndex + 1}`}
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-            referrerPolicy="strict-origin-when-cross-origin"
-          ></iframe>
-        </div>
-        <span className="arrow" onClick={nextVideo}>❯</span>
-      </section>
-
-      {/* Bolinhas de navegação */}
-      <div className="carousel-dots">
-        {videos.map((_, index) => (
-          <span
-            key={index}
-            className={`dot ${index === videoIndex ? "active" : ""}`}
-            onClick={() => setVideoIndex(index)}
-          ></span>
-        ))}
-      </div>
-      <br></br><br></br>
+      {/* Vídeo Institucional */}
+<section className="video-section">
+  <div className="video-box">
+    <video
+      src="/videos/video-brasfi.mp4"
+      controls
+      playsInline
+      autoPlay={false}
+      muted={false}
+>
+  Seu navegador não suporta vídeo HTML5.
+</video>
+  </div>
+</section>
+<br></br>
 <div className = "Brasfiverde">
 </div>
       {/* Destaque */}
       <section className="highlight">
         <div className="thumb"></div>
         <p className="text">
-          A BRASFI é uma aliança brasileira que <br></br>conecta profissionais e acadêmicos <br></br>para impulsionar finanças <br></br>e investimentos sustentáveis.
+          A BRASFI é uma aliança brasileira que conecta profissionais e acadêmicos <br></br>para impulsionar finanças e investimentos sustentáveis.
         </p>
       </section>
-    
 
 {/* Feedback */}
 <section className="feedback">
@@ -74,7 +46,7 @@ const Home = () => {
     <div className="depo-thumb1"></div>
     <div className="info-depo">
       <p className="nome">
-        Ricardo Viana <span className="cargo">CEO</span>
+        Leonardo Lima <span className="cargo">Diretor Executivo</span>
       </p><br />
       <p className="texto-esquerda">
         “Queremos ser referência global em finanças que regeneram,<br />
@@ -86,7 +58,7 @@ const Home = () => {
   <div className="depoimento linha-direita">
     <div className="info-depo">
       <p className="nome">
-        Marina Leal <span className="cargo">Diretora de Inovação</span>
+        Vitor Duarte <span className="cargo">Vice-Diretor Executivo</span>
       </p><br />
       <p className="texto-direita">
         “Cada decisão financeira carrega o poder de moldar o futuro. Estamos aqui para garantir que esse futuro seja verde, justo e próspero.”
@@ -99,7 +71,7 @@ const Home = () => {
     <div className="depo-thumb3"></div>
     <div className="info-depo">
       <p className="nome">
-        André Nascimento<span className="cargo">Diretor de Comunicação</span>
+        Deborah Luz<span className="cargo">Diretora de Marketing</span>
       </p><br />
       <p className="texto-esquerda">
         “Valorizamos pessoas que acreditam que o mundo pode ser melhor, e que trabalham para isso todos os dias.”
