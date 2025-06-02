@@ -41,21 +41,21 @@ const Foruns = () => {
   );*/
 
   return (
-  <div className="forum-page">
-    <div className="forum-sidebar">
-      <button className="forum-button">＋</button>
-      <button className="forum-button">🧭</button>
-      <p>Seus Fóruns</p>
-    </div>
+    <><div className='Titulo'>
+      <h1>Seus Fóruns</h1>
+    </div><div className="forum-page">
+        <div className="forum-sidebar">
+          <button className="forum-button">＋</button>
+          <button className="forum-button">🧭</button>
+        </div>
 
-    <div className="forum-empty-content">
-      <p>Parece que você não está num fórum...</p>
-      <Link to="/descobrir" className="forum-link">Descubra aqui</Link>
-    </div>
-  </div>
+        <div className="forum-empty-content">
+          <p>Parece que você não está num fórum...</p>
+          <Link to="/descobrir" className="forum-link">Descubra aqui</Link>
+        </div>
+      </div></>
 );
 
 };
 
 export default Foruns;
-
