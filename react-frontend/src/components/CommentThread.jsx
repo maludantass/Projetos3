@@ -41,6 +41,10 @@ const CommentThread = ({ comment, level = 0 }) => {
         marginTop: 10,
       }}
     >
+      <p>
+        <strong>{comment.author?.username || 'Desconhecido'}</strong> em{' '}
+        {new Date(comment.createdAt).toLocaleString()}
+      </p>
       <p>{comment.text}</p>
       <CommentVotes
         commentId={comment.id}
