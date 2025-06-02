@@ -65,7 +65,7 @@ const CommunityPosts = () => {
           <p>{post.content}</p>
 
           {/* 🔼 Votação */}
-          <PostVotes postId={post.id} score={post.score} />
+          <PostVotes postId={post.id} score={post.voteScore} />
 
           {/* 💬 Comentários */}
           <button onClick={() => carregarComentarios(post.id)}>
