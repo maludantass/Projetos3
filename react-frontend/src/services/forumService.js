@@ -19,3 +19,10 @@ export const createPost = async (postData) => {
   const res = await axios.post(`${API}/posts`, postData);
   return res.data;
 };
+//comentario
+export const getCommentsByPost = async (postId) => {
+  const res = await axios.get(`${API}/posts/${postId}/comments`, {
+    headers: getAuthHeader(),
+  });
+  return res.data.content;
+};
