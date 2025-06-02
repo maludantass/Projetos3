@@ -1,7 +1,3 @@
-import { useEffect, useState } from 'react';
-import { getCommunities } from '../services/forumService';
-import { Link } from 'react-router-dom';
-import './Foruns.css';
 import './Feed.css';
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -56,36 +52,19 @@ const posts = [
   },
 ];
 
-const Foruns = () => {
-  const [communities, setCommunities] = useState([]);
 const Feed = () => {
   const [likedPosts, setLikedPosts] = useState({});
   const [favoritedPosts, setFavoritedPosts] = useState({});
   const [expandedPosts, setExpandedPosts] = useState({});
 
-  useEffect(() => {
-  // ⚠️ Ignora o backend e adiciona uma comunidade fake para testar visualmente
-  const comunidadeFake = {
-    id: 123456,
-    title: 'Comunidade de Teste (Remover depois)',
   const toggleLike = (postId) => {
     setLikedPosts((prev) => ({ ...prev, [postId]: !prev[postId] }));
   };
-
-  setCommunities([comunidadeFake]);
-}, []);
 
   const toggleFavorite = (postId) => {
     setFavoritedPosts((prev) => ({ ...prev, [postId]: !prev[postId] }));
   };
 
-  
-  //TESTE DPS VOLTA PRA ELE
-  /*useEffect(() => {
-    getCommunities()
-      .then(setCommunities)
-      .catch((err) => console.error('Erro ao carregar comunidades:', err));
-  }, []);*/
   const toggleComments = (postId) => {
     setExpandedPosts((prev) => ({
       ...prev,
@@ -93,20 +72,8 @@ const Feed = () => {
     }));
   };
 
-//
-  /*return (
   return (
     <div>
-      <h1>Seus Fóruns</h1>
-      <ul>
-        {communities.map((comunidade) => (
-          <li key={comunidade.id}>
-            <Link to={`/comunidade/${comunidade.id}`}>{comunidade.title}</Link>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );*/
 <div className="top-search-bar">
   <div className="icon-group">
     <button className="icon-btn">
@@ -114,24 +81,9 @@ const Feed = () => {
     </button>
   </div>
 
-  return (
-    <><div className='Titulo'>
-      <h1>Seus Fóruns</h1>
-    </div><div className="forum-page">
-        <div className="forum-sidebar">
-          <button className="forum-button">＋</button>
-          <button className="forum-button">🧭</button>
-          <p>Seus Fóruns</p>
-        </div>
   <SearchBar />
 </div>
 
-        <div className="forum-empty-content">
-          <p>Parece que você não está num fórum...</p>
-          <Link to="/descobrir" className="forum-link">Descubra aqui</Link>
-        </div>
-      </div></>
-);
       <div className="feed-container">
         {posts.map((post) => (
           <div className="post-card" key={post.id}>
@@ -142,7 +94,6 @@ const Feed = () => {
               {post.isRepost && <span className="repost-label">respostou</span>}
             </div>
 
-};
             {post.isRepost && post.original && (
               <div className="repost-block">
                 <strong>{post.original.user}</strong> | {post.original.handle}
@@ -188,7 +139,6 @@ const Feed = () => {
           </div>
         ))}
 
-export default Foruns;
         <div className="refresh">
           <img src="/static/images/carregamento.png" alt="Carregando..." className="loading-icon" />
         </div>
