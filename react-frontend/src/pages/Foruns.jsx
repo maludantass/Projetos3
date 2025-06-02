@@ -26,29 +26,8 @@ const Foruns = () => {
       .catch((err) => console.error('Erro ao carregar comunidades:', err));
   }, []);*/
 
-  return (
-  <div className="forum-page">
-    <div className="forum-sidebar">
-      <button className="forum-button">＋</button>
-      <button className="forum-button">✎</button>
-      <p>Seus Fóruns</p>
-    </div>
 
-    <div className="forum-content">
-      <h1>Comunidades do Fórum</h1>
-      <ul className="forum-list">
-        {communities.map((comunidade) => (
-          <li key={comunidade.id}>
-            <Link to={`/comunidade/${comunidade.id}`}>{comunidade.title}</Link>
-          </li>
-        ))}
-      </ul>
-    </div>
-  </div>
-);
-};
-//Ajeitando o css
-  /*return (
+  return (
     <div>
       <h1>Comunidades do Fórum</h1>
       <ul>
@@ -62,5 +41,5 @@ const Foruns = () => {
   );
 };
 
-export default Foruns;*/
+export default Foruns;
 
