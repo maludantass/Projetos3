@@ -32,7 +32,7 @@ const PostComments = ({ postId }) => {
     try {
       await updateComment(commentId, { text: editCommentText });
       setEditingCommentId(null);
-      carregarComentarios(); // Atualiza a lista
+      carregarComentarios();
     } catch (error) {
       console.error('Erro ao atualizar comentário:', error);
     }
@@ -51,7 +51,6 @@ const PostComments = ({ postId }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       await createComment({
         postId: postId,
