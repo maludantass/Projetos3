@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { getCommunities } from '../services/forumService';
 import { Link } from 'react-router-dom';
+import './Foruns.css';
+
 
 const Foruns = () => {
   const [communities, setCommunities] = useState([]);
@@ -25,6 +27,28 @@ const Foruns = () => {
   }, []);*/
 
   return (
+  <div className="forum-page">
+    <div className="forum-sidebar">
+      <button className="forum-button">＋</button>
+      <button className="forum-button">✎</button>
+      <p>Seus Fóruns</p>
+    </div>
+
+    <div className="forum-content">
+      <h1>Comunidades do Fórum</h1>
+      <ul className="forum-list">
+        {communities.map((comunidade) => (
+          <li key={comunidade.id}>
+            <Link to={`/comunidade/${comunidade.id}`}>{comunidade.title}</Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+);
+};
+//Ajeitando o css
+  /*return (
     <div>
       <h1>Comunidades do Fórum</h1>
       <ul>
@@ -38,5 +62,5 @@ const Foruns = () => {
   );
 };
 
-export default Foruns;
+export default Foruns;*/
 

@@ -1,0 +1,30 @@
+.forum-page {
+  display: flex;
+  padding: 1rem;
+  min-height: 100vh;
+}
+
+.forum-sidebar {
+  width: 200px;
+  border-right: 1px solid #ccc;
+  padding-right: 1rem;
+}
+
+.forum-content {
+  flex: 1;
+  padding-left: 1rem;
+}
+
+.forum-list li {
+  margin-bottom: 10px;
+}
+
+.forum-button {
+  display: block;
+  margin-bottom: 10px;
+  padding: 8px;
+  background-color: #f0f0f0;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
