@@ -34,3 +34,12 @@ export const createComment = async (commentData) => {
   return res.data;
 };
 
+//TESTE
+export const createCommunity = async (communityData) => {
+  const res = await axios.post(`${API}/communities`, communityData, {
+    headers: getAuthHeader(),
+  });
+  return res.data;
+};
+
+
