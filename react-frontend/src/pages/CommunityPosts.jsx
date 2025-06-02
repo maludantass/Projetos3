@@ -125,7 +125,7 @@ const CommunityPosts = () => {
             <>
               <h3>{post.title}</h3>
               <p style={{ fontStyle: 'italic', color: '#555', fontSize: '0.9rem' }}>
-                Por {post.author?.username || 'Desconhecido'} em{' '}
+                Por <strong>{post.author?.username || 'Desconhecido'}</strong> em{' '}
                 {new Date(post.createdAt).toLocaleString()}
               </p>
               <p>{post.content}</p>
