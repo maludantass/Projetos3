@@ -26,3 +26,11 @@ export const getCommentsByPost = async (postId) => {
   });
   return res.data.content;
 };
+//criar comentario
+export const createComment = async (commentData) => {
+  const res = await axios.post(`${API}/comments`, commentData, {
+    headers: getAuthHeader(),
+  });
+  return res.data;
+};
+
