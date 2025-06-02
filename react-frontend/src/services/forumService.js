@@ -92,3 +92,12 @@ export const deleteComment = async (commentId) => {
   });
   return res.data;
 };
+
+// Buscar comentários de um post com paginação
+export const getCommentsByPost = async (postId, page = 0, size = 10) => {
+  const res = await axios.get(`${API}/posts/${postId}/comments`, {
+    headers: getAuthHeader(),
+    params: { page, size },
+  });
+  return res.data; // retorna o objeto completo com content, totalPages, etc
+};
