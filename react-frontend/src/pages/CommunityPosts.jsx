@@ -20,13 +20,37 @@ const CommunityPosts = () => {
   const [editingPostId, setEditingPostId] = useState(null);
   const [editPostData, setEditPostData] = useState({ title: '', content: '', url: '' });
 
-  useEffect(() => {
+useEffect(() => {
+  if (communityId) {
+    getPostsByCommunity(communityId)
+      .then((data) => {
+        // ⚠️ Post de teste para visualização do layout
+        const postFake = {
+          id: 9999,
+          title: 'Post de Teste (Remover depois)',
+          content: 'Este é um post fake só para testar o layout da página.',
+          author: { username: 'UsuarioTeste' },
+          createdAt: new Date().toISOString(),
+          voteScore: 0,
+        };
+
+        // Adiciona o post fake no início da lista real de posts
+        setPosts([postFake, ...data]);
+      })
+      .catch((err) => console.error('Erro ao buscar posts:', err));
+  }
+}, [communityId]);
+
+  
+  
+//teste
+  /*useEffect(() => {
     if (communityId) {
       getPostsByCommunity(communityId)
         .then(setPosts)
         .catch((err) => console.error('Erro ao buscar posts:', err));
     }
-  }, [communityId]);
+  }, [communityId]);*/
 
   const carregarComentarios = async (postId, page = 0) => {
     try {
