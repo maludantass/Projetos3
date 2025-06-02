@@ -1,0 +1,199 @@
+.feed-container {
+  padding: 20px 20px 20px 20px;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  /* Remover centralização */
+  display: block; /* ou simplesmente remova a linha */
+}
+
+.post-card {
+  background-color: #A8D5BA;
+  border-radius: 12px;
+  padding: 16px;
+  margin: 20px auto;
+  width: 90%;
+  max-width: 800px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ccc;
+}
+
+.user-info {
+  font-weight: bold;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+}
+
+.user-name {
+  font-weight: bold;
+  color: black;
+}
+
+.repost-label {
+  font-style: italic;
+  color: #666;
+  font-size: 13px;
+  margin-left: 8px;
+}
+
+.repost-block {
+  background-color: #c9ecc6;
+  padding: 10px;
+  border-left: 4px solid #4e944f;
+  margin-bottom: 10px;
+  font-size: 14px;
+  border-radius: 6px;
+}
+
+.post-text {
+  font-size: 15px;
+  line-height: 1.5;
+  margin-bottom: 12px;
+  color: #000;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+  padding: 4px 0;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 8px;
+}
+
+.action-icon {
+  margin-right: 12px;
+  font-size: 18px;
+}
+
+.comment-section {
+  margin-top: 8px;
+  font-size: 14px;
+  color: #222;
+}
+
+.comment-section p {
+  margin: 4px 0;
+}
+
+.ver-mais {
+  display: block;
+  margin-top: 8px;
+  font-size: 13px;
+  color: #2d6a4f;
+  cursor: pointer;
+}
+
+.refresh {
+  display: flex;
+  justify-content: center;
+  margin: 30px 0;
+}
+
+/* Ícones organizados como na imagem */
+.actions-left, .actions-right {
+  display: flex;
+  align-items: center;
+}
+
+/* Comentários negrito para nome e texto após */
+.comment-section strong {
+  font-weight: bold;
+  margin-right: 4px;
+}
+
+/* Remove margens globais se necessário */
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: #e4f4de;
+}
+
+/* Barra fixa e navbar */
+.navbar-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+.top-bar {
+  background-color: #b0dab6;
+  text-align: center;
+  padding: 6px;
+  font-weight: bold;
+  font-size: 13px;
+}
+
+.navbar {
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 24px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.loading-icon {
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+.top-search-bar {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  padding: 10px 0;
+  flex-wrap: wrap;
+}
+
+.icon-group {
+  display: flex;
+  gap: 20px;
+}
+
+.icon-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.search-group {
+  display: flex;
+  border-radius: 30px;
+  overflow: hidden;
+}
+
+.search-input {
+  padding: 10px 16px;
+  border: none;
+  background-color: #b7d7be;
+  font-size: 16px;
+  color: #2e5e36;
+  width: 300px;
+  outline: none;
+}
+
+.filter-btn {
+  background-color: #4a804b;
+  color: white;
+  border: none;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  font-size: 18px;
+  cursor: pointer;
+  gap: 8px;
+}
+
+.icon-image {
+  width: 28px;
+  height: 28px;
+}
