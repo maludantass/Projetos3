@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { getPostsByCommunity, createPost } from '../services/forumService';
+import PostComments from '../components/PostComments';
 
 const CommunityPosts = () => {
   const { id } = useParams(); // ID da comunidade
@@ -56,12 +57,14 @@ const CommunityPosts = () => {
       </form>
 
       <ul>
-        {posts.map((post) => (
-          <li key={post.id}>
-            <strong>{post.title}</strong> — {post.content}
-          </li>
-        ))}
-      </ul>
+  {posts.map((post) => (
+    <li key={post.id}>
+      <strong>{post.title}</strong> — {post.content}
+      <PostComments postId={post.id} />
+    </li>
+  ))}
+</ul>
+
     </div>
   );
 };
