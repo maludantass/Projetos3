@@ -1,27 +1,43 @@
 import { useState } from 'react';
 import { vote } from '../services/forumService';
 
-const PostVotes = ({ post }) => {
-  const [voteCount, setVoteCount] = useState(post.voteScore || 0);
-  const [userVote, setUserVote] = useState(post.userVoteType || null); // 'UP', 'DOWN' ou null
+const PostVotes = ({ postId, score }) => {
+  const [voteScore, setVoteScore] = useState(score);
+  const [userVote, setUserVote] = useState(null); // 'UPVOTE', 'DOWNVOTE' ou null
 
-  const votar = async (tipo) => {
+  const handleVote = async (tipo) => {
     try {
-      const res = await vote({ postId: post.id, voteType: tipo });
-      setVoteCount(res.voteScore);
-      setUserVote(res.userVoteType);
+      const res = await vote({
+        postId: postId,
+        voteType: tipo,
+      });
+
+      setVoteScore(res.newVoteScore);
+      setUserVote(res.newVoteStatus); // 'UPVOTE', 'DOWNVOTE', ou null
     } catch (err) {
       console.error('Erro ao votar:', err);
     }
   };
 
   return (
-    <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-      <button onClick={() => votar('UP')} disabled={userVote === 'UP'}>
+    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+      <button
+        onClick={() => handleVote('UPVOTE')}
+        style={{
+          color: userVote === 'UPVOTE' ? 'green' : 'black',
+        }}
+      >
         👍
       </button>
-      <span>{voteCount}</span>
-      <button onClick={() => votar('DOWN')} disabled={userVote === 'DOWN'}>
+
+      <span>{voteScore}</span>
+
+      <button
+        onClick={() => handleVote('DOWNVOTE')}
+        style={{
+          color: userVote === 'DOWNVOTE' ? 'red' : 'black',
+        }}
+      >
         👎
       </button>
     </div>
