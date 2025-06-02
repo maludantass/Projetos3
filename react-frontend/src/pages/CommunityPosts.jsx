@@ -14,6 +14,8 @@ const CommunityPosts = () => {
   const { communityId } = useParams();
   const [posts, setPosts] = useState([]);
   const [comments, setComments] = useState({});
+  const [commentsPage, setCommentsPage] = useState({});
+  const [commentsTotalPages, setCommentsTotalPages] = useState({});
   const [novoComentario, setNovoComentario] = useState({});
   const [editingPostId, setEditingPostId] = useState(null);
   const [editPostData, setEditPostData] = useState({ title: '', content: '', url: '' });
@@ -26,12 +28,27 @@ const CommunityPosts = () => {
     }
   }, [communityId]);
 
-  const carregarComentarios = async (postId) => {
+  const carregarComentarios = async (postId, page = 0) => {
     try {
-      const postComments = await getCommentsByPost(postId);
-      setComments((prev) => ({ ...prev, [postId]: postComments }));
+      const postComments = await getCommentsByPost(postId, page, 5);
+      setComments((prev) => ({ ...prev, [postId]: postComments.content }));
+      setCommentsPage((prev) => ({ ...prev, [postId]: page }));
+      setCommentsTotalPages((prev) => ({ ...prev, [postId]: postComments.totalPages }));
     } catch (error) {
       console.error('Erro ao carregar comentários:', error);
+    }
+  };
+
+  // Funções para navegar páginas dos comentários
+  const goPreviousCommentsPage = (postId) => {
+    if ((commentsPage[postId] || 0) > 0) {
+      carregarComentarios(postId, commentsPage[postId] - 1);
+    }
+  };
+
+  const goNextCommentsPage = (postId) => {
+    if ((commentsPage[postId] || 0) + 1 < (commentsTotalPages[postId] || 1)) {
+      carregarComentarios(postId, commentsPage[postId] + 1);
     }
   };
 
@@ -50,18 +67,19 @@ const CommunityPosts = () => {
     try {
       await updatePost(postId, editPostData);
       setEditingPostId(null);
-      const updatedPosts = posts.map(p => (p.id === postId ? { ...p, ...editPostData } : p));
+      const updatedPosts = posts.map((p) => (p.id === postId ? { ...p, ...editPostData } : p));
       setPosts(updatedPosts);
     } catch (error) {
       console.error('Erro ao atualizar post:', error);
     }
   };
 
+  // Função para deletar post
   const handleDelete = async (postId) => {
     if (window.confirm('Tem certeza que quer deletar este post?')) {
       try {
         await deletePost(postId);
-        setPosts(posts.filter(p => p.id !== postId));
+        setPosts(posts.filter((p) => p.id !== postId));
       } catch (error) {
         console.error('Erro ao deletar post:', error);
       }
@@ -80,7 +98,7 @@ const CommunityPosts = () => {
         text: novoComentario[postId],
       });
       setNovoComentario((prev) => ({ ...prev, [postId]: '' }));
-      carregarComentarios(postId);
+      carregarComentarios(postId, 0);
     } catch (error) {
       console.error('Erro ao enviar comentário:', error);
     }
@@ -134,7 +152,7 @@ const CommunityPosts = () => {
               <button onClick={() => handleDelete(post.id)}>Excluir</button>
 
               <PostVotes postId={post.id} score={post.voteScore} />
-              <button onClick={() => carregarComentarios(post.id)}>Ver comentários</button>
+              <button onClick={() => carregarComentarios(post.id, 0)}>Ver comentários</button>
               <ul>
                 {(comments[post.id] || []).map((c) => (
                   <li key={c.id}>
@@ -143,14 +161,28 @@ const CommunityPosts = () => {
                       {new Date(c.createdAt).toLocaleString()}
                     </p>
                     <p>{c.text}</p>
-                    <CommentVotes
-                      commentId={c.id}
-                      voteScore={c.voteScore || 0}
-                      initialUserVote={null}
-                    />
+                    <CommentVotes commentId={c.id} voteScore={c.voteScore || 0} initialUserVote={null} />
                   </li>
                 ))}
               </ul>
+              <div style={{ marginBottom: '1rem' }}>
+                <button
+                  onClick={() => goPreviousCommentsPage(post.id)}
+                  disabled={(commentsPage[post.id] || 0) === 0}
+                  style={{ marginRight: '10px' }}
+                >
+                  Anterior
+                </button>
+                <button
+                  onClick={() => goNextCommentsPage(post.id)}
+                  disabled={(commentsPage[post.id] || 0) + 1 >= (commentsTotalPages[post.id] || 1)}
+                >
+                  Próximo
+                </button>
+                <span style={{ marginLeft: '15px' }}>
+                  Página {(commentsPage[post.id] || 0) + 1} de {(commentsTotalPages[post.id] || 1)}
+                </span>
+              </div>
               <form onSubmit={(e) => handleSubmit(e, post.id)}>
                 <input
                   type="text"
