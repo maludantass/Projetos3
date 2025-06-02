@@ -2,6 +2,14 @@ import axios from 'axios';
 
 const API = 'http://localhost:8080/api/forum';
 
+// Cabeçalho de autenticação (usado para endpoints protegidos)
+const getAuthHeader = () => {
+  const user = JSON.parse(localStorage.getItem('user'));
+  return user?.token
+    ? { Authorization: `Bearer ${user.token}` }
+    : {};
+};
+
 // Buscar todas as comunidades do fórum
 export const getCommunities = async () => {
   const res = await axios.get(`${API}/communities`);
@@ -14,19 +22,23 @@ export const getPostsByCommunity = async (communityId) => {
   return res.data.content;
 };
 
-//criar posts
+// Criar post em uma comunidade
 export const createPost = async (postData) => {
-  const res = await axios.post(`${API}/posts`, postData);
+  const res = await axios.post(`${API}/posts`, postData, {
+    headers: getAuthHeader(),
+  });
   return res.data;
 };
-//comentario
+
+// Buscar comentários de um post
 export const getCommentsByPost = async (postId) => {
   const res = await axios.get(`${API}/posts/${postId}/comments`, {
     headers: getAuthHeader(),
   });
   return res.data.content;
 };
-//criar comentario
+
+// Criar novo comentário
 export const createComment = async (commentData) => {
   const res = await axios.post(`${API}/comments`, commentData, {
     headers: getAuthHeader(),
@@ -34,5 +46,10 @@ export const createComment = async (commentData) => {
   return res.data;
 };
 
-
-
+// Enviar voto
+export const vote = async (voteData) => {
+  const res = await axios.post(`${API}/votes`, voteData, {
+    headers: getAuthHeader(),
+  });
+  return res.data;
+};
