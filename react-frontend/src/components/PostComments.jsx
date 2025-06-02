@@ -82,7 +82,7 @@ const PostComments = ({ postId }) => {
             </>
           ) : (
             <>
-              <p>
+              <p style={{ fontSize: '0.9rem', color: '#555' }}>
                 <strong>{comment.author?.username || 'Desconhecido'}</strong> em{' '}
                 {new Date(comment.createdAt).toLocaleString()}
               </p>
