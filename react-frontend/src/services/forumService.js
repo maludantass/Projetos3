@@ -30,12 +30,13 @@ export const createPost = async (postData) => {
   return res.data;
 };
 
-// Buscar comentários de um post
-export const getCommentsByPost = async (postId) => {
+// Buscar comentários de um post com paginação
+export const getCommentsByPost = async (postId, page = 0, size = 10) => {
   const res = await axios.get(`${API}/posts/${postId}/comments`, {
     headers: getAuthHeader(),
+    params: { page, size },
   });
-  return res.data.content;
+  return res.data; // retorna o objeto completo com content, totalPages, etc
 };
 
 // Criar novo comentário
@@ -53,6 +54,7 @@ export const vote = async (voteData) => {
   });
   return res.data;
 };
+
 // Thread de comentario
 export const getRepliesForComment = async (parentCommentId) => {
   const res = await axios.get(`${API}/comments/${parentCommentId}/replies`, {
@@ -91,13 +93,4 @@ export const deleteComment = async (commentId) => {
     headers: getAuthHeader(),
   });
   return res.data;
-};
-
-// Buscar comentários de um post com paginação
-export const getCommentsByPost = async (postId, page = 0, size = 10) => {
-  const res = await axios.get(`${API}/posts/${postId}/comments`, {
-    headers: getAuthHeader(),
-    params: { page, size },
-  });
-  return res.data; // retorna o objeto completo com content, totalPages, etc
 };
