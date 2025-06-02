@@ -41,7 +41,7 @@ const CommentThread = ({ comment, level = 0 }) => {
         marginTop: 10,
       }}
     >
-      <p>
+      <p style={{ fontSize: '0.9rem', color: '#555' }}>
         <strong>{comment.author?.username || 'Desconhecido'}</strong> em{' '}
         {new Date(comment.createdAt).toLocaleString()}
       </p>
@@ -68,8 +68,9 @@ const CommentThread = ({ comment, level = 0 }) => {
           value={newReply}
           onChange={(e) => setNewReply(e.target.value)}
           required
+          style={{ width: '100%', padding: '0.4rem' }}
         />
-        <button type="submit">Responder</button>
+        <button type="submit" style={{ marginTop: '4px' }}>Responder</button>
       </form>
     </div>
   );
