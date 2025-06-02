@@ -26,7 +26,15 @@ const CommunityPosts = () => {
     }
   }, [communityId]);
 
-  // Carregar comentários etc... (já tem)
+  // Função para carregar comentários
+  const carregarComentarios = async (postId) => {
+    try {
+      const postComments = await getCommentsByPost(postId);
+      setComments((prev) => ({ ...prev, [postId]: postComments }));
+    } catch (error) {
+      console.error('Erro ao carregar comentários:', error);
+    }
+  };
 
   // Funções para editar post
   const startEditing = (post) => {
@@ -63,11 +71,37 @@ const CommunityPosts = () => {
     }
   };
 
+  const handleCommentChange = (postId, text) => {
+    setNovoComentario((prev) => ({ ...prev, [postId]: text }));
+  };
+
+  const handleSubmit = async (e, postId) => {
+    e.preventDefault();
+    try {
+      await createComment({
+        postId: postId,
+        text: novoComentario[postId],
+      });
+      setNovoComentario((prev) => ({ ...prev, [postId]: '' }));
+      carregarComentarios(postId);
+    } catch (error) {
+      console.error('Erro ao enviar comentário:', error);
+    }
+  };
+
   return (
     <div>
       <h2>Posts da Comunidade</h2>
       {posts.map((post) => (
-        <div key={post.id} style={{ border: '1px solid #ccc', marginBottom: '1rem', padding: '1rem', borderRadius: '8px' }}>
+        <div
+          key={post.id}
+          style={{
+            border: '1px solid #ccc',
+            marginBottom: '1rem',
+            padding: '1rem',
+            borderRadius: '8px',
+          }}
+        >
           {editingPostId === post.id ? (
             <>
               <input
@@ -93,10 +127,13 @@ const CommunityPosts = () => {
           ) : (
             <>
               <h3>{post.title}</h3>
+              <p style={{ fontStyle: 'italic', color: '#555', fontSize: '0.9rem' }}>
+                Por {post.author?.username || 'Desconhecido'} em{' '}
+                {new Date(post.createdAt).toLocaleString()}
+              </p>
               <p>{post.content}</p>
+
               {/* Botões só para autor */}
-              {/* Aqui você precisa de alguma forma saber se o usuário é autor, ex: post.author.id === currentUser.id */}
-              {/* Exemplo simples: */}
               <button onClick={() => startEditing(post)}>Editar</button>
               <button onClick={() => handleDelete(post.id)}>Excluir</button>
 
