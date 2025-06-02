@@ -61,6 +61,22 @@ export const getRepliesForComment = async (parentCommentId) => {
   return res.data;
 };
 
+// Atualizar post
+export const updatePost = async (postId, data) => {
+  const res = await axios.put(`${API}/posts/${postId}`, data, {
+    headers: getAuthHeader(),
+  });
+  return res.data;
+};
+
+// Deletar post
+export const deletePost = async (postId) => {
+  const res = await axios.delete(`${API}/posts/${postId}`, {
+    headers: getAuthHeader(),
+  });
+  return res.data;
+};
+
 // Atualizar comentário
 export const updateComment = async (commentId, data) => {
   const res = await axios.put(`${API}/comments/${commentId}`, data, {
