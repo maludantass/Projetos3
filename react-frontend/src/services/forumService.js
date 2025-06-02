@@ -60,3 +60,19 @@ export const getRepliesForComment = async (parentCommentId) => {
   });
   return res.data;
 };
+
+// Atualizar comentário
+export const updateComment = async (commentId, data) => {
+  const res = await axios.put(`${API}/comments/${commentId}`, data, {
+    headers: getAuthHeader(),
+  });
+  return res.data;
+};
+
+// Deletar comentário
+export const deleteComment = async (commentId) => {
+  const res = await axios.delete(`${API}/comments/${commentId}`, {
+    headers: getAuthHeader(),
+  });
+  return res.data;
+};
