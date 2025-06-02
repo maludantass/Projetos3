@@ -7,9 +7,26 @@ const Foruns = () => {
 
   useEffect(() => {
     getCommunities()
-      .then(setCommunities)
+      .then((data) => {
+        // ⚠️ Adicionando uma comunidade fake manualmente para testar o layout visual
+        const comunidadeFake = {
+          id: 123456, // ID fake apenas para testes
+          title: 'Comunidade de Teste (Remover depois)',
+        };
+
+        // Coloca a comunidade fake no início da lista real
+        setCommunities([comunidadeFake, ...data]);
+      })
       .catch((err) => console.error('Erro ao carregar comunidades:', err));
   }, []);
+
+  
+  //TESTE
+  /*useEffect(() => {
+    getCommunities()
+      .then(setCommunities)
+      .catch((err) => console.error('Erro ao carregar comunidades:', err));
+  }, []);*/
 
   return (
     <div>
