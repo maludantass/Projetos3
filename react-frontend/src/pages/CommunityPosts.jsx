@@ -26,7 +26,6 @@ const CommunityPosts = () => {
     }
   }, [communityId]);
 
-  // Função para carregar comentários
   const carregarComentarios = async (postId) => {
     try {
       const postComments = await getCommentsByPost(postId);
@@ -51,7 +50,6 @@ const CommunityPosts = () => {
     try {
       await updatePost(postId, editPostData);
       setEditingPostId(null);
-      // Atualiza a lista depois
       const updatedPosts = posts.map(p => (p.id === postId ? { ...p, ...editPostData } : p));
       setPosts(updatedPosts);
     } catch (error) {
@@ -59,7 +57,6 @@ const CommunityPosts = () => {
     }
   };
 
-  // Função para deletar post
   const handleDelete = async (postId) => {
     if (window.confirm('Tem certeza que quer deletar este post?')) {
       try {
@@ -133,7 +130,6 @@ const CommunityPosts = () => {
               </p>
               <p>{post.content}</p>
 
-              {/* Botões só para autor */}
               <button onClick={() => startEditing(post)}>Editar</button>
               <button onClick={() => handleDelete(post.id)}>Excluir</button>
 
@@ -142,6 +138,10 @@ const CommunityPosts = () => {
               <ul>
                 {(comments[post.id] || []).map((c) => (
                   <li key={c.id}>
+                    <p style={{ fontSize: '0.9rem', color: '#555' }}>
+                      <strong>{c.author?.username || 'Desconhecido'}</strong> em{' '}
+                      {new Date(c.createdAt).toLocaleString()}
+                    </p>
                     <p>{c.text}</p>
                     <CommentVotes
                       commentId={c.id}
