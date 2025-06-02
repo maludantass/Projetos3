@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { getCommentsByPost, createComment } from '../services/forumService';
-import CommentVotes from './CommentVotes';
-
+import CommentThread from './CommentThread';
 
 const PostComments = ({ postId }) => {
   const [comments, setComments] = useState([]);
@@ -28,7 +27,7 @@ const PostComments = ({ postId }) => {
     try {
       await createComment(novo);
       setNovoComentario('');
-      carregarComentarios(); // Atualiza comentários
+      carregarComentarios();
     } catch (error) {
       console.error('Erro ao criar comentário:', error);
     }
@@ -37,19 +36,9 @@ const PostComments = ({ postId }) => {
   return (
     <div style={{ marginLeft: '1rem' }}>
       <h4>Comentários:</h4>
-     <ul>
-  {comments.map((comment) => (
-    <li key={comment.id}>
-      <p>{comment.text}</p>
-      <CommentVotes
-        commentId={comment.id}
-        voteScore={comment.voteScore || 0} // use 0 se não tiver
-        initialUserVote={null} // você pode ajustar para pegar o voto atual se disponível
-      />
-    </li>
-  ))}
-</ul>
-
+      {comments.map((comment) => (
+        <CommentThread key={comment.id} comment={comment} />
+      ))}
 
       <form onSubmit={handleSubmit}>
         <input
