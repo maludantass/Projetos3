@@ -6,6 +6,7 @@ import {
 } from '../services/forumService';
 import { useParams } from 'react-router-dom';
 import PostVotes from '../components/PostVotes';
+import CommentVotes from '../components/CommentVotes';
 
 const CommunityPosts = () => {
   const { communityId } = useParams();
@@ -73,7 +74,14 @@ const CommunityPosts = () => {
           </button>
           <ul>
             {(comments[post.id] || []).map((c) => (
-              <li key={c.id}>{c.text}</li>
+              <li key={c.id}>
+                <p>{c.text}</p>
+                <CommentVotes
+                  commentId={c.id}
+                  voteScore={c.voteScore || 0}
+                  initialUserVote={null} // Ajuste se souber o voto do usuário
+                />
+              </li>
             ))}
           </ul>
 
@@ -82,9 +90,7 @@ const CommunityPosts = () => {
               type="text"
               placeholder="Novo comentário"
               value={novoComentario[post.id] || ''}
-              onChange={(e) =>
-                handleCommentChange(post.id, e.target.value)
-              }
+              onChange={(e) => handleCommentChange(post.id, e.target.value)}
               required
             />
             <button type="submit">Comentar</button>
