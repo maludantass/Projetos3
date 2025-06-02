@@ -53,3 +53,10 @@ export const vote = async (voteData) => {
   });
   return res.data;
 };
+// Thread de comentario
+export const getRepliesForComment = async (parentCommentId) => {
+  const res = await axios.get(`${API}/comments/${parentCommentId}/replies`, {
+    headers: getAuthHeader(),
+  });
+  return res.data;
+};
