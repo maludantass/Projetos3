@@ -7,15 +7,21 @@ const PostComments = ({ postId }) => {
   const [novoComentario, setNovoComentario] = useState('');
   const [editingCommentId, setEditingCommentId] = useState(null);
   const [editCommentText, setEditCommentText] = useState('');
+  const [page, setPage] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
 
-  const carregarComentarios = () => {
-    getCommentsByPost(postId)
-      .then(setComments)
+  const carregarComentarios = (pagina = 0) => {
+    getCommentsByPost(postId, pagina, 10)
+      .then((data) => {
+        setComments(data.content);
+        setPage(pagina);
+        setTotalPages(data.totalPages);
+      })
       .catch((err) => console.error(`Erro ao buscar comentários do post ${postId}:`, err));
   };
 
   useEffect(() => {
-    carregarComentarios();
+    carregarComentarios(0);
   }, [postId]);
 
   const startEditComment = (comment) => {
@@ -32,7 +38,7 @@ const PostComments = ({ postId }) => {
     try {
       await updateComment(commentId, { text: editCommentText });
       setEditingCommentId(null);
-      carregarComentarios();
+      carregarComentarios(page);
     } catch (error) {
       console.error('Erro ao atualizar comentário:', error);
     }
@@ -42,7 +48,8 @@ const PostComments = ({ postId }) => {
     if (window.confirm('Tem certeza que quer deletar este comentário?')) {
       try {
         await deleteComment(commentId);
-        carregarComentarios();
+        const novaPagina = comments.length === 1 && page > 0 ? page - 1 : page;
+        carregarComentarios(novaPagina);
       } catch (error) {
         console.error('Erro ao deletar comentário:', error);
       }
@@ -57,10 +64,18 @@ const PostComments = ({ postId }) => {
         text: novoComentario,
       });
       setNovoComentario('');
-      carregarComentarios();
+      carregarComentarios(0);
     } catch (error) {
       console.error('Erro ao criar comentário:', error);
     }
+  };
+
+  const goPrevious = () => {
+    if (page > 0) carregarComentarios(page - 1);
+  };
+
+  const goNext = () => {
+    if (page + 1 < totalPages) carregarComentarios(page + 1);
   };
 
   return (
@@ -92,6 +107,18 @@ const PostComments = ({ postId }) => {
           )}
         </div>
       ))}
+
+      <div style={{ marginBottom: '1rem' }}>
+        <button onClick={goPrevious} disabled={page === 0} style={{ marginRight: '10px' }}>
+          Anterior
+        </button>
+        <button onClick={goNext} disabled={page + 1 >= totalPages}>
+          Próximo
+        </button>
+        <span style={{ marginLeft: '15px' }}>
+          Página {page + 1} de {totalPages}
+        </span>
+      </div>
 
       <form onSubmit={handleSubmit}>
         <input
