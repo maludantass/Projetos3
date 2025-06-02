@@ -6,19 +6,15 @@ const Foruns = () => {
   const [communities, setCommunities] = useState([]);
 
   useEffect(() => {
-    getCommunities()
-      .then((data) => {
-        // ⚠️ Adicionando uma comunidade fake manualmente para testar o layout visual
-        const comunidadeFake = {
-          id: 123456, // ID fake apenas para testes
-          title: 'Comunidade de Teste (Remover depois)',
-        };
+  // ⚠️ Ignora o backend e adiciona uma comunidade fake para testar visualmente
+  const comunidadeFake = {
+    id: 123456,
+    title: 'Comunidade de Teste (Remover depois)',
+  };
 
-        // Coloca a comunidade fake no início da lista real
-        setCommunities([comunidadeFake, ...data]);
-      })
-      .catch((err) => console.error('Erro ao carregar comunidades:', err));
-  }, []);
+  setCommunities([comunidadeFake]);
+}, []);
+
 
   
   //TESTE
