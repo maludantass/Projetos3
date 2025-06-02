@@ -19,17 +19,17 @@ const Foruns = () => {
 
 
   
-  //TESTE
+  //TESTE DPS VOLTA PRA ELE
   /*useEffect(() => {
     getCommunities()
       .then(setCommunities)
       .catch((err) => console.error('Erro ao carregar comunidades:', err));
   }, []);*/
 
-
-  return (
+//
+  /*return (
     <div>
-      <h1>Comunidades do Fórum</h1>
+      <h1>Seus Fóruns</h1>
       <ul>
         {communities.map((comunidade) => (
           <li key={comunidade.id}>
@@ -38,7 +38,23 @@ const Foruns = () => {
         ))}
       </ul>
     </div>
-  );
+  );*/
+
+  return (
+  <div className="forum-page">
+    <div className="forum-sidebar">
+      <button className="forum-button">＋</button>
+      <button className="forum-button">🧭</button>
+      <p>Seus Fóruns</p>
+    </div>
+
+    <div className="forum-empty-content">
+      <p>Parece que você não está num fórum...</p>
+      <Link to="/descobrir" className="forum-link">Descubra aqui</Link>
+    </div>
+  </div>
+);
+
 };
 
 export default Foruns;
