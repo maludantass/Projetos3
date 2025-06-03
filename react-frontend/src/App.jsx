@@ -44,6 +44,7 @@ function App() {
           <Route path="/auth" element={<LoginCadastro setIsLoggedIn={setIsLoggedIn} />} />
           <Route path="/ajuda" element={<Ajuda />} />
           <Route path="/faq" element={<Faq />} />
+          <Route path="/foruns/todos" element={<TodosForuns />} />
 
           {/* Rotas protegidas */}
           <Route path="/feed" element={<PrivateRoute><Feed /></PrivateRoute>} />
@@ -51,7 +52,8 @@ function App() {
           <Route path="/eventos" element={<PrivateRoute><Eventos /></PrivateRoute>} />
           <Route path="/biblioteca" element={<PrivateRoute><Biblioteca /></PrivateRoute>} />
           <Route path="/comunidade/:id" element={<PrivateRoute><CommunityPosts /></PrivateRoute>} />
-          <Route path="/foruns/todos" element={<TodosForuns />} />
+          <Route path="/post/:postId" element={<PrivateRoute><PostDetalhado /></PrivateRoute>} />
+
 
           {isLoggedIn && (
             <Route
