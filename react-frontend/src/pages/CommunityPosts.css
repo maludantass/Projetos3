@@ -1,51 +1,121 @@
+/* Container principal da página da comunidade */
 .community-posts-container {
-  padding: 2rem;
-  max-width: 900px;
-  margin: 0 auto;
+  background-color: #c0e3cd;
+  min-height: 100vh;
+  padding: 5rem 2rem 6rem; /* margem superior + inferior para o input fixo */
+  font-family: sans-serif;
 }
 
-.post-card {
-  background-color: #fff;
-  border: 1px solid #ccc;
-  margin-bottom: 1.5rem;
-  padding: 1.2rem;
+/* Banner de preview com botão "Entrar" */
+.community-banner {
+  background-color: #2E7D32;
+  color: white;
+  padding: 1rem 2rem;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 500;
   border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  margin-bottom: 1.5rem;
 }
 
-.post-card h3 {
-  margin: 0 0 0.5rem;
-}
-
-.post-card .meta {
-  font-style: italic;
-  color: #777;
-  font-size: 0.9rem;
-  margin-bottom: 0.8rem;
-}
-
-.post-card .actions {
-  margin-top: 1rem;
-  display: flex;
-  gap: 1rem;
-}
-
-.post-card button {
-  padding: 6px 10px;
-  border-radius: 4px;
+.join-btn {
+  background-color: #fff;
+  color: #2E7D32;
+  margin-left: 1rem;
+  padding: 6px 14px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
   cursor: pointer;
-  font-size: 0.9rem;
 }
 
-.post-card input,
-.post-card textarea {
-  display: block;
-  width: 100%;
-  margin-bottom: 0.8rem;
-  padding: 0.5rem;
+/* Cabeçalho da comunidade */
+.community-header {
+  display: flex;
+  align-items: center;
+  background-color: #f0f7f2;
+  padding: 1.5rem;
+  border-radius: 10px;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.forum-avatar-large {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: gray;
+  margin-right: 1.5rem;
+}
+
+.forum-info-text h1 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.forum-info-text p {
+  margin-top: 0.3rem;
+  color: #444;
   font-size: 1rem;
 }
 
+/* Posts da comunidade */
+h2 {
+  margin-bottom: 1rem;
+}
+
+/* Card de post */
+.post-card {
+  background-color: white;
+  border-radius: 10px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid #bbb;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+}
+
+.post-card h3 {
+  margin-top: 0;
+  margin-bottom: 0.4rem;
+  font-size: 1.2rem;
+}
+
+.post-title-link {
+  color: #222;
+  text-decoration: none;
+}
+
+.post-title-link:hover {
+  text-decoration: underline;
+}
+
+.meta {
+  font-size: 0.85rem;
+  color: #666;
+  margin-bottom: 0.8rem;
+}
+
+.actions {
+  margin-top: 0.6rem;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.actions button {
+  padding: 6px 12px;
+  border-radius: 6px;
+  background-color: #2E7D32;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.actions button:hover {
+  background-color: #1b5e20;
+}
+
+/* Comentários */
 .comment-section {
   margin-top: 1rem;
 }
@@ -56,7 +126,7 @@
 }
 
 .comment-section li {
-  border-top: 1px solid #ddd;
+  border-top: 1px solid #eee;
   padding-top: 0.5rem;
   margin-top: 0.5rem;
 }
@@ -66,10 +136,46 @@
   display: flex;
   align-items: center;
   gap: 1rem;
+  font-size: 0.85rem;
 }
 
 .comment-form {
   margin-top: 1rem;
   display: flex;
   gap: 0.5rem;
+}
+
+.comment-form input {
+  flex: 1;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.comment-form button {
+  padding: 8px 12px;
+  background-color: #2E7D32;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* Input fixo no rodapé */
+.community-input {
+  position: fixed;
+  bottom: 0;
+  left: 60px; /* respeita sidebar */
+  right: 0;
+  padding: 1rem;
+  background-color: #f4f4f4;
+  border-top: 1px solid #ccc;
+}
+
+.community-input input {
+  width: 100%;
+  padding: 14px;
+  font-size: 1rem;
+  border-radius: 10px;
+  border: 1px solid #bbb;
 }
