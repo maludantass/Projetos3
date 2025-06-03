@@ -1,17 +1,31 @@
-.forum-main {
-  flex: 1;
-  padding: 1rem;
-  font-family: sans-serif;
-  background-color: #f4f4f4;
+.forum-page {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
 }
+
 .forum-sidebar {
   width: 60px;
+  height: 100vh; /* 🧠 faz ocupar toda a tela */
   background-color: #fff;
   border-right: 1px solid #ccc;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding-top: 1rem;
+  position: fixed; /* 🧠 fixa na lateral */
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+.forum-main {
+  margin-left: 60px; /* 🧠 empurra o conteúdo pro lado da sidebar */
+  flex: 1;
+  padding: 1rem;
+  font-family: sans-serif;
+  background-color: #f4f4f4;
+  min-height: 100vh;
 }
 
 .forum-header h1 {
