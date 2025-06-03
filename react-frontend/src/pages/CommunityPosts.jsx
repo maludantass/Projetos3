@@ -11,7 +11,6 @@ import PostVotes from '../components/PostVotes';
 import CommentVotes from '../components/CommentVotes';
 import './CommunityPosts.css';
 
-
 const CommunityPosts = () => {
   const { communityId } = useParams();
   const [posts, setPosts] = useState([]);
@@ -22,37 +21,23 @@ const CommunityPosts = () => {
   const [editingPostId, setEditingPostId] = useState(null);
   const [editPostData, setEditPostData] = useState({ title: '', content: '', url: '' });
 
-useEffect(() => {
-  if (communityId) {
-    getPostsByCommunity(communityId)
-      .then((data) => {
-        // ⚠️ Post de teste para visualização do layout
-        const postFake = {
-          id: 9999,
-          title: 'Post de Teste (Remover depois)',
-          content: 'Este é um post fake só para testar o layout da página.',
-          author: { username: 'UsuarioTeste' },
-          createdAt: new Date().toISOString(),
-          voteScore: 0,
-        };
-
-        // Adiciona o post fake no início da lista real de posts
-        setPosts([postFake, ...data]);
-      })
-      .catch((err) => console.error('Erro ao buscar posts:', err));
-  }
-}, [communityId]);
-
-  
-  
-//teste
-  /*useEffect(() => {
+  useEffect(() => {
     if (communityId) {
       getPostsByCommunity(communityId)
-        .then(setPosts)
+        .then((data) => {
+          const postFake = {
+            id: 9999,
+            title: 'Post de Teste (Remover depois)',
+            content: 'Este é um post fake só para testar o layout da página.',
+            author: { username: 'UsuarioTeste' },
+            createdAt: new Date().toISOString(),
+            voteScore: 0,
+          };
+          setPosts([postFake, ...data]);
+        })
         .catch((err) => console.error('Erro ao buscar posts:', err));
     }
-  }, [communityId]);*/
+  }, [communityId]);
 
   const carregarComentarios = async (postId, page = 0) => {
     try {
@@ -65,7 +50,6 @@ useEffect(() => {
     }
   };
 
-  // Funções para navegar páginas dos comentários
   const goPreviousCommentsPage = (postId) => {
     if ((commentsPage[postId] || 0) > 0) {
       carregarComentarios(postId, commentsPage[postId] - 1);
@@ -78,7 +62,6 @@ useEffect(() => {
     }
   };
 
-  // Funções para editar post
   const startEditing = (post) => {
     setEditingPostId(post.id);
     setEditPostData({ title: post.title, content: post.content, url: post.url || '' });
@@ -100,7 +83,6 @@ useEffect(() => {
     }
   };
 
-  // Função para deletar post
   const handleDelete = async (postId) => {
     if (window.confirm('Tem certeza que quer deletar este post?')) {
       try {
@@ -119,10 +101,7 @@ useEffect(() => {
   const handleSubmit = async (e, postId) => {
     e.preventDefault();
     try {
-      await createComment({
-        postId: postId,
-        text: novoComentario[postId],
-      });
+      await createComment({ postId: postId, text: novoComentario[postId] });
       setNovoComentario((prev) => ({ ...prev, [postId]: '' }));
       carregarComentarios(postId, 0);
     } catch (error) {
@@ -131,18 +110,10 @@ useEffect(() => {
   };
 
   return (
-    <div>
+    <div className="community-posts-container">
       <h2>Posts da Comunidade</h2>
       {posts.map((post) => (
-        <div
-          key={post.id}
-          style={{
-            border: '1px solid #ccc',
-            marginBottom: '1rem',
-            padding: '1rem',
-            borderRadius: '8px',
-          }}
-        >
+        <div key={post.id} className="post-card">
           {editingPostId === post.id ? (
             <>
               <input
@@ -162,63 +133,56 @@ useEffect(() => {
                 onChange={(e) => setEditPostData({ ...editPostData, url: e.target.value })}
                 placeholder="URL (opcional)"
               />
-              <button onClick={() => savePost(post.id)}>Salvar</button>
-              <button onClick={cancelEditing}>Cancelar</button>
+              <div className="actions">
+                <button onClick={() => savePost(post.id)}>Salvar</button>
+                <button onClick={cancelEditing}>Cancelar</button>
+              </div>
             </>
           ) : (
             <>
               <h3>{post.title}</h3>
-              <p style={{ fontStyle: 'italic', color: '#555', fontSize: '0.9rem' }}>
+              <p className="meta">
                 Por <strong>{post.author?.username || 'Desconhecido'}</strong> em{' '}
                 {new Date(post.createdAt).toLocaleString()}
               </p>
               <p>{post.content}</p>
-
-              <button onClick={() => startEditing(post)}>Editar</button>
-              <button onClick={() => handleDelete(post.id)}>Excluir</button>
-
-              <PostVotes postId={post.id} score={post.voteScore} />
-              <button onClick={() => carregarComentarios(post.id, 0)}>Ver comentários</button>
-              <ul>
-                {(comments[post.id] || []).map((c) => (
-                  <li key={c.id}>
-                    <p style={{ fontSize: '0.9rem', color: '#555' }}>
-                      <strong>{c.author?.username || 'Desconhecido'}</strong> em{' '}
-                      {new Date(c.createdAt).toLocaleString()}
-                    </p>
-                    <p>{c.text}</p>
-                    <CommentVotes commentId={c.id} voteScore={c.voteScore || 0} initialUserVote={null} />
-                  </li>
-                ))}
-              </ul>
-              <div style={{ marginBottom: '1rem' }}>
-                <button
-                  onClick={() => goPreviousCommentsPage(post.id)}
-                  disabled={(commentsPage[post.id] || 0) === 0}
-                  style={{ marginRight: '10px' }}
-                >
-                  Anterior
-                </button>
-                <button
-                  onClick={() => goNextCommentsPage(post.id)}
-                  disabled={(commentsPage[post.id] || 0) + 1 >= (commentsTotalPages[post.id] || 1)}
-                >
-                  Próximo
-                </button>
-                <span style={{ marginLeft: '15px' }}>
-                  Página {(commentsPage[post.id] || 0) + 1} de {(commentsTotalPages[post.id] || 1)}
-                </span>
+              <div className="actions">
+                <button onClick={() => startEditing(post)}>Editar</button>
+                <button onClick={() => handleDelete(post.id)}>Excluir</button>
               </div>
-              <form onSubmit={(e) => handleSubmit(e, post.id)}>
-                <input
-                  type="text"
-                  placeholder="Novo comentário"
-                  value={novoComentario[post.id] || ''}
-                  onChange={(e) => handleCommentChange(post.id, e.target.value)}
-                  required
-                />
-                <button type="submit">Comentar</button>
-              </form>
+              <PostVotes postId={post.id} score={post.voteScore} />
+              <div className="comment-section">
+                <button onClick={() => carregarComentarios(post.id, 0)}>Ver comentários</button>
+                <ul>
+                  {(comments[post.id] || []).map((c) => (
+                    <li key={c.id}>
+                      <p style={{ fontSize: '0.9rem', color: '#555' }}>
+                        <strong>{c.author?.username || 'Desconhecido'}</strong> em{' '}
+                        {new Date(c.createdAt).toLocaleString()}
+                      </p>
+                      <p>{c.text}</p>
+                      <CommentVotes commentId={c.id} voteScore={c.voteScore || 0} initialUserVote={null} />
+                    </li>
+                  ))}
+                </ul>
+                <div className="pagination-controls">
+                  <button onClick={() => goPreviousCommentsPage(post.id)} disabled={(commentsPage[post.id] || 0) === 0}>Anterior</button>
+                  <button onClick={() => goNextCommentsPage(post.id)} disabled={(commentsPage[post.id] || 0) + 1 >= (commentsTotalPages[post.id] || 1)}>Próximo</button>
+                  <span>
+                    Página {(commentsPage[post.id] || 0) + 1} de {(commentsTotalPages[post.id] || 1)}
+                  </span>
+                </div>
+                <form className="comment-form" onSubmit={(e) => handleSubmit(e, post.id)}>
+                  <input
+                    type="text"
+                    placeholder="Novo comentário"
+                    value={novoComentario[post.id] || ''}
+                    onChange={(e) => handleCommentChange(post.id, e.target.value)}
+                    required
+                  />
+                  <button type="submit">Comentar</button>
+                </form>
+              </div>
             </>
           )}
         </div>
