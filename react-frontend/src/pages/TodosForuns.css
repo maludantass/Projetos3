@@ -79,3 +79,21 @@
   margin-left: 1rem;
   text-align: right;
 }
+.forum-voltar {
+  margin-bottom: 1.5rem;
+}
+
+.voltar-btn {
+  display: inline-block;
+  padding: 6px 12px;
+  background-color: #000;
+  color: #fff;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: background-color 0.2s ease;
+}
+
+.voltar-btn:hover {
+  background-color: #333;
+}
