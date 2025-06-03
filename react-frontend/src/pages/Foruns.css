@@ -4,6 +4,15 @@
   font-family: sans-serif;
   background-color: #f4f4f4;
 }
+.forum-sidebar {
+  width: 60px;
+  background-color: #fff;
+  border-right: 1px solid #ccc;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 1rem;
+}
 
 .forum-header h1 {
   margin-bottom: 1rem;
