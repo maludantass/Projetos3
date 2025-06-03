@@ -12,27 +12,33 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 1rem;
   position: fixed; /* 🧠 fixa na lateral */
   top: 0;
   left: 0;
   z-index: 1;
-
-}
+  justify-content: flex-start;
+  padding-top: 6rem; /* ou maior se a navbar for alta */
 }
 
 .forum-button {
-  background-color: #000;
-  color: #fff;
-  font-size: 20px;
-  width: 36px;
-  height: 36px;
+  background-color: black;
+  color: white;
+  font-size: 24px;
+  width: 44px;
+  height: 44px;
   border: none;
   border-radius: 50%;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
 }
 
+.forum-button:hover {
+  background-color: #333; /* leve sombreamento ao passar o mouse */
+}
 .forum-main {
   margin-left: 60px; /* 🧠 empurra o conteúdo pro lado da sidebar */
   flex: 1;
