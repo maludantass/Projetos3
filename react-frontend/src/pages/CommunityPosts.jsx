@@ -6,10 +6,11 @@ import {
   updatePost,
   deletePost,
 } from '../services/forumService';
-import { useParams } from 'react-router-dom';
 import PostVotes from '../components/PostVotes';
 import CommentVotes from '../components/CommentVotes';
 import './CommunityPosts.css';
+import { useParams, Link } from 'react-router-dom';
+
 
 const CommunityPosts = () => {
   const { communityId } = useParams();
@@ -140,7 +141,12 @@ const CommunityPosts = () => {
             </>
           ) : (
             <>
-              <h3>{post.title}</h3>
+                  <h3>
+      <Link to={`/post/${post.id}`} className="post-title-link">
+        {post.title}
+      </Link>
+    </h3>
+
               <p className="meta">
                 Por <strong>{post.author?.username || 'Desconhecido'}</strong> em{' '}
                 {new Date(post.createdAt).toLocaleString()}
