@@ -49,7 +49,6 @@ return (
       ALIANÇA BRASILEIRA DE FINANÇAS E INVESTIMENTOS SUSTENTÁVEIS
     </header>
     
-  <div className="forum-page">
     {/* ✅ Sidebar sempre visível */}
     <div className="forum-sidebar">
       <button className="forum-button">＋</button>
