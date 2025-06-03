@@ -9,6 +9,8 @@ import {
 import { useParams } from 'react-router-dom';
 import PostVotes from '../components/PostVotes';
 import CommentVotes from '../components/CommentVotes';
+import './CommunityPosts.css';
+
 
 const CommunityPosts = () => {
   const { communityId } = useParams();
