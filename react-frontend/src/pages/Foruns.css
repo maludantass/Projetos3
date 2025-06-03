@@ -17,6 +17,10 @@
   top: 0;
   left: 0;
   z-index: 1;
+
+  justify-content: flex-end; /* 🧠 empurra os botões pro final da sidebar */
+  padding-bottom: 2rem;      /* 🧠 espaço do fundo */
+}
 }
 
 .forum-button {
