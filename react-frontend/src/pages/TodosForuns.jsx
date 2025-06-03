@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { getCommunities } from '../services/forumService';
 import { Link } from 'react-router-dom';
-import './TodosForuns.css'; // Você pode duplicar ou adaptar o CSS de Foruns.css
+import './TodosForuns.css';
 
 const TodosForuns = () => {
   const [communities, setCommunities] = useState([]);
@@ -19,6 +19,10 @@ const TodosForuns = () => {
       </header>
 
       <div className="forum-main">
+        <div className="forum-voltar">
+          <Link to="/foruns" className="voltar-btn">← Voltar para seus fóruns</Link>
+        </div>
+
         <h1>Todos os Fóruns Disponíveis</h1>
         <div className="forum-card-list">
           {communities.map((comunidade) => (
