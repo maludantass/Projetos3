@@ -41,15 +41,13 @@ const Foruns = () => {
   );*/
 
   return (
-    <><div className='Titulo'>
-      <h1>Seus Fóruns</h1>
-    </div><div className="forum-page">
-        <div className="forum-sidebar">
-          <button className="forum-button">＋</button>
-          <button className="forum-button">🧭</button>
-        </div>
+  <div className="forum-page">
+    <div className="forum-sidebar">
+      <button className="forum-button">＋</button>
+      <button className="forum-button">🧭</button>
+    </div>
 
-        {communities.length === 0 ? (
+    {communities.length === 0 ? (
       // ⚠️ Página 1 – Nenhum fórum
       <div className="forum-empty-content">
         <p>Parece que você não está num fórum...</p>
@@ -95,6 +93,7 @@ const Foruns = () => {
     )}
   </div>
 );
+
       };
 
 export default Foruns;
