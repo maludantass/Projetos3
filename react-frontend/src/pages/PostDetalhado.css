@@ -1,0 +1,70 @@
+.post-detalhado {
+  padding: 2rem;
+  background-color: #f8f8f8;
+  min-height: 100vh;
+  font-family: sans-serif;
+}
+
+.preview-banner {
+  background-color: #000;
+  color: #fff;
+  padding: 10px;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.entrar-btn {
+  margin-left: 10px;
+  padding: 6px 12px;
+  background-color: #fff;
+  color: #000;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+}
+
+.post-principal {
+  background-color: white;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+}
+
+.post-autor {
+  font-style: italic;
+  color: #555;
+  font-size: 0.9rem;
+}
+
+.comentarios {
+  background-color: white;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.comment-form {
+  margin-top: 1rem;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.comment-form input {
+  flex: 1;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.comment-form button {
+  padding: 8px 12px;
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.voltar-area {
+  margin-top: 2rem;
+}
