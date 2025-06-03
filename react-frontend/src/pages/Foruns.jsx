@@ -30,8 +30,8 @@ const Foruns = () => {
       {/* Conteúdo principal */}
       {communities.length === 0 ? (
         <div className="forum-empty-content">
-          <p>Parece que você não está num fórum...</p>
-          <Link to="/foruns/todos" className="forum-link">Descubra aqui</Link>
+          <h2>Parece que você não está em um fórum...</h2>
+         <Link to="/foruns/todos" className="main-btn">Descubra aqui</Link>
         </div>
       ) : (
         <div className="forum-main">
