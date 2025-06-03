@@ -11,6 +11,7 @@ import Perfil from "./pages/Perfil";
 import Faq from "./pages/Faq";
 import Home from "./pages/Home"; 
 import CommunityPosts from "./pages/CommunityPosts";
+import TodosForuns from './pages/TodosForuns';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -50,6 +51,7 @@ function App() {
           <Route path="/eventos" element={<PrivateRoute><Eventos /></PrivateRoute>} />
           <Route path="/biblioteca" element={<PrivateRoute><Biblioteca /></PrivateRoute>} />
           <Route path="/comunidade/:id" element={<PrivateRoute><CommunityPosts /></PrivateRoute>} />
+          <Route path="/foruns/todos" element={<TodosForuns />} />
 
           {isLoggedIn && (
             <Route
