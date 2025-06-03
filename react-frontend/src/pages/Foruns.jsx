@@ -40,7 +40,15 @@ const Foruns = () => {
     </div>
   );*/
 
+
 return (
+
+  <div className="forum-page">
+    {/* Top Bar */}
+    <header className="top-bar">
+      ALIANÇA BRASILEIRA DE FINANÇAS E INVESTIMENTOS SUSTENTÁVEIS
+    </header>
+    
   <div className="forum-page">
     {/* ✅ Sidebar sempre visível */}
     <div className="forum-sidebar">
