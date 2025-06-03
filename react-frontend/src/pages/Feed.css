@@ -104,14 +104,6 @@
   font-weight: bold;
   margin-right: 4px;
 }
-
-/* Remove margens globais se necessário */
-html, body {
-  margin: 0;
-  padding: 0;
-  background-color: #e4f4de;
-}
-
 /* Barra fixa e navbar */
 .navbar-container {
   position: fixed;
@@ -196,4 +188,27 @@ html, body {
 .icon-image {
   width: 28px;
   height: 28px;
+}
+.form-novo-post {
+  background-color: #f0f0f0;
+  margin: 20px auto;
+  padding: 15px;
+  width: 80%;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-novo-post textarea {
+  resize: none;
+  height: 100px;
+  padding: 10px;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.form-novo-post button {
+  margin-top: 5px;
+  padding: 8px;
+  cursor: pointer;
 }
