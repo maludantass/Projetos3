@@ -54,7 +54,7 @@ function App() {
           <Route path="/eventos" element={<PrivateRoute><Eventos /></PrivateRoute>} />
           <Route path="/biblioteca" element={<PrivateRoute><Biblioteca /></PrivateRoute>} />
           <Route path="/comunidade/:id" element={<PrivateRoute><CommunityPosts /></PrivateRoute>} />
-          <Route path="/post/:postId" element={<PrivateRoute><PostDetalhado /></PrivateRoute>} />
+          
 
 
           {isLoggedIn && (
