@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import { getCommunities } from '../services/forumService';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom'; // 👈 IMPORTANTE
 import './Foruns.css';
 
 const Foruns = () => {
   const [communities, setCommunities] = useState([]);
+  const navigate = useNavigate(); // 👈 NAVEGAÇÃO
 
   useEffect(() => {
     getCommunities()
@@ -21,15 +22,16 @@ const Foruns = () => {
 
       {/* Sidebar fixa */}
       <div className="forum-sidebar">
-        <button className="forum-button">＋</button>
-        <button className="forum-button">🧭</button>
+        <button className="forum-button" onClick={() => navigate('/foruns/todos')}>
+          ＋
+        </button>
       </div>
 
       {/* Conteúdo principal */}
       {communities.length === 0 ? (
         <div className="forum-empty-content">
           <p>Parece que você não está num fórum...</p>
-          <Link to="/descobrir" className="forum-link">Descubra aqui</Link>
+          <Link to="/foruns/todos" className="forum-link">Descubra aqui</Link>
         </div>
       ) : (
         <div className="forum-main">
