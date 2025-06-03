@@ -19,6 +19,18 @@
   z-index: 1000;
 }
 
+.forum-button {
+  background-color: #000;
+  color: #fff;
+  font-size: 20px;
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 50%;
+  margin-bottom: 1rem;
+  cursor: pointer;
+}
+
 .forum-main {
   margin-left: 60px; /* 🧠 empurra o conteúdo pro lado da sidebar */
   flex: 1;
