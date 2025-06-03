@@ -1,48 +1,94 @@
-.forum-page {
-  display: flex;
-  height: 100vh;
+.forum-main {
+  flex: 1;
+  padding: 1rem;
+  font-family: sans-serif;
+  background-color: #f4f4f4;
 }
 
-.forum-sidebar {
-  width: 60px;
-  background-color: #fff;
-  border-right: 1px solid #ccc;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-top: 1rem;
-}
-
-.forum-button {
-  background-color: #000;
-  color: #fff;
-  font-size: 20px;
-  width: 36px;
-  height: 36px;
-  border: none;
-  border-radius: 50%;
+.forum-header h1 {
   margin-bottom: 1rem;
+}
+
+.forum-topics {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+.topic {
+  background: none;
+  border: none;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-weight: bold;
+  color: #333;
+  border-radius: 6px;
+}
+
+.topic.active {
+  text-decoration: underline;
+}
+
+.search-area {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+}
+
+.search-input {
+  padding: 6px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.filter-btn {
+  margin-left: 4px;
+  background: #ccc;
+  border: none;
+  padding: 6px 8px;
   cursor: pointer;
 }
 
-.forum-empty-content {
-  flex: 1;
-  background-color: #e6f0e0;
+.forum-section h2 {
+  margin-bottom: 1rem;
+}
+
+.forum-card-list {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  font-family: sans-serif;
-  text-align: center;
+  gap: 1rem;
 }
 
-.forum-empty-content p {
-  font-size: 1.2rem;
-  margin-bottom: 0.5rem;
+.forum-card {
+  display: flex;
+  align-items: flex-start;
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 0 4px rgba(0,0,0,0.1);
 }
 
-.forum-link {
-  text-decoration: underline;
-  color: black;
-  font-weight: bold;
+.forum-avatar {
+  width: 50px;
+  height: 50px;
+  background: gray;
+  border-radius: 50%;
+  margin-right: 1rem;
+}
+
+.forum-info {
+  flex: 1;
+}
+
+.forum-info h3 {
+  margin: 0 0 4px 0;
+}
+
+.forum-members {
+  font-size: 0.9rem;
+  color: #666;
+  margin-left: 1rem;
+  text-align: right;
 }
