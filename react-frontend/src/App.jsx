@@ -12,6 +12,8 @@ import Faq from "./pages/Faq";
 import Home from "./pages/Home"; 
 import CommunityPosts from "./pages/CommunityPosts";
 import TodosForuns from './pages/TodosForuns';
+import PostDetalhado from "./pages/PostDetalhado";
+
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
