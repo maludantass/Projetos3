@@ -41,13 +41,11 @@ const Foruns = () => {
   );*/
 
  return (
-  <div className="forum-page">
-    {/* ✅ Barra lateral – sempre visível */}
-    <div className="forum-sidebar">
-      <button className="forum-button">＋</button>
-      <button className="forum-button">🧭</button>
-    </div>
-
+ </div><div className="forum-page">
+        <div className="forum-sidebar">
+          <button className="forum-button">＋</button>
+          <button className="forum-button">🧭</button>
+        </div>
     {/* ✅ Conteúdo da direita muda dependendo do estado */}
     {communities.length === 0 ? (
       <div className="forum-empty-content">
