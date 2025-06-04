@@ -90,7 +90,7 @@ const Home = () => {
       {/* Call to Action */}
       <section className="call-to-action">
         <p>QUER FAZER PARTE?</p>
-        <button>CLIQUE AQUI</button>
+        <Link to="/auth" className="button">CLIQUE AQUI</Link>
       </section>
 
       {/* Rodapé */}
