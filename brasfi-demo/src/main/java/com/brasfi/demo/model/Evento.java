@@ -14,13 +14,19 @@ public class Evento {
     private LocalDate dataInicio;
     private LocalDate dataFim;
     private String detalhe;
-    
+
+    @Column(length = 1000) 
+    private String topicos; 
+
     private String link;
 
-    private boolean gravado; 
+    private boolean gravado;
     private String emailUsuario;
 
+    public Evento() {
+    }
 
+//get e set
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -49,5 +55,12 @@ public class Evento {
     public void setEmailUsuario(String emailUsuario) {
         this.emailUsuario = emailUsuario;
     }
-}
 
+    public String getTopicos() {
+        return topicos;
+    }
+
+    public void setTopicos(String topicos) {
+        this.topicos = topicos;
+    }
+}

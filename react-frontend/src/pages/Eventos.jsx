@@ -1,14 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import './Eventos.css'; // O CSS mesclado
-import Evento1 from '../images/Evento1.png'; // Ajuste o caminho se necessário
-import Evento2 from '../images/Evento2.png'; // Ajuste o caminho se necessário
-import Evento3 from '../images/Evento3.png'; // Ajuste o caminho se necessário
-import Evento4 from '../images/Evento4.png'; // Ajuste o caminho se necessário
+import './Eventos.css';
+import Evento1 from '../images/Evento1.png';
+import Evento2 from '../images/Evento2.png';
+import Evento3 from '../images/Evento3.png';
+import Evento4 from '../images/Evento4.png';
 
 const imagens = [Evento1, Evento2, Evento3, Evento4];
 
-// ModalDetalhesEvento (Permanece o mesmo da versão anterior)
+// ModalDetalhesEvento
 function ModalDetalhesEvento({ evento, onClose }) {
+  const getTopicosList = (topicosString) => {
+    if (!topicosString) return [];
+    return topicosString.split('\n').map(topic => topic.trim()).filter(topic => topic.length > 0);
+  };
+
+  const topicosDoEvento = getTopicosList(evento.topicos);
+
   return (
     <div className="modal-overlay-detalhe-evento">
       <div className="modal-detalhado">
@@ -27,18 +34,14 @@ function ModalDetalhesEvento({ evento, onClose }) {
             <img src={evento.imagem} alt="Imagem do evento" className="imagem-evento-direita" />
           )}
         </div>
-        <div className="topicos-evento">
-          <h4>Tópicos:</h4>
-          <ul>
-            {[
-              "Como estruturar uma estratégia ESG robusta na área financeira",
-              "Métricas e indicadores: como mensurar e reportar impacto",
-              "O papel do CFO na transformação sustentável",
-              "Conformidade com regulações nacionais e internacionais",
-              "Finanças verdes, crédito sustentável e acesso a funding internacional"
-            ].map((t, idx) => <li key={idx}>• {t}</li>)}
-          </ul>
-        </div>
+        {topicosDoEvento.length > 0 && (
+          <div className="topicos-evento">
+            <h4>Tópicos:</h4>
+            <ul>
+              {topicosDoEvento.map((t, idx) => <li key={idx}>• {t}</li>)}
+            </ul>
+          </div>
+        )}
         <div className="rodape-evento">
           <p><strong>Data:</strong> {evento.dataInicio} {evento.dataFim && evento.dataFim !== evento.dataInicio ? `- ${evento.dataFim}` : ''}</p>
           {evento.link && (
@@ -53,12 +56,12 @@ function ModalDetalhesEvento({ evento, onClose }) {
   );
 }
 
-// SecaoEventos ATUALIZADO para mostrar 4 e depois +2
+// SecaoEventos 
 function SecaoEventos({ titulo, eventos, onEventoClick }) {
   const hoje = new Date().toISOString().split('T')[0];
-  
+
   const INITIAL_ITEMS_COUNT = 4;
-  const EXPANDED_ITEMS_COUNT = 6; // 4 iniciais + 2 extras
+  const EXPANDED_ITEMS_COUNT = 6;
 
   const [visibleItemCount, setVisibleItemCount] = useState(INITIAL_ITEMS_COUNT);
 
@@ -68,10 +71,8 @@ function SecaoEventos({ titulo, eventos, onEventoClick }) {
 
   const handleViewMoreToggle = () => {
     if (visibleItemCount === INITIAL_ITEMS_COUNT) {
-      // Se mostrando 4, expande para 6 (ou o total disponível se menor que 6)
       setVisibleItemCount(Math.min(EXPANDED_ITEMS_COUNT, eventosOrdenados.length));
     } else {
-      // Se expandido (mostrando mais que 4), volta para 4
       setVisibleItemCount(INITIAL_ITEMS_COUNT);
     }
   };
@@ -88,7 +89,7 @@ function SecaoEventos({ titulo, eventos, onEventoClick }) {
         {eventosVisiveis.map((evento, i) => (
           <div
             className="item"
-            key={evento.id || `evento-${titulo}-${i}`} // Chave mais específica
+            key={evento.id || `evento-${titulo}-${i}`}
             data-imagem={i % 4}
             onClick={() => onEventoClick({ ...evento, imagem: imagens[i % 4] })}
           >
@@ -101,21 +102,21 @@ function SecaoEventos({ titulo, eventos, onEventoClick }) {
 
       {canShowMoreButton && (
         <button
-            className="view-more"
-            onClick={handleViewMoreToggle}
-            aria-expanded={isExpanded}
+          className="view-more"
+          onClick={handleViewMoreToggle}
+          aria-expanded={isExpanded}
         >
-            {isExpanded ? 'Ver menos' : 'Ver mais'}
-            <svg viewBox="0 0 24 24">
-                <path d={isExpanded ? "M7 14l5-5 5 5z" : "M7 10l5 5 5-5z"} /> {/* Seta para cima se expandido, para baixo se não */}
-            </svg>
+          {isExpanded ? 'Ver menos' : 'Ver mais'}
+          <svg viewBox="0 0 24 24">
+            <path d={isExpanded ? "M7 14l5-5 5 5z" : "M7 10l5 5 5-5z"} />
+          </svg>
         </button>
       )}
     </section>
   );
 }
 
-// Componente Eventos principal (Permanece o mesmo da versão anterior)
+// Eventos 
 function Eventos() {
   const [mostrarModalAdicionar, setMostrarModalAdicionar] = useState(false);
   const [mostrarModalDetalhes, setMostrarModalDetalhes] = useState(false);
@@ -154,6 +155,7 @@ function Eventos() {
     dataInicio: '',
     dataFim: '',
     detalhe: '',
+    topicos: '', 
     link: '',
     gravado: false,
     emailUsuario: localStorage.getItem('email') || ''
@@ -162,8 +164,8 @@ function Eventos() {
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setForm(prevForm => ({
-        ...prevForm,
-        [name]: type === 'checkbox' ? checked : (type === 'radio' ? (value === 'true') : value)
+      ...prevForm,
+      [name]: type === 'checkbox' ? checked : (type === 'radio' ? (value === 'true') : value)
     }));
   };
 
@@ -182,15 +184,15 @@ function Eventos() {
 
     let emailUsuario = "sem-email";
     try {
-        const userString = localStorage.getItem("user");
-        if (userString) {
-            const user = JSON.parse(userString);
-            emailUsuario = user?.email || "sem-email";
-        }
+      const userString = localStorage.getItem("user");
+      if (userString) {
+        const user = JSON.parse(userString);
+        emailUsuario = user?.email || "sem-email";
+      }
     } catch (error) {
-        console.error("Erro ao parsear usuário do localStorage:", error);
+      console.error("Erro ao parsear usuário do localStorage:", error);
     }
-    
+
     const eventoComEmail = { ...form, emailUsuario };
 
     try {
@@ -227,17 +229,18 @@ function Eventos() {
   const abrirModalAdicionar = () => {
     let email = '';
     try {
-        const userString = localStorage.getItem("user");
-        if (userString) {
-            const user = JSON.parse(userString);
-            email = user?.email || '';
-        }
+      const userString = localStorage.getItem("user");
+      if (userString) {
+        const user = JSON.parse(userString);
+        email = user?.email || '';
+      }
     } catch (error) {
-        console.error("Erro ao parsear usuário do localStorage para novo evento:", error);
+      console.error("Erro ao parsear usuário do localStorage para novo evento:", error);
     }
     setForm({
-        titulo: '', dataInicio: '', dataFim: '', detalhe: '',
-        link: '', gravado: false, emailUsuario: email
+      titulo: '', dataInicio: '', dataFim: '', detalhe: '',
+      topicos: '', 
+      link: '', gravado: false, emailUsuario: email
     });
     setMostrarModalAdicionar(true);
   };
@@ -294,8 +297,8 @@ function Eventos() {
               <input
                 type="date" name="dataInicio" value={form.dataInicio}
                 onChange={(e) => {
-                    const novaDataInicio = e.target.value;
-                    setForm(prev => ({ ...prev, dataInicio: novaDataInicio, ...(prev.dataFim && prev.dataFim < novaDataInicio && { dataFim: "" }) }));
+                  const novaDataInicio = e.target.value;
+                  setForm(prev => ({ ...prev, dataInicio: novaDataInicio, ...(prev.dataFim && prev.dataFim < novaDataInicio && { dataFim: "" }) }));
                 }}
                 min={new Date().toISOString().split("T")[0]} required
               />
@@ -308,6 +311,13 @@ function Eventos() {
               <textarea
                 name="detalhe" placeholder="Detalhes"
                 value={form.detalhe} onChange={handleChange} required
+              />
+              <textarea
+                name="topicos"
+                placeholder="Tópicos (um por linha)"
+                value={form.topicos}
+                onChange={handleChange}
+                rows="4" 
               />
               <input
                 type="text" name="link" placeholder="Link do evento (opcional)"
