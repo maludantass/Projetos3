@@ -7,6 +7,20 @@ import Evento4 from '../images/Evento4.png';
 
 const imagens = [Evento1, Evento2, Evento3, Evento4];
 
+// Função auxiliar para formatar a data e hora
+const formatDateTime = (isoString) => {
+  if (!isoString) return '';
+  const date = new Date(isoString);
+  return date.toLocaleString('pt-BR', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+  });
+};
+
 // ModalDetalhesEvento
 function ModalDetalhesEvento({ evento, onClose }) {
   const getTopicosList = (topicosString) => {
@@ -15,6 +29,56 @@ function ModalDetalhesEvento({ evento, onClose }) {
   };
 
   const topicosDoEvento = getTopicosList(evento.topicos);
+
+  const [tempoRestante, setTempoRestante] = useState('');
+
+  useEffect(() => {
+    const calculateTimeRemaining = () => {
+      if (!evento.dataInicio) return '';
+      const now = new Date();
+      const eventDateTime = new Date(evento.dataInicio);
+
+      const diffMs = eventDateTime - now;
+
+      if (diffMs < 0) {
+        return 'Evento já ocorreu';
+      }
+
+      const diffSeconds = Math.floor(diffMs / 1000);
+      const diffMinutes = Math.floor(diffSeconds / 60);
+      const diffHours = Math.floor(diffMinutes / 60);
+      const diffDays = Math.floor(diffHours / 24);
+
+      const remainingHours = diffHours % 24;
+      const remainingMinutes = diffMinutes % 60;
+      const remainingSeconds = diffSeconds % 60;
+
+      let timeString = '';
+      if (diffDays > 0) {
+        timeString += `${diffDays} dia${diffDays > 1 ? 's' : ''} `;
+      }
+      if (remainingHours > 0) {
+        timeString += `${remainingHours} hora${remainingHours > 1 ? 's' : ''} `;
+      }
+      if (remainingMinutes > 0) {
+        timeString += `${remainingMinutes} minuto${remainingMinutes > 1 ? 's' : ''}`;
+      }
+      if (diffDays === 0 && remainingHours === 0 && remainingMinutes === 0 && remainingSeconds > 0) {
+        timeString = `menos de 1 minuto`;
+      }
+      
+      return `Faltam: ${timeString.trim()}`;
+    };
+
+    setTempoRestante(calculateTimeRemaining());
+
+    const interval = setInterval(() => {
+      setTempoRestante(calculateTimeRemaining());
+    }, 1000); // Atualiza a cada segundo
+
+    return () => clearInterval(interval); // Limpa o intervalo ao desmontar
+  }, [evento.dataInicio]);
+
 
   return (
     <div className="modal-overlay-detalhe-evento">
@@ -25,6 +89,9 @@ function ModalDetalhesEvento({ evento, onClose }) {
         <div className="cabecalho-modal">
           <div className="texto-cabecalho">
             <h2 className="titulo-evento"><strong>{evento.titulo}</strong></h2>
+            {evento.dataInicio && (
+              <p className="tempo-restante-evento">{tempoRestante}</p>
+            )}
             <div className="descricao-evento">
               <h4>Descrição:</h4>
               <p>{evento.detalhe}</p>
@@ -43,7 +110,10 @@ function ModalDetalhesEvento({ evento, onClose }) {
           </div>
         )}
         <div className="rodape-evento">
-          <p><strong>Data:</strong> {evento.dataInicio} {evento.dataFim && evento.dataFim !== evento.dataInicio ? `- ${evento.dataFim}` : ''}</p>
+          <p>
+            <strong>Data e Hora:</strong> {formatDateTime(evento.dataInicio)}
+            {evento.dataFim && evento.dataFim !== evento.dataInicio ? ` - ${formatDateTime(evento.dataFim)}` : ''}
+          </p>
           {evento.link && (
             <p className="link-evento">
               <strong>https://</strong>
@@ -56,17 +126,18 @@ function ModalDetalhesEvento({ evento, onClose }) {
   );
 }
 
-// SecaoEventos 
+// SecaoEventos
 function SecaoEventos({ titulo, eventos, onEventoClick }) {
-  const hoje = new Date().toISOString().split('T')[0];
+  const hoje = new Date(); // Obter a data e hora atual
 
   const INITIAL_ITEMS_COUNT = 4;
   const EXPANDED_ITEMS_COUNT = 6;
 
   const [visibleItemCount, setVisibleItemCount] = useState(INITIAL_ITEMS_COUNT);
 
+  // Ordenar eventos por data de início, considerando a hora
   const eventosOrdenados = [...eventos]
-    .filter(evento => evento.dataFim >= hoje)
+    .filter(evento => new Date(evento.dataFim) >= hoje) // Filtrar por data/hora de término
     .sort((a, b) => new Date(a.dataInicio) - new Date(b.dataInicio));
 
   const handleViewMoreToggle = () => {
@@ -93,8 +164,6 @@ function SecaoEventos({ titulo, eventos, onEventoClick }) {
             data-imagem={i % 4}
             onClick={() => onEventoClick({ ...evento, imagem: imagens[i % 4] })}
           >
-            <h4 className="evento-titulo">{evento.titulo}</h4>
-            <p className="evento-data">{evento.dataInicio} - {evento.dataFim}</p>
           </div>
         ))}
         {eventosVisiveis.length === 0 && <p>Nenhum evento encontrado para esta categoria.</p>}
@@ -116,7 +185,7 @@ function SecaoEventos({ titulo, eventos, onEventoClick }) {
   );
 }
 
-// Eventos 
+// Eventos
 function Eventos() {
   const [mostrarModalAdicionar, setMostrarModalAdicionar] = useState(false);
   const [mostrarModalDetalhes, setMostrarModalDetalhes] = useState(false);
@@ -144,7 +213,7 @@ function Eventos() {
   };
 
   const eventosFiltrados = todosEventos.filter(ev =>
-    ev.titulo.toLowerCase().includes(filtroTitulo.toLowerCase())
+    (ev.titulo || '').toLowerCase().includes(filtroTitulo.toLowerCase())
   );
 
   const eventosProximos = eventosFiltrados.filter(ev => !ev.gravado);
@@ -152,10 +221,10 @@ function Eventos() {
 
   const [form, setForm] = useState({
     titulo: '',
-    dataInicio: '',
-    dataFim: '',
+    dataInicio: '', 
+    dataFim: '',    
     detalhe: '',
-    topicos: '', 
+    topicos: '',
     link: '',
     gravado: false,
     emailUsuario: localStorage.getItem('email') || ''
@@ -171,14 +240,16 @@ function Eventos() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const hoje = new Date().toISOString().split("T")[0];
+    const agora = new Date();
+    const dataInicioDateTime = new Date(form.dataInicio);
+    const dataFimDateTime = new Date(form.dataFim);
 
-    if (form.dataInicio < hoje) {
-      alert("A data de início deve ser igual ou posterior a hoje.");
+    if (dataInicioDateTime < agora) {
+      alert("A data e hora de início devem ser iguais ou posteriores a agora.");
       return;
     }
-    if (form.dataFim < form.dataInicio) {
-      alert("A data de término não pode ser anterior à data de início.");
+    if (dataFimDateTime < dataInicioDateTime) {
+      alert("A data e hora de término não podem ser anteriores à data e hora de início.");
       return;
     }
 
@@ -237,9 +308,13 @@ function Eventos() {
     } catch (error) {
       console.error("Erro ao parsear usuário do localStorage para novo evento:", error);
     }
+
+    const now = new Date();
+    const nowIso = new Date(now.getTime() - (now.getTimezoneOffset() * 60000)).toISOString().slice(0, 16);
+
     setForm({
-      titulo: '', dataInicio: '', dataFim: '', detalhe: '',
-      topicos: '', 
+      titulo: '', dataInicio: nowIso, dataFim: nowIso, detalhe: '', 
+      topicos: '',
       link: '', gravado: false, emailUsuario: email
     });
     setMostrarModalAdicionar(true);
@@ -293,20 +368,22 @@ function Eventos() {
                 type="text" name="titulo" placeholder="Título"
                 value={form.titulo} onChange={handleChange} required
               />
-              <h5>Data de início</h5>
+              <h5>Data e Hora de início</h5>
               <input
-                type="date" name="dataInicio" value={form.dataInicio}
+                type="datetime-local" name="dataInicio" value={form.dataInicio}
                 onChange={(e) => {
                   const novaDataInicio = e.target.value;
                   setForm(prev => ({ ...prev, dataInicio: novaDataInicio, ...(prev.dataFim && prev.dataFim < novaDataInicio && { dataFim: "" }) }));
                 }}
-                min={new Date().toISOString().split("T")[0]} required
+                min={new Date(new Date().getTime() - (new Date().getTimezoneOffset() * 60000)).toISOString().slice(0, 16)} // Define min como a hora atual
+                required
               />
-              <h5>Data de término</h5>
+              <h5>Data e Hora de término</h5>
               <input
-                type="date" name="dataFim" value={form.dataFim}
+                type="datetime-local" name="dataFim" value={form.dataFim}
                 onChange={handleChange}
-                min={form.dataInicio || new Date().toISOString().split("T")[0]} required
+                min={form.dataInicio || new Date(new Date().getTime() - (new Date().getTimezoneOffset() * 60000)).toISOString().slice(0, 16)} // Define min como a data de início ou a hora atual
+                required
               />
               <textarea
                 name="detalhe" placeholder="Detalhes"
@@ -317,7 +394,7 @@ function Eventos() {
                 placeholder="Tópicos (um por linha)"
                 value={form.topicos}
                 onChange={handleChange}
-                rows="4" 
+                rows="4"
               />
               <input
                 type="text" name="link" placeholder="Link do evento (opcional)"

@@ -2,6 +2,7 @@ package com.brasfi.demo.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime; 
 
 @Entity
 public class Evento {
@@ -11,12 +12,12 @@ public class Evento {
     private Long id;
 
     private String titulo;
-    private LocalDate dataInicio;
-    private LocalDate dataFim;
+    private LocalDateTime dataInicio; 
+    private LocalDateTime dataFim;    
     private String detalhe;
 
-    @Column(length = 1000) 
-    private String topicos; 
+    @Column(length = 1000)
+    private String topicos;
 
     private String link;
 
@@ -33,11 +34,11 @@ public class Evento {
     public String getTitulo() { return titulo; }
     public void setTitulo(String titulo) { this.titulo = titulo; }
 
-    public LocalDate getDataInicio() { return dataInicio; }
-    public void setDataInicio(LocalDate dataInicio) { this.dataInicio = dataInicio; }
+    public LocalDateTime getDataInicio() { return dataInicio; }
+    public void setDataInicio(LocalDateTime dataInicio) { this.dataInicio = dataInicio; }
 
-    public LocalDate getDataFim() { return dataFim; }
-    public void setDataFim(LocalDate dataFim) { this.dataFim = dataFim; }
+    public LocalDateTime getDataFim() { return dataFim; }
+    public void setDataFim(LocalDateTime dataFim) { this.dataFim = dataFim; }
 
     public String getDetalhe() { return detalhe; }
     public void setDetalhe(String detalhe) { this.detalhe = detalhe; }
