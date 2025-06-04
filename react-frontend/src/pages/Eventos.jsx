@@ -7,7 +7,7 @@ import Evento4 from '../images/Evento4.png';
 
 const imagens = [Evento1, Evento2, Evento3, Evento4];
 
-// Função auxiliar para formatar a data e hora
+// funcao para formatar data e hora
 const formatDateTime = (isoString) => {
   if (!isoString) return '';
   const date = new Date(isoString);
@@ -31,18 +31,26 @@ function ModalDetalhesEvento({ evento, onClose }) {
   const topicosDoEvento = getTopicosList(evento.topicos);
 
   const [tempoRestante, setTempoRestante] = useState('');
+  const [statusClasse, setStatusClasse] = useState(''); 
 
   useEffect(() => {
     const calculateTimeRemaining = () => {
-      if (!evento.dataInicio) return '';
+      if (!evento.dataInicio || !evento.dataFim) return '';
       const now = new Date();
-      const eventDateTime = new Date(evento.dataInicio);
+      const eventStartDateTime = new Date(evento.dataInicio);
+      const eventEndDateTime = new Date(evento.dataFim);
 
-      const diffMs = eventDateTime - now;
-
-      if (diffMs < 0) {
+      if (now > eventEndDateTime) {
+        setStatusClasse('status-concluido'); 
         return 'Evento já ocorreu';
       }
+
+      if (now >= eventStartDateTime && now <= eventEndDateTime) {
+        setStatusClasse('status-em-andamento');
+        return 'EM ANDAMENTO';
+      }
+
+      const diffMs = eventStartDateTime - now;
 
       const diffSeconds = Math.floor(diffMs / 1000);
       const diffMinutes = Math.floor(diffSeconds / 60);
@@ -66,7 +74,8 @@ function ModalDetalhesEvento({ evento, onClose }) {
       if (diffDays === 0 && remainingHours === 0 && remainingMinutes === 0 && remainingSeconds > 0) {
         timeString = `menos de 1 minuto`;
       }
-      
+
+      setStatusClasse('status-futuro');
       return `Faltam: ${timeString.trim()}`;
     };
 
@@ -74,11 +83,10 @@ function ModalDetalhesEvento({ evento, onClose }) {
 
     const interval = setInterval(() => {
       setTempoRestante(calculateTimeRemaining());
-    }, 1000); // Atualiza a cada segundo
+    }, 1000);
 
-    return () => clearInterval(interval); // Limpa o intervalo ao desmontar
-  }, [evento.dataInicio]);
-
+    return () => clearInterval(interval);
+  }, [evento.dataInicio, evento.dataFim]);
 
   return (
     <div className="modal-overlay-detalhe-evento">
@@ -90,7 +98,7 @@ function ModalDetalhesEvento({ evento, onClose }) {
           <div className="texto-cabecalho">
             <h2 className="titulo-evento"><strong>{evento.titulo}</strong></h2>
             {evento.dataInicio && (
-              <p className="tempo-restante-evento">{tempoRestante}</p>
+              <p className={`tempo-restante-evento ${statusClasse}`}>{tempoRestante}</p>
             )}
             <div className="descricao-evento">
               <h4>Descrição:</h4>
@@ -128,16 +136,15 @@ function ModalDetalhesEvento({ evento, onClose }) {
 
 // SecaoEventos
 function SecaoEventos({ titulo, eventos, onEventoClick }) {
-  const hoje = new Date(); // Obter a data e hora atual
+  const hoje = new Date(); 
 
   const INITIAL_ITEMS_COUNT = 4;
   const EXPANDED_ITEMS_COUNT = 6;
 
   const [visibleItemCount, setVisibleItemCount] = useState(INITIAL_ITEMS_COUNT);
 
-  // Ordenar eventos por data de início, considerando a hora
   const eventosOrdenados = [...eventos]
-    .filter(evento => new Date(evento.dataFim) >= hoje) // Filtrar por data/hora de término
+    .filter(evento => new Date(evento.dataFim) >= hoje) 
     .sort((a, b) => new Date(a.dataInicio) - new Date(b.dataInicio));
 
   const handleViewMoreToggle = () => {
