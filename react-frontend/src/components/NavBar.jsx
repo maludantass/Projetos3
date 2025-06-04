@@ -19,7 +19,6 @@ const Navbar = ({ isLoggedIn }) => {
               <li><Link to="/foruns">Fóruns</Link></li>
               <li><Link to="/eventos">Eventos</Link></li>
               <li><Link to="/ajuda">Ajuda</Link></li>
-              <li><Link to="/biblioteca">Biblioteca</Link></li>
             </>
           ) : (
             <>

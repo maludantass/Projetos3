@@ -4,7 +4,6 @@ import Navbar from "./components/NavBar";
 import Feed from "./pages/Feed";
 import Foruns from "./pages/Foruns";
 import Eventos from "./pages/Eventos";
-import Biblioteca from "./pages/Biblioteca";
 import Ajuda from "./pages/Ajuda";
 import LoginCadastro from "./pages/LoginCadastro";
 import Perfil from "./pages/Perfil";
@@ -52,7 +51,6 @@ function App() {
           <Route path="/feed" element={<PrivateRoute><Feed /></PrivateRoute>} />
           <Route path="/foruns" element={<PrivateRoute><Foruns /></PrivateRoute>} />
           <Route path="/eventos" element={<PrivateRoute><Eventos /></PrivateRoute>} />
-          <Route path="/biblioteca" element={<PrivateRoute><Biblioteca /></PrivateRoute>} />
           <Route path="/comunidade/:id" element={<PrivateRoute><CommunityPosts /></PrivateRoute>} />
           
 
