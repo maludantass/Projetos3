@@ -39,6 +39,12 @@ public class FeedController {
         return feedService.getPostsLikedByUser(user);
     }
 
+@PostMapping("/like")
+public void likeOrUnlikePost(@RequestParam Long userId, @RequestParam Long postId) {
+    postService.toggleLike(userId, postId);
+}
+
+
     // Endpoint para os vídeos salvos do usuário
     @GetMapping("/saved/{userId}")
     public List<Post> getSavedPosts(@PathVariable Long userId) {

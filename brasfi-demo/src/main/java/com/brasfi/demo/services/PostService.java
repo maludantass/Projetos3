@@ -1,20 +1,26 @@
 package com.brasfi.demo.services;
-
 import org.springframework.stereotype.Service;
+
+import com.brasfi.demo.model.Likes;
 import com.brasfi.demo.model.Post;
 import com.brasfi.demo.repository.PostRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import com.brasfi.demo.model.User;
+import com.brasfi.demo.repository.UserRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class PostService {
 
     private final PostRepository postRepository;
+    private final UserRepository userRepository;
 
-    public PostService(PostRepository postRepository) {
+    public PostService(PostRepository postRepository, UserRepository userRepository) {
         this.postRepository = postRepository;
+        this.userRepository = userRepository;
     }
 
     // Método que vai criar um novo post
@@ -64,4 +70,24 @@ public class PostService {
     public void deletePost(Long postId) {
         postRepository.deleteById(postId);
     }
+  @Transactional
+public void toggleLike(Long userId, Long postId) {
+    User user = userRepository.findById(userId)
+        .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
+    Post post = postRepository.findById(postId)
+        .orElseThrow(() -> new RuntimeException("Post não encontrado"));
+
+    boolean removed = post.getLikes().removeIf(like -> like.getUser().getId().equals(userId));
+
+    if (!removed) {
+        Likes newLike = new Likes();
+        newLike.setUser(user);
+        newLike.setPost(post);
+        post.getLikes().add(newLike);
+    }
+
+    postRepository.save(post); // <-- IMPORTANTE!
+}
+
 }

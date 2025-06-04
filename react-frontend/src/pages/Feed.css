@@ -134,16 +134,20 @@
   height: 40px;
   animation: spin 1s linear infinite;
 }
-
 .top-search-bar {
   margin-top: 30px;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: center; /* IMPORTANTE: mantém os ícones centralizados verticalmente */
   gap: 30px;
   padding: 10px 0;
-  flex-wrap: wrap;
+  flex-wrap: nowrap; /* Impede que vá para a linha de baixo */
 }
+.flag-icon {
+  width: 28px;
+  height: 28px;
+}
+
 
 .icon-group {
   display: flex;
@@ -151,6 +155,13 @@
 }
 
 .icon-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+.icon-btn1 {
+  margin-left: 16px;
   background: none;
   border: none;
   padding: 0;
