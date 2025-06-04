@@ -12,4 +12,6 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     List<Post> findByUser(User user);
     List<Post> findByUserId(Long userId);
     List<Post> findByExpiresAtAfter(LocalDateTime dateTime);
+    List<Post> findByContentContainingIgnoreCase(String contentQuery); //Novo pra barra de pesquisa do feed!
+    List<Post> findByPostType(String postType); //Mesmo motivo q o de cima
 }

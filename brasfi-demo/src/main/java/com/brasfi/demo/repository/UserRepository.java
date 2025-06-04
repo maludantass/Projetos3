@@ -32,4 +32,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
      */
     Optional<User> findByUsername(String username); // Novo método adicionado
 
+    Optional<User> findByUsernameContainingIgnoreCase(String username); //Para busca no feed com barra de pesquisa
+
 }

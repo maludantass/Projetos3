@@ -2,6 +2,7 @@ package com.brasfi.demo.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -29,13 +30,13 @@ public class Post {
     private LocalDateTime expiresAt;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<Likes> likes;
+    private List<Likes> likes = new ArrayList<>(); // Adicionada inicialização
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<Comment> comments;
+    private List<Comment> comments = new ArrayList<>(); // Adicionada inicialização
 
     @ManyToMany(mappedBy = "savedPosts", fetch = FetchType.LAZY)
-    private List<User> usersSaving;
+    private List<User> usersSaving = new ArrayList<>(); // Adicionada inicialização
 
     public Post() {
         // Construtor padrão
