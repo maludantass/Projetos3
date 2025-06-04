@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Perfil.css";
+import defaultAvatar from "../images/user.png";
 
 function Perfil({ setIsLoggedIn }) {
   const navigate = useNavigate();
@@ -21,11 +22,34 @@ function Perfil({ setIsLoggedIn }) {
 
   return (
     <div className="perfil-page">
-      <div className="perfil-card">
-        <h1>Perfil</h1>
-          <p><strong>Usuário:</strong> {user.username}</p>
-          <p><strong>Email:</strong> {user.email}</p>
-          <button onClick={handleLogout} className="logout-btn">Logout</button>
+      <div className="profile-wrapper">
+        <div className="profile-header-background"></div> 
+        
+        <div className="profile-content">
+          <div className="profile-avatar-section">
+            <img
+              src={defaultAvatar}
+              alt="Avatar Padrão do Usuário"
+              className="profile-avatar"
+            />
+          </div>
+
+          <div className="profile-info-section">
+            <p className="profile-username">@{user.username}</p>
+            <p className="profile-greeting">
+              Olá, {user.username}!
+            </p>
+            <p className="profile-email">
+              Email: {user.email}
+            </p>
+          </div>
+
+          <div className="profile-actions">
+            <button onClick={handleLogout} className="logout-btn">
+              Sair
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );
