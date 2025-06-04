@@ -5,6 +5,7 @@ import com.brasfi.demo.model.User;
 import com.brasfi.demo.repository.UserRepository;
 import com.brasfi.demo.services.FeedService;
 import com.brasfi.demo.services.PostService;
+import com.brasfi.demo.dto.PostResponseDTO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -45,10 +46,13 @@ public class FeedController {
         return user.getSavedPosts();
     }
 
-    // Endpoint para obter o feed geral (posts que ainda não expiraram)
+    // Endpoint para obter o feed geral (posts que ainda não expiraram) 
     @GetMapping("/general")
-    public List<Post> getGeneralFeed() {
-        return feedService.getGeneralFeed();
+    public List<PostResponseDTO> getGeneralFeed() {
+        return feedService.getGeneralFeed()
+            .stream()
+            .map(PostResponseDTO::new)
+            .toList();
     }
 
     // Endpoint para criar um novo post
@@ -69,7 +73,9 @@ public class FeedController {
         }
 
         // Criação do post
-        return postService.createPost(post);
+        Post savedPost = postService.createPost(post);
+        savedPost.setUser(user); // força garantir que o user esteja no JSON retornado
+        return savedPost;
     }
 
     private User getUserById(Long userId) {

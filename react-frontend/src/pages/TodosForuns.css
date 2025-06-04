@@ -17,7 +17,6 @@
 
 .todos-foruns-page {
   padding-top: 2rem;
-  background-color: #f4f4f4;
   min-height: 100vh;
   font-family: sans-serif;
 }
@@ -31,6 +30,7 @@
 .forum-main h1 {
   text-align: center;
   margin-bottom: 2rem;
+  
 }
 
 .forum-card-list {
@@ -58,7 +58,7 @@
 .forum-avatar {
   width: 50px;
   height: 50px;
-  background: gray;
+  background: white;
   border-radius: 50%;
   margin-right: 1rem;
   flex-shrink: 0;
@@ -86,14 +86,19 @@
 .voltar-btn {
   display: inline-block;
   padding: 6px 12px;
-  background-color: #000;
+  background-color: #2E7D32;
   color: #fff;
   border-radius: 6px;
   text-decoration: none;
   font-size: 0.9rem;
   transition: background-color 0.2s ease;
+
+  position: absolute;  /*  isso aqui faz o top/left funcionar */
+  top: 7.0rem;
+  left: 2rem;
+  z-index: 10; /* garante que fique acima de outros elementos */
 }
 
 .voltar-btn:hover {
-  background-color: #333;
+  background-color: #1e6c48;
 }

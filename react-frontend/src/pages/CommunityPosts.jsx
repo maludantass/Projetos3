@@ -4,13 +4,12 @@ import {
   getCommentsByPost,
   createComment,
   updatePost,
-  deletePost,
+  deletePost
 } from '../services/forumService';
 import PostVotes from '../components/PostVotes';
 import CommentVotes from '../components/CommentVotes';
-import './CommunityPosts.css';
 import { useParams, Link } from 'react-router-dom';
-
+import './CommunityPosts.css';
 
 const CommunityPosts = () => {
   const { communityId } = useParams();
@@ -25,18 +24,8 @@ const CommunityPosts = () => {
   useEffect(() => {
     if (communityId) {
       getPostsByCommunity(communityId)
-        .then((data) => {
-          const postFake = {
-            id: 9999,
-            title: 'Post de Teste (Remover depois)',
-            content: 'Este é um post fake só para testar o layout da página.',
-            author: { username: 'UsuarioTeste' },
-            createdAt: new Date().toISOString(),
-            voteScore: 0,
-          };
-          setPosts([postFake, ...data]);
-        })
-        .catch((err) => console.error('Erro ao buscar posts:', err));
+        .then(setPosts)
+        .catch((err) => console.error('Erro ao carregar posts da comunidade:', err));
     }
   }, [communityId]);
 
@@ -112,6 +101,23 @@ const CommunityPosts = () => {
 
   return (
     <div className="community-posts-container">
+
+      {/* Banner superior */}
+      <div className="community-banner">
+        Você está vendo a preview do fórum. <strong>Quer participar?</strong>
+        <button className="join-btn">Entrar</button>
+      </div>
+
+      {/* Cabeçalho do fórum */}
+      <div className="community-header">
+        <div className="forum-avatar-large"></div>
+        <div className="forum-info-text">
+          <h1>Nome do Fórum</h1>
+          <p>Descrição do fórum para contextualizar os usuários.</p>
+        </div>
+      </div>
+
+      {/* Lista de posts */}
       <h2>Posts da Comunidade</h2>
       {posts.map((post) => (
         <div key={post.id} className="post-card">
@@ -141,12 +147,11 @@ const CommunityPosts = () => {
             </>
           ) : (
             <>
-                  <h3>
-      <Link to={`/post/${post.id}`} className="post-title-link">
-        {post.title}
-      </Link>
-    </h3>
-
+              <h3>
+                <Link to={`/post/${post.id}`} className="post-title-link">
+                  {post.title}
+                </Link>
+              </h3>
               <p className="meta">
                 Por <strong>{post.author?.username || 'Desconhecido'}</strong> em{' '}
                 {new Date(post.createdAt).toLocaleString()}
@@ -157,6 +162,7 @@ const CommunityPosts = () => {
                 <button onClick={() => handleDelete(post.id)}>Excluir</button>
               </div>
               <PostVotes postId={post.id} score={post.voteScore} />
+
               <div className="comment-section">
                 <button onClick={() => carregarComentarios(post.id, 0)}>Ver comentários</button>
                 <ul>
@@ -193,6 +199,11 @@ const CommunityPosts = () => {
           )}
         </div>
       ))}
+
+      {/* Campo de mensagem fixo */}
+      <div className="community-input">
+        <input type="text" placeholder="Converse com os membros" />
+      </div>
     </div>
   );
 };
