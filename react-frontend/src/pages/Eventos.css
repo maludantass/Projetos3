@@ -1,3 +1,4 @@
+/* Estilos Globais e do CODIGO 1 (base) */
 body {
    font-family: sans-serif;
    margin: 0;
@@ -6,21 +7,25 @@ body {
    color: #333;
 }
 
-.top-bar {
-   display: flex;
-   justify-content: space-between;
-   align-items: center;
-   margin-bottom: 30px;
-   padding: 10px 20px; 
-   background-color: #fff; 
-   border-bottom: 1px solid #eee;
+main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
 }
 
-.top-bar-eventos input[type="text"] {
-  width: 300px;
-  padding: 10px 15px;
-  border: 2px solid #2E7D32; /* Borda verde */
-  border-radius: 25px; /* Cantos arredondados */
+/* Barra Superior e Pesquisa (do CODIGO 1) */
+.top-bar-eventos { /* Mantido do codigo1, mas o input pode usar a estilização do codigo2 que é igual */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px; /* Era 30px, ajustado como no JSX do codigo1 */
+}
+
+.top-bar-eventos input[type="text"] { /* Estilo do codigo1 e codigo2 são bem parecidos, usando um deles */
+  width: 250px; /* Ajustado como no JSX do codigo1 */
+  padding: 10px 15px; /* Aumentado um pouco para melhor aparência */
+  border: 2px solid #2E7D32;
+  border-radius: 25px;
   font-size: 1rem;
   background-color: #f8f8f8;
   transition: all 0.3s;
@@ -28,238 +33,182 @@ body {
 }
 
 .top-bar-eventos input[type="text"]:focus {
-  border-color: #4CAF50; /* Verde mais claro ao focar */
+  border-color: #4CAF50;
   box-shadow: 0 0 8px rgba(76, 175, 80, 0.3);
 }
 
-.left-icons span {
-   margin-right: 15px;
-   font-size: 20px;
-   color: #555;
-   cursor: pointer;
+/* Botão "+" de Adicionar Evento (do CODIGO 1) */
+.add-event-btn {
+  background-color: #2E7D32;
+  color: white;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s;
 }
 
-.left-icons svg {
-   width: 20px;
-   height: 20px;
-   fill: #555;
+.add-event-btn:hover {
+  background-color: #4CAF50;
+  transform: scale(1.1);
 }
 
-.search-bar {
-   display: flex;
-   align-items: center;
-   background-color: #ddd;
-   border-radius: 5px;
-   padding: 5px 10px;
-}
-
-.search-bar input[type="text"] {
-   border: none;
-   background: transparent;
-   padding: 8px;
-   width: 200px;
-   outline: none;
-}
-
-.filter-icon {
-   background-color: #aaa;
-   color: white;
-   padding: 8px;
-   border-radius: 5px;
-   cursor: pointer;
-}
-
-main {
-  max-width: 1200px; /* Largura máxima */
-  margin: 0 auto; /* Centraliza horizontalmente */
-  padding: 20px;
-}
-
-.events, .articles {
+/* Seção de Eventos e Títulos (comum, priorizando codigo1/2 onde similar) */
+.events {
    margin-bottom: 40px;
    background-color: #fff;
    padding: 20px;
    border-radius: 8px;
    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
- .events h2 {
+.events h2 { /* Estilo do codigo1/2 */
   text-align: center;
   margin-bottom: 24px;
   font-size: 1.5rem;
-  color: #2E7D32; /* Verde escuro para combinar */
+  color: #2E7D32;
+  border-bottom: 2px solid #eee; 
+  padding-bottom: 8px;
 }
 
-h2, h3 {
-   color: #333;
-   margin-bottom: 15px;
-   border-bottom: 2px solid #eee; 
-   padding-bottom: 8px;
-}
-
+/* Grid e Itens de Evento (do CODIGO 2 - com imagens) */
 .grid-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 16px;
+  gap: 24px; /* Espaçamento do codigo1/2 */
+  padding: 0 16px; /* Padding do codigo1/2 */
   margin-bottom: 20px;
 }
 
-/* --- ALTERAÇÃO PRINCIPAL (DEGRADÊ VERDE + HOVER) --- */
-/* Ajustes para os cards de evento */
-.grid-container .item {
-  height: 180px; /* Altura fixa */
-  min-height: auto; /* Remove a min-height anterior */
-  padding: 20px;
+.item { /* Estilo base do item do CODIGO 2 */
+  position: relative;
+  height: 180px;
   border-radius: 12px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  background: linear-gradient(135deg, #2E7D32 0%, #4CAF50 100%);
-  color: white;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
   cursor: pointer;
-  overflow: hidden; /* Garante que nada ultrapasse os limites */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  /* Gradiente de fundo do codigo1 é removido em favor da imagem de fundo */
 }
 
-/* Espaçamento entre os grids */
-.grid-container {
-  gap: 24px; /* Aumenta o espaçamento entre cards */
-  padding: 0 16px; /* Adiciona padding nas laterais */
-}
-
-/* Ajustes no texto */
-.evento-titulo {
-  font-size: 1.2rem;
-  margin-bottom: 12px;
-  line-height: 1.3;
-  font-weight: 600;
-}
-
-.evento-data {
-  font-size: 0.9rem;
-  opacity: 0.9;
-  margin-top: auto; /* Empurra para baixo */
-}
-
-/* Efeito hover mais pronunciado */
-.grid-container .item:hover {
+.item:hover { /* Efeito hover do codigo1/2 */
   transform: translateY(-5px);
   box-shadow: 0 8px 16px rgba(0,0,0,0.15);
 }
 
-.topic ul {
-   list-style: none;
-   padding: 0;
-   margin-bottom: 15px;
+/* Aplicação das imagens de fundo aos itens (do CODIGO 2) */
+.item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 1; /* Para ficar abaixo do conteúdo textual, se houver */
 }
 
-.topic li {
-   display: flex;
-   justify-content: space-between;
-   align-items: center;
-   padding: 12px 0; 
-   border-bottom: 1px solid #eee;
+/* Assegure que os caminhos para as imagens estejam corretos */
+.item[data-imagem="0"]::before { background-image: url('../images/Evento1.png'); }
+.item[data-imagem="1"]::before { background-image: url('../images/Evento2.png'); }
+.item[data-imagem="2"]::before { background-image: url('../images/Evento3.png'); }
+.item[data-imagem="3"]::before { background-image: url('../images/Evento4.png'); }
+
+/* Oculta título e data DENTRO do card para priorizar imagem (do CODIGO 2) */
+/* Se quiser mostrar texto SOBRE a imagem, remova ou ajuste esta regra */
+.item .evento-titulo,
+.item .evento-data {
+  display: none; 
+  /* Se quiser mostrar sobre a imagem, pode estilizá-los assim:
+  position: relative;
+  z-index: 2;
+  color: white;
+  padding: 10px;
+  background-color: rgba(0,0,0,0.4);
+  */
 }
 
-.topic li:last-child {
-   border-bottom: none;
-}
 
-.topic li span {
-   display: inline-block;
-   background-color: #bbb;
-   height: 10px;
-   margin-right: 10px;
-   border-radius: 3px;
-}
-
-.topic li span:nth-child(1) { width: 80%; }
-.topic li span:nth-child(2) { width: 60%; }
-.topic li span:nth-child(3) { width: 40%; }
-
-.topic li span:nth-child(4) { width: 75%; }
-.topic li span:nth-child(5) { width: 30%; }
-
-.topic li svg {
-   width: 20px;
-   height: 20px;
-   fill: #777;
-}
-
-/* Botão "Ver mais" com borda redonda verde */
+/* Botão "Ver mais" (do CODIGO 1, que é similar ao do codigo2) */
 .view-more {
   display: block;
   margin: 20px auto;
   background: transparent;
-  border: 2px solid #2E7D32; /* Borda verde */
-  border-radius: 20px; /* Cantos totalmente arredondados */
+  border: 2px solid #2E7D32;
+  border-radius: 20px;
   color: #2E7D32;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  padding: 6px 16px; /* Ajuste para melhor proporção */
+  padding: 6px 16px;
   text-align: center;
   transition: all 0.3s;
 }
 
 .view-more:hover {
   color: white;
-  background-color: #2E7D32; /* Fundo verde no hover */
+  background-color: #2E7D32;
 }
 
-.view-more svg {
+.view-more svg { /* Estilo do SVG do botão do codigo1 */
   width: 16px;
   height: 16px;
-  fill: currentColor; /* Herda a cor do texto */
+  fill: currentColor;
   margin-left: 6px;
   vertical-align: middle;
   transition: fill 0.3s;
 }
 
-.articles .topic {
-   margin-bottom: 30px;
-   padding-bottom: 20px;
-   border-bottom: 1px solid #ccc;
-}
-
-.articles .topic:last-child {
-   border-bottom: none;
-}
-
+/* Modal de ADICIONAR EVENTO (Overlay e Modal base - do CODIGO 1) */
 .modal-overlay {
    position: fixed;
    top: 0;
    left: 0;
    width: 100vw;
    height: 100vh;
-   background-color: rgba(0, 0, 0, 0.4);
+   background-color: rgba(0, 0, 0, 0.4); /* Opacidade do codigo1 */
    display: flex;
    align-items: center;
    justify-content: center;
    z-index: 1000;
-   backdrop-filter: blur(3px);
+   backdrop-filter: blur(3px); /* Efeito do codigo1 */
 }
 
-.modal {
+/* Estilo para o modal de ADICIONAR EVENTO (do CODIGO 1) */
+.modal { /* Esta é a classe .modal usada pelo modal de adicionar do codigo1 */
    background-color: #ffffff;
-   padding: 2rem;
-   border-radius: 12px;
-   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+   padding: 2rem; /* Padding do codigo1 */
+   border-radius: 12px; /* Raio do codigo1 */
+   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Sombra do codigo1 */
    width: 90%;
-   max-width: 480px;
+   max-width: 480px; /* Largura do codigo1 */
    font-family: sans-serif;
-   animation: fadeIn 0.3s ease;
+   animation: fadeIn 0.3s ease; /* Animação do codigo1 */
+   text-align: left; /* Adicionado para consistência, original do codigo1 não especificava */
+   position: relative; /* Adicionado para consistência */
 }
 
-.modal h2 {
-   margin-top: 0;
-   font-size: 1.5rem;
-   color: #222;
+.modal h3 { /* Título do modal de adicionar */
+  margin-top: 0;
+  font-size: 1.5rem; /* Tamanho do codigo1 para h2, adaptado para h3 */
+  color: #222; /* Cor do codigo1 */
+  margin-bottom: 15px; /* Margem do h2/h3 do codigo1 */
+  border-bottom: 2px solid #eee; /* Borda do h2/h3 do codigo1 */
+  padding-bottom: 8px; /* Padding do h2/h3 do codigo1 */
 }
 
-.modal input,
-.modal textarea {
-   width: 100%;
+.modal input[type="text"],
+.modal input[type="date"],
+.modal textarea { /* Inputs do modal de adicionar (do CODIGO 1) */
+   width: 100%; /* Garante que ocupe 100% da largura do form */
+   box-sizing: border-box; /* Para padding não aumentar a largura total */
    margin-top: 10px;
    margin-bottom: 20px;
    padding: 10px 12px;
@@ -271,18 +220,27 @@ h2, h3 {
 }
 
 .modal input:focus,
-.modal textarea:focus {
-   border-color: #888;
+.modal textarea:focus { /* Foco dos inputs do modal de adicionar (do CODIGO 1) */
+   border-color: #888; /* Cor do codigo1, era #2E7D32, mas #888 é mais sutil */
    outline: none;
 }
 
-.modal-actions {
+.modal h5 { /* Para os títulos "Data de início/término" */
+    margin-top: 10px;
+    margin-bottom: 5px;
+    font-size: 0.9rem;
+    color: #333;
+    font-weight: 500;
+}
+
+.modal-actions { /* Ações do modal de adicionar (do CODIGO 1) */
    display: flex;
    justify-content: flex-end;
    gap: 10px;
+   margin-top: 20px; /* Adiciona espaço acima dos botões */
 }
 
-.modal-actions button {
+.modal-actions button { /* Botões base do modal de adicionar (do CODIGO 1) */
    padding: 10px 16px;
    font-size: 1rem;
    border: none;
@@ -291,109 +249,176 @@ h2, h3 {
    transition: background-color 0.2s;
 }
 
-.modal-actions .cancel-btn {
+.modal-actions .cancel-btn { /* Botão cancelar do modal de adicionar (do CODIGO 1) */
    background-color: #eee;
    color: #333;
 }
+.modal-actions .cancel-btn:hover { background-color: #ddd; }
 
-.modal-actions .save-btn {
-   background-color: #333;
+
+.modal-actions .save-btn { /* Botão salvar do modal de adicionar (do CODIGO 1) */
+   background-color: #2E7D32; /* Verde do tema */
    color: #fff;
 }
+.modal-actions .save-btn:hover { background-color: #4CAF50; } /* Verde mais claro */
 
-.modal-actions .cancel-btn:hover {
-   background-color: #ddd;
-}
 
-.modal-actions .save-btn:hover {
-   background-color: #111;
-}
-
-@keyframes fadeIn {
-   from { opacity: 0; transform: translateY(-10px); }
-   to { opacity: 1; transform: translateY(0); }
-}
-
-.modal-overlay-detalhe-evento {
+/* Modal de DETALHES DO EVENTO (Overlay - do CODIGO 1, usado por ambos) */
+.modal-overlay-detalhe-evento { /* Do codigo1, mas usado pelo modal de detalhes do codigo2 */
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); 
+  background-color: rgba(0, 0, 0, 0.5); /* Opacidade do codigo1 */
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 999;
+  z-index: 999; /* z-index do codigo1 */
+  /* backdrop-filter: blur(3px); Opcional, se quiser o mesmo efeito do modal de adicionar */
 }
 
-.modal {
-  background-color: #ffffff;
-  padding: 24px 32px;
+/* Estilo para o modal DETALHADO (do CODIGO 2) */
+.modal-detalhado { /* Classe específica do modal de detalhes do CODIGO 2 */
+  background-color: white;
   border-radius: 12px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-  max-width: 480px;
-  width: 90%;
-  text-align: left;
-  position: relative;
-  animation: fadeInUp 0.3s ease;
-}
-
-.modal h3 {
-  font-size: 22px;
-  margin-bottom: 12px;
-  color: #2c3e50;
-}
-
-.modal h4 {
-  font-size: 18px;
-  font-weight: 600;
-  margin-bottom: 10px;
-  color: #34495e;
-}
-
-.modal p {
-  font-size: 14px;
-  color: #555;
-  margin: 6px 0;
-}
-
-.modal button {
-  background-color: #030d031c;
-  color: rgb(0, 0, 0);
-  border: none;
-  padding: 10px 20px;
-  border-radius: 6px;
-  margin-top: 18px;
-  cursor: pointer;
-  font-weight: 600;
-  transition: background-color 0.3s;
-}
-
-
-/* Botão "+" */
-.add-event-btn {
-  background-color: #2E7D32; /* Verde escuro */
-  color: white;
-  border: none;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%; /* Formato circular */
-  font-size: 1.5rem;
-  cursor: pointer;
+  padding: 24px 32px; /* Padding do codigo2 (ajustado de 32px geral) */
+  max-width: 900px; /* Largura do codigo2 */
+  width: 90%; /* Largura responsiva do codigo1/2 */
   display: flex;
+  flex-direction: column;
+  font-family: sans-serif;
+  position: relative;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25); /* Sombra do codigo2 */
+  animation: fadeInUp 0.3s ease; /* Animação do codigo1/2 */
+  text-align: left; /* Garantir alinhamento */
+}
+
+.modal-detalhado .modal-header { /* Cabeçalho interno do modal de detalhes (CODIGO 2) */
+  display: flex;
+  justify-content: flex-start;
   align-items: center;
-  justify-content: center;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  transition: all 0.3s;
+  margin-bottom: 1rem; /* Espaçamento do codigo2 */
 }
 
-.add-event-btn:hover {
-  background-color: #4CAF50; /* Verde mais claro no hover */
-  transform: scale(1.1);
+.modal-detalhado .botao-voltar-modal { /* Botão voltar (CODIGO 2) */
+  background: none;
+  border: none;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #333;
+  cursor: pointer;
+  padding: 0; /* Remover padding extra */
+  /* margin-bottom: 20px; Removido, pois o .modal-header já tem margin */
 }
 
-@keyframes fadeInUp {
+.modal-detalhado .cabecalho-modal { /* Seção com texto e imagem (CODIGO 2) */
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start; /* Alinha itens ao topo */
+  gap: 2rem; /* Espaçamento do codigo2 */
+  margin-bottom: 1.5rem; /* Espaçamento entre seções do codigo2 (era 1rem, aumentado) */
+}
+
+.modal-detalhado .texto-cabecalho { /* Container do texto no cabeçalho (CODIGO 2) */
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem; /* Espaçamento entre título, subtítulo, descrição */
+}
+
+.modal-detalhado .titulo-evento { /* Título do evento no modal de detalhes (CODIGO 2) */
+  font-size: 1.8rem; /* Aumentado um pouco para destaque */
+  margin: 0;
+  color: #2E7D32; /* Cor do tema */
+  font-weight: bold;
+}
+
+.modal-detalhado .subtitulo-brasfi { /* Subtítulo (CODIGO 2) */
+  font-style: italic;
+  color: #555;
+  margin: 0; /* Removido margin-top */
+}
+
+.modal-detalhado .descricao-evento { /* Descrição (CODIGO 2) */
+  margin-top: 0.5rem; /* Pequeno espaço acima */
+  margin-bottom: 1rem; /* Espaço abaixo */
+  line-height: 1.6; /* Melhor legibilidade */
+}
+.modal-detalhado .descricao-evento h4,
+.modal-detalhado .topicos-evento h4 {
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+
+.modal-detalhado .imagem-evento-direita { /* Imagem (CODIGO 2) */
+  width: 280px; /* Largura do codigo2 (era 300px) */
+  max-height: 250px; /* Limita altura da imagem */
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.modal-detalhado .topicos-evento { /* Seção de tópicos (CODIGO 2) */
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+}
+.modal-detalhado .topicos-evento ul {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 0.5rem;
+    line-height: 1.6;
+}
+.modal-detalhado .topicos-evento li {
+    margin-bottom: 6px;
+    color: #444;
+}
+
+
+.modal-detalhado .rodape-evento { /* Rodapé com data e link (CODIGO 2) */
+  text-align: center;
+  margin-top: 2rem; /* Espaço acima */
+  margin-bottom: 0; /* Remover margem inferior se for o último elemento */
+}
+.modal-detalhado .rodape-evento p {
+    font-size: 0.95rem;
+    color: #333;
+}
+.modal-detalhado .rodape-evento p strong {
+    font-weight: 600;
+}
+
+
+.modal-detalhado .link-evento { /* Estilo do link (CODIGO 2) */
+  background-color: #e0f2f1; /* Tom de verde mais claro e suave */
+  text-align: center;
+  padding: 10px 15px;
+  border-radius: 20px; /* Mais arredondado */
+  margin-top: 12px;
+  font-weight: 500; /* Menos bold que o original */
+  overflow-wrap: break-word;
+  border: 1px solid #b2dfdb; /* Borda sutil */
+}
+
+.modal-detalhado .link-evento a {
+  color: #00695c; /* Verde escuro para contraste */
+  text-decoration: none;
+  font-weight: 600;
+}
+.modal-detalhado .link-evento a:hover {
+    text-decoration: underline;
+}
+
+
+/* Animações (Comum, do CODIGO 1) */
+@keyframes fadeIn {
+   from { opacity: 0; transform: translateY(-10px); }
+   to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp { /* Usada pelo modal-detalhado */
   from {
     opacity: 0;
     transform: translateY(40px);
@@ -404,19 +429,48 @@ h2, h3 {
   }
 }
 
-/* Grid inicial (4 itens) */
-.grid-container.inicial {
-  grid-template-columns: repeat(4, 1fr); /* 4 colunas fixas */
-}
-
-/* Grid expandido (itens extras) */
-.grid-container.extras {
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Volta ao padrão */
-}
-
-/* Responsividade */
+/* Responsividade (do CODIGO 1 - para o grid inicial, mas SecaoEventos foi alterada) */
+/* O grid agora é sempre responsivo com auto-fill, então essa regra específica pode não ser mais necessária
+   a menos que queira um comportamento diferente em telas menores para os primeiros 4 itens.
+   A lógica de "mostrarTodos" agora controla quantos itens são renderizados, não as colunas do CSS. */
 @media (max-width: 1200px) {
-  .grid-container.inicial {
-    grid-template-columns: repeat(2, 1fr); /* 2 colunas em telas menores */
+  /* .grid-container.inicial { Antiga classe do codigo1
+    grid-template-columns: repeat(2, 1fr);
+  } */
+  .modal-detalhado .cabecalho-modal {
+    flex-direction: column;
+    align-items: center;
   }
+  .modal-detalhado .imagem-evento-direita {
+    width: 100%;
+    max-width: 300px; /* Limita em telas menores */
+    margin-top: 1rem;
+  }
+  .modal-detalhado .texto-cabecalho {
+    text-align: center;
+  }
+}
+
+@media (max-width: 600px) {
+    .top-bar-eventos {
+        flex-direction: column-reverse; /* Input em cima, botão + em baixo */
+        gap: 10px;
+        align-items: stretch; /* Estica o input e o botão */
+    }
+    .top-bar-eventos input[type="text"] {
+        width: 100%; /* Ocupa toda a largura */
+    }
+    .add-event-btn {
+        align-self: flex-end; /* Alinha o botão + à direita */
+    }
+
+    .modal-detalhado {
+        padding: 16px;
+    }
+    .modal-detalhado .titulo-evento {
+        font-size: 1.5rem;
+    }
+    .modal-detalhado .imagem-evento-direita {
+        max-height: 200px;
+    }
 }
