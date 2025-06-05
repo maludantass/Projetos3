@@ -228,7 +228,7 @@ function SecaoEventos({ titulo, eventos, onEventoClick, somenteFavoritos }) {
     className="imagem-capa-evento"
     draggable="false"
   />
-  <h4>{evento.titulo}</h4>
+  <h4 className="titulo-abaixo">{evento.titulo}</h4>
 </div>
 
         ))}
