@@ -1,6 +1,5 @@
-package com.brasfi.demo.dto;
+package com.brasfi.demo.dto; // Ou o seu pacote de DTOs
 
-import jakarta.validation.constraints.Email; 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -19,16 +18,17 @@ public class ForumPostRequestDTO {
     @Size(min = 3, max = 300, message = "O título do post deve ter entre 3 e 300 caracteres.")
     private String title;
 
+    // O conteúdo é opcional se uma URL for fornecida, e vice-versa.
+    // Essa lógica de validação (um ou outro deve estar presente)
+    // geralmente é tratada na camada de serviço ou com validações customizadas a nível de classe.
     @Size(max = 10000, message = "O conteúdo do post não pode exceder 10000 caracteres.")
-    private String content;
+    private String content; // Conteúdo textual do post (opcional se url for preenchida)
 
     @Size(max = 2048, message = "A URL não pode exceder 2048 caracteres.")
-    private String url;
+    private String url; // URL para posts do tipo link (opcional se content for preenchido)
 
     @NotNull(message = "O ID da comunidade (ForumCommunity) é obrigatório.")
-    private Long forumCommunityId;
+    private Long forumCommunityId; // ID da ForumCommunity onde o post será criado
 
-    @NotBlank(message = "O email do autor não pode estar em branco.")
-    @Email(message = "O formato do email é inválido.")
-    private String authorEmail;
+    // O ID do autor (User) será obtido do usuário autenticado no backend.
 }

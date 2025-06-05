@@ -6,7 +6,7 @@ import './Foruns.css';
 const Foruns = () => {
   const [communities, setCommunities] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState(''); // 👈 busca por título
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -16,17 +16,16 @@ const Foruns = () => {
       .finally(() => setLoading(false));
   }, []);
 
-  const meusForuns = JSON.parse(localStorage.getItem('meusForuns')) || [];
+  if (loading) {
+    return <p>Carregando...</p>;
+  }
 
-  const comunidadesInscritas = communities.filter((c) =>
-    meusForuns.includes(c.id)
+  const estaInscrito = communities.length > 0;
+
+  // 👇 comunidades filtradas pela busca
+  const comunidadesFiltradas = communities.filter((comunidade) =>
+    comunidade.title.toLowerCase().includes(search.toLowerCase())
   );
-
-  const comunidadesFiltradas = comunidadesInscritas.filter((c) =>
-    c.title.toLowerCase().includes(search.toLowerCase())
-  );
-
-  if (loading) return <p>Carregando...</p>;
 
   return (
     <div className="forum-page">
@@ -38,12 +37,7 @@ const Foruns = () => {
         <button className="forum-button" onClick={() => navigate('/foruns/novo')}>＋</button>
       </div>
 
-      {comunidadesInscritas.length === 0 ? (
-        <div className="forum-empty-content">
-          <h2>Parece que você não está em um fórum...</h2>
-          <Link to="/foruns/todos" className="main-btn">Descubra aqui</Link>
-        </div>
-      ) : (
+      {estaInscrito ? (
         <div className="forum-main">
           <div className="forum-header">
             <h1>Seus Fóruns</h1>
@@ -54,6 +48,8 @@ const Foruns = () => {
               <button className="topic">Tópico 3</button>
               <button className="topic">Tópico 4</button>
               <button className="topic">Tópico 5</button>
+
+              {/* 👉 Campo de busca */}
               <div className="search-area">
                 <input
                   type="text"
@@ -70,20 +66,25 @@ const Foruns = () => {
           <div className="forum-section">
             <h2>Em Destaque</h2>
             <div className="forum-card-list">
-              {comunidadesFiltradas.map((c) => (
-                <Link to={`/comunidade/${c.id}`} key={c.id} className="forum-card">
+              {comunidadesFiltradas.map((comunidade) => (
+                <Link to={`/comunidade/${comunidade.id}`} key={comunidade.id} className="forum-card">
                   <div className="forum-avatar"></div>
                   <div className="forum-info">
-                    <h3>{c.title}</h3>
-                    <p>{c.description || "Sem descrição disponível."}</p>
+                    <h3>{comunidade.title}</h3>
+                    <p>{comunidade.description || "Sem descrição disponível."}</p>
                   </div>
                   <div className="forum-members">
-                    Membros:<br />{c.memberCount ?? c.members?.length ?? 0}
+                    Membros:<br />{comunidade.memberCount ?? comunidade.members?.length ?? 0}
                   </div>
                 </Link>
               ))}
             </div>
           </div>
+        </div>
+      ) : (
+        <div className="forum-empty-content">
+          <h2>Parece que você não está em um fórum...</h2>
+          <Link to="/foruns/todos" className="main-btn">Descubra aqui</Link>
         </div>
       )}
     </div>

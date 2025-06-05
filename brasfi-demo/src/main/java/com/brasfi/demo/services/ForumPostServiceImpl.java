@@ -3,8 +3,12 @@ package com.brasfi.demo.services;
 import com.brasfi.demo.dto.ForumPostRequestDTO;
 import com.brasfi.demo.dto.ForumPostResponseDTO;
 import com.brasfi.demo.dto.UserSummaryDTO;
-import com.brasfi.demo.model.*;
-import com.brasfi.demo.repository.*;
+import com.brasfi.demo.model.*; // Importa User, ForumPost, ForumCommunity, VoteType
+import com.brasfi.demo.repository.*; // Importa todos os repositórios necessários
+// Importe suas exceções customizadas
+// import com.brasfi.demo.exception.ResourceNotFoundException;
+// import com.brasfi.demo.exception.OperationNotPermittedException;
+// import com.brasfi.demo.exception.InvalidRequestException; // Para validações como content OU url
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -13,7 +17,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils; 
+import org.springframework.util.StringUtils; // Para verificar strings vazias/nulas
 
 @Service
 @RequiredArgsConstructor
@@ -23,8 +27,8 @@ public class ForumPostServiceImpl implements ForumPostService {
     private final ForumPostRepository forumPostRepository;
     private final UserRepository userRepository;
     private final ForumCommunityRepository forumCommunityRepository;
-    private final ForumVoteRepository forumVoteRepository;        
-    private final ForumCommentRepository forumCommentRepository; 
+    private final ForumVoteRepository forumVoteRepository;         // Para calcular voteScore
+    private final ForumCommentRepository forumCommentRepository; // Para calcular commentCount
 
     @Override
     @Transactional
@@ -32,17 +36,16 @@ public class ForumPostServiceImpl implements ForumPostService {
         log.info("Requisição para criar ForumPost com título: '{}' na comunidade ID: {}",
                 requestDTO.getTitle(), requestDTO.getForumCommunityId());
 
-        User author = userRepository.findByEmail(requestDTO.getAuthorEmail())
-                .orElseThrow(() -> new RuntimeException("Usuário autor não encontrado com o email: " + requestDTO.getAuthorEmail()));
-
+        User author = getCurrentAuthenticatedUser();
         ForumCommunity community = forumCommunityRepository.findById(requestDTO.getForumCommunityId())
-                .orElseThrow(() -> new RuntimeException("Comunidade não encontrada com ID: " + requestDTO.getForumCommunityId()));
+                .orElseThrow(() -> new RuntimeException("Comunidade não encontrada com ID: " + requestDTO.getForumCommunityId())); // Use ResourceNotFoundException
 
+        // Validação: content OU url deve estar presente
         if (!StringUtils.hasText(requestDTO.getContent()) && !StringUtils.hasText(requestDTO.getUrl())) {
-            throw new RuntimeException("O post deve ter conteúdo ou uma URL.");
+            throw new RuntimeException("O post deve ter conteúdo ou uma URL."); // Use InvalidRequestException
         }
         if (StringUtils.hasText(requestDTO.getContent()) && StringUtils.hasText(requestDTO.getUrl())) {
-            throw new RuntimeException("O post não pode ter conteúdo e URL simultaneamente.");
+            throw new RuntimeException("O post não pode ter conteúdo e URL simultaneamente."); // Use InvalidRequestException
         }
 
         ForumPost post = new ForumPost();
@@ -56,6 +59,7 @@ public class ForumPostServiceImpl implements ForumPostService {
         log.info("ForumPost ID {} criado por {} na comunidade {}",
                 savedPost.getId(), author.getUsername(), community.getTitle());
 
+        // voteScore e commentCount serão 0 para um novo post
         return mapToResponseDTO(savedPost, 0, 0);
     }
 
