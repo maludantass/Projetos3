@@ -12,6 +12,7 @@ import Home from "./pages/Home";
 import CommunityPosts from "./pages/CommunityPosts";
 import TodosForuns from './pages/TodosForuns';
 import PostDetalhado from './pages/PostDetalhado';
+import NovoForum from './pages/NovoForum';
 
 
 function App() {
@@ -46,6 +47,7 @@ function App() {
           <Route path="/ajuda" element={<Ajuda />} />
           <Route path="/faq" element={<Faq />} />
           <Route path="/foruns/todos" element={<TodosForuns />} />
+           <Route path="/foruns/novo" element={<NovoForum />} />
 
           {/* Rotas protegidas */}
           <Route path="/feed" element={<PrivateRoute><Feed /></PrivateRoute>} />
@@ -61,6 +63,7 @@ function App() {
     </PrivateRoute>
   }
 />
+
 
 
 
