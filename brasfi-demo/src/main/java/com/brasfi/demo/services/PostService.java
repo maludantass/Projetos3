@@ -72,6 +72,7 @@ public class PostService {
     public void deletePost(Long postId) {
         postRepository.deleteById(postId);
     }
+    
     @Transactional
     public void toggleLike(Long userId, Long postId) {
         User user = userRepository.findById(userId)
