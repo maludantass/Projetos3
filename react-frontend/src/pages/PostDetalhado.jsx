@@ -18,14 +18,14 @@ const PostDetalhado = () => {
   const [error, setError] = useState(null);
   const [submitting, setSubmitting] = useState(false);
 
-  // Verifica se o usuário está inscrito nesse postId
   useEffect(() => {
-    const inscritos = JSON.parse(localStorage.getItem('meusForuns')) || [];
-    setIsMember(inscritos.includes(Number(postId)));
-  }, [postId]);
+    const membro = localStorage.getItem('isForumMember') === 'true';
+    setIsMember(membro);
+  }, []);
 
   useEffect(() => {
     const loadData = async () => {
+      // Verificar se postId existe
       if (!postId) {
         setError('ID do post não encontrado');
         setLoading(false);
@@ -35,13 +35,23 @@ const PostDetalhado = () => {
       try {
         setLoading(true);
         setError(null);
+        
+        console.log('Carregando post ID:', postId); // Debug
+        
+        // Carregar post e comentários em paralelo
         const [postData, commentsData] = await Promise.all([
           getPostById(postId),
           getCommentsByPost(postId)
         ]);
+        
+        console.log('Post carregado:', postData); // Debug
+        console.log('Comentários carregados:', commentsData); // Debug
+        
         setPost(postData);
         setComments(commentsData.content || []);
+        
       } catch (err) {
+        console.error('Erro ao carregar dados:', err);
         setError(`Erro ao carregar o post: ${err.response?.data?.message || err.message}`);
       } finally {
         setLoading(false);
@@ -53,37 +63,29 @@ const PostDetalhado = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!newComment.trim()) return;
+    
+    if (!newComment.trim()) {
+      return;
+    }
 
     try {
       setSubmitting(true);
       await createComment({ postId, text: newComment.trim() });
       setNewComment('');
+      
+      // Recarregar comentários
       const updated = await getCommentsByPost(postId);
       setComments(updated.content || []);
+      
     } catch (err) {
-      alert('Erro ao criar comentário.');
+      console.error('Erro ao criar comentário:', err);
+      alert('Erro ao criar comentário. Tente novamente.');
     } finally {
       setSubmitting(false);
     }
   };
 
-  const inscrever = () => {
-    const inscritos = JSON.parse(localStorage.getItem('meusForuns')) || [];
-    if (!inscritos.includes(Number(postId))) {
-      inscritos.push(Number(postId));
-      localStorage.setItem('meusForuns', JSON.stringify(inscritos));
-    }
-    setIsMember(true);
-  };
-
-  const sair = () => {
-    const inscritos = JSON.parse(localStorage.getItem('meusForuns')) || [];
-    const atualizados = inscritos.filter(id => id !== Number(postId));
-    localStorage.setItem('meusForuns', JSON.stringify(atualizados));
-    setIsMember(false);
-  };
-
+  // Estados de loading e erro
   if (loading) {
     return (
       <div className="post-detalhado-container">
@@ -119,12 +121,28 @@ const PostDetalhado = () => {
       {!isMember ? (
         <div className="preview-banner">
           Você está vendo a preview do fórum. <strong>Quer participar?</strong>
-          <button className="entrar-btn" onClick={inscrever}>Entrar</button>
+          <button
+            className="entrar-btn"
+            onClick={() => {
+              localStorage.setItem('isForumMember', 'true');
+              setIsMember(true);
+            }}
+          >
+            Entrar
+          </button>
         </div>
       ) : (
         <div className="entrada-confirmada">
           Você entrou no fórum!
-          <button className="sair-btn" onClick={sair}>Sair</button>
+          <button
+            className="sair-btn"
+            onClick={() => {
+              localStorage.removeItem('isForumMember');
+              setIsMember(false);
+            }}
+          >
+            Sair
+          </button>
         </div>
       )}
 
