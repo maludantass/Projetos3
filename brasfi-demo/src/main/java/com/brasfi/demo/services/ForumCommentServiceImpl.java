@@ -3,12 +3,8 @@ package com.brasfi.demo.services;
 import com.brasfi.demo.dto.ForumCommentRequestDTO;
 import com.brasfi.demo.dto.ForumCommentResponseDTO;
 import com.brasfi.demo.dto.UserSummaryDTO;
-import com.brasfi.demo.model.*; // User, ForumComment, ForumPost, VoteType
-import com.brasfi.demo.repository.*; // ForumCommentRepository, UserRepository, ForumPostRepository, ForumVoteRepository
-// Suas exceções customizadas
-// import com.brasfi.demo.exception.ResourceNotFoundException;
-// import com.brasfi.demo.exception.OperationNotPermittedException;
-// import com.brasfi.demo.exception.InvalidRequestException;
+import com.brasfi.demo.model.*; 
+import com.brasfi.demo.repository.*; 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -19,9 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-// import java.util.Collections;
 import java.util.List;
-// import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -36,36 +30,36 @@ public class ForumCommentServiceImpl implements ForumCommentService {
     @Override
     @Transactional
     public ForumCommentResponseDTO createComment(ForumCommentRequestDTO requestDTO) {
-        User author = getCurrentAuthenticatedUser();
-        ForumPost forumPost = forumPostRepository.findById(requestDTO.getPostId())
-                .orElseThrow(() -> new RuntimeException("Post não encontrado com ID: " + requestDTO.getPostId())); // Use ResourceNotFoundException
 
+        User author = userRepository.findByEmail(requestDTO.getAuthorEmail())
+                .orElseThrow(() -> new RuntimeException("Usuário autor não encontrado com o email: " + requestDTO.getAuthorEmail()));
+    
+        ForumPost forumPost = forumPostRepository.findById(requestDTO.getPostId())
+                .orElseThrow(() -> new RuntimeException("Post não encontrado com ID: " + requestDTO.getPostId()));
+    
         ForumComment parentComment = null;
         if (requestDTO.getParentCommentId() != null) {
             parentComment = forumCommentRepository.findById(requestDTO.getParentCommentId())
-                    .orElseThrow(() -> new RuntimeException("Comentário pai não encontrado com ID: " + requestDTO.getParentCommentId())); // Use ResourceNotFoundException
-            // Validação opcional: garantir que o parentComment pertence ao mesmo post
+                    .orElseThrow(() -> new RuntimeException("Comentário pai não encontrado com ID: " + requestDTO.getParentCommentId()));
             if (!parentComment.getForumPost().getId().equals(forumPost.getId())) {
-                throw new RuntimeException("Comentário pai não pertence ao post especificado."); // Use InvalidRequestException
+                throw new RuntimeException("Comentário pai não pertence ao post especificado.");
             }
         }
-
+    
         ForumComment comment = new ForumComment();
         comment.setText(requestDTO.getText());
-        comment.setAuthor(author);
+        comment.setAuthor(author); 
         comment.setForumPost(forumPost);
         comment.setParentComment(parentComment);
-
+    
         ForumComment savedComment = forumCommentRepository.save(comment);
         log.info("Comentário ID {} criado por {} no post ID {} (pai ID: {})",
                 savedComment.getId(), author.getUsername(), forumPost.getId(),
                 parentComment != null ? parentComment.getId() : "N/A");
-
-        // Para um novo comentário, voteScore e replyCount são 0.
-        // A lista de replies também estará vazia.
+    
         return mapToResponseDTO(savedComment);
     }
-
+    
     @Override
     @Transactional(readOnly = true)
     public Page<ForumCommentResponseDTO> getCommentsByPost(Long postId, Pageable pageable) {
@@ -184,12 +178,9 @@ public class ForumCommentServiceImpl implements ForumCommentService {
         
         List<ForumCommentResponseDTO> repliesDTO = new ArrayList<>();
         if (depth > 0 && comment.getReplies() != null && !comment.getReplies().isEmpty()) {
-            // CUIDADO: Acessar comment.getReplies() pode causar N+1 se não otimizado.
-            // Uma estratégia melhor seria buscar as replies com paginação se necessário,
-            // ou garantir que a query que busca o comentário já traga as replies (JOIN FETCH).
-            // Por simplicidade aqui, estamos mapeando as replies carregadas.
+
             for (ForumComment reply : comment.getReplies()) {
-                repliesDTO.add(mapToResponseDTO(reply, depth - 1)); // Chamada recursiva com profundidade reduzida
+                repliesDTO.add(mapToResponseDTO(reply, depth - 1)); 
             }
         }
 
@@ -198,12 +189,12 @@ public class ForumCommentServiceImpl implements ForumCommentService {
                 comment.getId(),
                 comment.getText(),
                 authorDto,
-                comment.getForumPost().getId(), // Assume que getForumPost() nunca será nulo para um comentário válido
+                comment.getForumPost().getId(), 
                 parentId,
                 comment.getCreatedAt(),
                 comment.getUpdatedAt(),
                 calculateVoteScore(comment),
-                countDirectReplies(comment), // Contagem de respostas diretas
+                countDirectReplies(comment), 
                 repliesDTO // Lista de DTOs de respostas
         );
     }

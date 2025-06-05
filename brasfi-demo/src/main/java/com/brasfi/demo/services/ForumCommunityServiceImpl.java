@@ -8,16 +8,12 @@ import com.brasfi.demo.model.User;
 import com.brasfi.demo.repository.ForumCommunityRepository;
 import com.brasfi.demo.repository.ForumPostRepository;
 import com.brasfi.demo.repository.UserRepository;
-// Importe suas exceções customizadas aqui
-// import com.brasfi.demo.exception.ResourceNotFoundException;
-// import com.brasfi.demo.exception.OperationNotPermittedException; // Para permissões
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-// Removido import de AccessDeniedException se não for usar para admin
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,15 +30,18 @@ public class ForumCommunityServiceImpl implements ForumCommunityService {
     @Transactional
     public ForumCommunityResponseDTO createCommunity(ForumCommunityRequestDTO requestDTO) {
         log.info("Requisição para criar ForumCommunity com título: '{}'", requestDTO.getTitle());
-        User author = getCurrentAuthenticatedUser();
 
+        User author = userRepository.findByEmail(requestDTO.getAuthorEmail())
+                .orElseThrow(() -> new RuntimeException("Usuário autor não encontrado com o email: " + requestDTO.getAuthorEmail()));
+    
         ForumCommunity community = new ForumCommunity();
         community.setTitle(requestDTO.getTitle());
         community.setDescription(requestDTO.getDescription());
         community.setAuthor(author);
-
+    
         ForumCommunity savedCommunity = forumCommunityRepository.save(community);
         log.info("ForumCommunity criada com ID {} pelo usuário {}", savedCommunity.getId(), author.getUsername());
+        
         return mapToResponseDTO(savedCommunity);
     }
 
@@ -137,30 +136,22 @@ public class ForumCommunityServiceImpl implements ForumCommunityService {
         if (authentication == null || !authentication.isAuthenticated() || "anonymousUser".equals(authentication.getPrincipal())) {
             throw new RuntimeException("Nenhum usuário autenticado encontrado."); // Use uma exceção de autenticação
         }
-        String principalName = authentication.getName(); // Assume que retorna o username ou email
+        String principalName = authentication.getName(); 
 
-        // Use o método apropriado do seu UserRepository (findByUsername ou findByEmail)
-        // Baseado no seu UserRepository fornecido, você tem findByEmail.
-        // Se principalName for o username, você precisará adicionar findByUsername ao UserRepository.
-        // Vou assumir que principalName é o username para este exemplo, e que você tem findByUsername.
-        // Se principalName for email, use userRepository.findByEmail(principalName)
-        return userRepository.findByUsername(principalName) // CERTIFIQUE-SE QUE ESTE MÉTODO EXISTE E RETORNA Optional<User>
+        return userRepository.findByUsername(principalName)
                 .orElseThrow(() -> new RuntimeException("Usuário autenticado '" + principalName + "' não encontrado."));
     }
 
     private ForumCommunityResponseDTO mapToResponseDTO(ForumCommunity community) {
         UserSummaryDTO authorDto = null;
         if (community.getAuthor() != null) {
-            authorDto = new UserSummaryDTO(community.getAuthor()); // Usa user.getUsername()
+            authorDto = new UserSummaryDTO(community.getAuthor()); 
         }
 
         int postCount = 0;
         if (community.getId() != null) {
             postCount = (int) forumPostRepository.countByForumCommunity(community);
         }
-        // Se a coleção 'posts' estiver EAGER ou já carregada, você poderia usar:
-        // else if (community.getPosts() != null) { postCount = community.getPosts().size(); }
-
 
         return new ForumCommunityResponseDTO(
                 community.getId(),
