@@ -1,3 +1,4 @@
+// Eventos.jsx
 import React, { useState, useEffect } from 'react';
 import './Eventos.css';
 import Evento1 from '../images/Evento1.png';
@@ -7,7 +8,6 @@ import Evento4 from '../images/Evento4.png';
 
 const imagens = [Evento1, Evento2, Evento3, Evento4];
 
-// funcao para formatar data e hora
 const formatDateTime = (isoString) => {
   if (!isoString) return '';
   const date = new Date(isoString);
@@ -21,8 +21,6 @@ const formatDateTime = (isoString) => {
   });
 };
 
-
-// ModalDetalhesEvento
 function ModalDetalhesEvento({ evento, onClose }) {
   const getTopicosList = (topicosString) => {
     if (!topicosString) return [];
@@ -30,9 +28,36 @@ function ModalDetalhesEvento({ evento, onClose }) {
   };
 
   const topicosDoEvento = getTopicosList(evento.topicos);
-
   const [tempoRestante, setTempoRestante] = useState('');
-  const [statusClasse, setStatusClasse] = useState(''); 
+  const [statusClasse, setStatusClasse] = useState('');
+  const [notificacaoAtiva, setNotificacaoAtiva] = useState(false);
+  const [marcadorAtivo, setMarcadorAtivo] = useState(false);
+
+  useEffect(() => {
+    const key = `notificacaoEvento_${evento.id}`;
+    const saved = localStorage.getItem(key) === 'true';
+    setNotificacaoAtiva(saved);
+  }, [evento]);
+
+  useEffect(() => {
+    const key = `marcadorEvento_${evento.id}`;
+    const salvo = localStorage.getItem(key) === 'true';
+    setMarcadorAtivo(salvo);
+  }, [evento.id]);
+
+  const toggleNotificacao = () => {
+    const key = `notificacaoEvento_${evento.id}`;
+    const novoEstado = !notificacaoAtiva;
+    localStorage.setItem(key, novoEstado.toString());
+    setNotificacaoAtiva(novoEstado);
+  };
+
+  const toggleMarcador = () => {
+    const key = `marcadorEvento_${evento.id}`;
+    const novoEstado = !marcadorAtivo;
+    localStorage.setItem(key, novoEstado.toString());
+    setMarcadorAtivo(novoEstado);
+  };
 
   useEffect(() => {
     const calculateTimeRemaining = () => {
@@ -42,17 +67,15 @@ function ModalDetalhesEvento({ evento, onClose }) {
       const eventEndDateTime = new Date(evento.dataFim);
 
       if (now > eventEndDateTime) {
-        setStatusClasse('status-concluido'); 
+        setStatusClasse('status-concluido');
         return 'Evento já ocorreu';
       }
 
       if (now >= eventStartDateTime && now <= eventEndDateTime) {
-        setStatusClasse('status-em-andamento');
-        return 'EM ANDAMENTO';
+        return null;
       }
 
       const diffMs = eventStartDateTime - now;
-
       const diffSeconds = Math.floor(diffMs / 1000);
       const diffMinutes = Math.floor(diffSeconds / 60);
       const diffHours = Math.floor(diffMinutes / 60);
@@ -63,15 +86,9 @@ function ModalDetalhesEvento({ evento, onClose }) {
       const remainingSeconds = diffSeconds % 60;
 
       let timeString = '';
-      if (diffDays > 0) {
-        timeString += `${diffDays} dia${diffDays > 1 ? 's' : ''} `;
-      }
-      if (remainingHours > 0) {
-        timeString += `${remainingHours} hora${remainingHours > 1 ? 's' : ''} `;
-      }
-      if (remainingMinutes > 0) {
-        timeString += `${remainingMinutes} minuto${remainingMinutes > 1 ? 's' : ''}`;
-      }
+      if (diffDays > 0) timeString += `${diffDays} dia${diffDays > 1 ? 's' : ''} `;
+      if (remainingHours > 0) timeString += `${remainingHours} hora${remainingHours > 1 ? 's' : ''} `;
+      if (remainingMinutes > 0) timeString += `${remainingMinutes} minuto${remainingMinutes > 1 ? 's' : ''}`;
       if (diffDays === 0 && remainingHours === 0 && remainingMinutes === 0 && remainingSeconds > 0) {
         timeString = `menos de 1 minuto`;
       }
@@ -81,13 +98,15 @@ function ModalDetalhesEvento({ evento, onClose }) {
     };
 
     setTempoRestante(calculateTimeRemaining());
-
     const interval = setInterval(() => {
       setTempoRestante(calculateTimeRemaining());
     }, 1000);
-
     return () => clearInterval(interval);
   }, [evento.dataInicio, evento.dataFim]);
+
+  const now = new Date();
+  const dataInicio = new Date(evento.dataInicio);
+  const dataFim = new Date(evento.dataFim);
 
   return (
     <div className="modal-overlay-detalhe-evento">
@@ -95,6 +114,7 @@ function ModalDetalhesEvento({ evento, onClose }) {
         <div className="modal-header">
           <button className="botao-voltar-modal" onClick={onClose}>← Voltar</button>
         </div>
+
         <div className="cabecalho-modal">
           <div className="texto-cabecalho">
             <h2 className="titulo-evento"><strong>{evento.titulo}</strong></h2>
@@ -106,10 +126,39 @@ function ModalDetalhesEvento({ evento, onClose }) {
               <p>{evento.detalhe}</p>
             </div>
           </div>
-          {evento.imagem && (
-            <img src={evento.imagem} alt="Imagem do evento" className="imagem-evento-direita" />
-          )}
+
+          <div className="imagem-e-icone">
+            {now > dataFim ? (
+              <div className="icone-notificacao" onClick={toggleMarcador}>
+                {marcadorAtivo ? (
+                 <svg xmlns="http://www.w3.org/2000/svg" className="bookmark-icon" viewBox="0 0 24 24" fill="#2E7D32">
+          <path d="M6 2a2 2 0 0 0-2 2v18l8-4 8 4V4a2 2 0 0 0-2-2H6z" />
+        </svg>
+  ) : (
+    <svg xmlns="http://www.w3.org/2000/svg" className="bookmark-icon" viewBox="0 0 24 24" fill="none" stroke="#2E7D32" strokeWidth="2">
+          <path d="M6 2a2 2 0 0 0-2 2v18l8-4 8 4V4a2 2 0 0 0-2-2H6z" />
+        </svg>
+  )}
+              </div>
+            ) : now >= dataInicio && now <= dataFim ? (
+              <div className="icone-em-andamento">EM ANDAMENTO</div>
+            ) : (
+              <div className="icone-notificacao" onClick={toggleNotificacao}>
+                {notificacaoAtiva ? (
+                  <svg xmlns="http://www.w3.org/2000/svg" className="sino-icon" viewBox="0 0 24 24" fill="#2E7D32">
+          <path d="M12 24a2 2 0 0 0 2-2h-4a2 2 0 0 0 2 2Zm6.364-6v-5a6.5 6.5 0 0 0-5-6.32V6a1.5 1.5 0 1 0-3 0v.68a6.5 6.5 0 0 0-5 6.32v5l-1.636 1.636A1 1 0 0 0 5 22h14a1 1 0 0 0 .707-1.707L18.364 18Z" />
+        </svg>
+                ) : (
+                  <svg xmlns="http://www.w3.org/2000/svg" className="sino-icon" viewBox="0 0 24 24" fill="none" stroke="#2E7D32" strokeWidth="2">
+          <path d="M12 22a2 2 0 0 0 2-2h-4a2 2 0 0 0 2 2Zm6.36-6v-5a6.5 6.5 0 0 0-5-6.32V4a1.5 1.5 0 0 0-3 0v.68a6.5 6.5 0 0 0-5 6.32v5l-1.64 1.64A1 1 0 0 0 5 20h14a1 1 0 0 0 .7-1.7L18.36 16Z" />
+        </svg>
+                )}
+              </div>
+            )}
+            <img src={evento.imagem} alt="Imagem do evento" className="imagem-evento-direita" draggable="false" />
+          </div>
         </div>
+
         {topicosDoEvento.length > 0 && (
           <div className="topicos-evento">
             <h4>Tópicos:</h4>
@@ -118,6 +167,7 @@ function ModalDetalhesEvento({ evento, onClose }) {
             </ul>
           </div>
         )}
+
         <div className="rodape-evento">
           <p>
             <strong>Data e Hora:</strong> {formatDateTime(evento.dataInicio)}
@@ -125,8 +175,7 @@ function ModalDetalhesEvento({ evento, onClose }) {
           </p>
           {evento.link && (
             <p className="link-evento">
-              <strong>https://</strong>
-              <a href={evento.link} target="_blank" rel="noreferrer">{evento.link.replace(/^https?:\/\//, '')}</a>
+              <a href={evento.link} target="_blank" rel="noreferrer">{evento.link}</a>
             </p>
           )}
         </div>
@@ -135,32 +184,33 @@ function ModalDetalhesEvento({ evento, onClose }) {
   );
 }
 
-// SecaoEventos
-function SecaoEventos({ titulo, eventos, onEventoClick }) {
-  
-  const hoje = new Date(); 
 
+
+function SecaoEventos({ titulo, eventos, onEventoClick, somenteFavoritos }) {
   const INITIAL_ITEMS_COUNT = 4;
-  const EXPANDED_ITEMS_COUNT = 6;
+  const [mostrarTodos, setMostrarTodos] = useState(false);
 
-  const [visibleItemCount, setVisibleItemCount] = useState(INITIAL_ITEMS_COUNT);
+  const eventosFiltrados = somenteFavoritos
+  ? eventos.filter(ev => {
+      const id = ev.id;
+      return localStorage.getItem(`marcadorEvento_${id}`) === 'true';
+    })
+  : eventos;
 
-  const eventosOrdenados = [...eventos]
-    .filter(evento => new Date(evento.dataFim) >= hoje) 
-    .sort((a, b) => new Date(a.dataInicio) - new Date(b.dataInicio));
 
-  const handleViewMoreToggle = () => {
-    if (visibleItemCount === INITIAL_ITEMS_COUNT) {
-      setVisibleItemCount(Math.min(EXPANDED_ITEMS_COUNT, eventosOrdenados.length));
-    } else {
-      setVisibleItemCount(INITIAL_ITEMS_COUNT);
-    }
-  };
+  const eventosOrdenados = [...eventosFiltrados].sort(
+    (a, b) => new Date(a.dataInicio) - new Date(b.dataInicio)
+  );
 
-  const eventosVisiveis = eventosOrdenados.slice(0, visibleItemCount);
+  const eventosVisiveis = mostrarTodos
+    ? eventosOrdenados
+    : eventosOrdenados.slice(0, INITIAL_ITEMS_COUNT);
 
   const canShowMoreButton = eventosOrdenados.length > INITIAL_ITEMS_COUNT;
-  const isExpanded = visibleItemCount > INITIAL_ITEMS_COUNT;
+
+  const toggleMostrarTodos = () => {
+    setMostrarTodos(prev => !prev);
+  };
 
   return (
     <section className="events">
@@ -173,26 +223,32 @@ function SecaoEventos({ titulo, eventos, onEventoClick }) {
             data-imagem={i % 4}
             onClick={() => onEventoClick({ ...evento, imagem: imagens[i % 4] })}
           >
+            {/* Conteúdo do card pode ser expandido aqui */}
           </div>
         ))}
-        {eventosVisiveis.length === 0 && <p>Nenhum evento encontrado para esta categoria.</p>}
+        {eventosVisiveis.length === 0 && (
+          <div className="mensagem-sem-eventos">
+    Nenhum evento encontrado para esta categoria.
+  </div>
+        )}
       </div>
 
       {canShowMoreButton && (
         <button
           className="view-more"
-          onClick={handleViewMoreToggle}
-          aria-expanded={isExpanded}
+          onClick={toggleMostrarTodos}
+          aria-expanded={mostrarTodos}
         >
-          {isExpanded ? 'Ver menos' : 'Ver mais'}
+          {mostrarTodos ? 'Ver menos' : 'Ver mais'}
           <svg viewBox="0 0 24 24">
-            <path d={isExpanded ? "M7 14l5-5 5 5z" : "M7 10l5 5 5-5z"} />
+            <path d={mostrarTodos ? 'M7 14l5-5 5 5z' : 'M7 10l5 5 5-5z'} />
           </svg>
         </button>
       )}
     </section>
   );
 }
+
 
 // Eventos
 function Eventos() {
@@ -201,6 +257,12 @@ function Eventos() {
   const [eventoSelecionado, setEventoSelecionado] = useState(null);
   const [todosEventos, setTodosEventos] = useState([]);
   const [filtroTitulo, setFiltroTitulo] = useState('');
+  const [filtroFavoritos, setFiltroFavoritos] = useState(false);
+
+const toggleFiltroFavoritos = () => {
+  setFiltroFavoritos(prev => !prev);
+};
+
 
   const buscarEventos = async () => {
     try {
@@ -333,117 +395,156 @@ function Eventos() {
     setMostrarModalAdicionar(false);
   };
 
-  return (
-    <main>
-      <div
-        className="top-bar-eventos"
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          marginBottom: '16px'
-        }}
-      >
+      return (
+  <main>
+    <div
+      className="top-bar-eventos"
+      style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: '16px'
+      }}
+    >
+      <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
         <button className="add-event-btn" onClick={abrirModalAdicionar}>+</button>
-        <input
-          type="text"
-          placeholder="Pesquisar por título"
-          value={filtroTitulo}
-          onChange={handleFiltroChange}
-          style={{
-            padding: '6px 10px', fontSize: '16px',
-            borderRadius: '4px', border: '1px solid #ccc', width: '250px',
-          }}
-        />
+
+        <button
+  onClick={toggleFiltroFavoritos}
+  className={`bookmark-filter-btn ${filtroFavoritos ? 'active' : ''}`}
+  title="Ver favoritos"
+>
+  {filtroFavoritos ? (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className="bookmark-icon"
+      viewBox="0 0 24 24"
+      fill="#1B5E20"  // Verde escuro quando ativo
+    >
+      <path d="M6 2a2 2 0 0 0-2 2v18l8-4 8 4V4a2 2 0 0 0-2-2H6z" />
+    </svg>
+  ) : (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className="bookmark-icon"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="#2E7D32"  // Verde claro quando inativo
+      strokeWidth="2"
+    >
+      <path d="M6 2a2 2 0 0 0-2 2v18l8-4 8 4V4a2 2 0 0 0-2-2H6z" />
+    </svg>
+  )}
+</button>
+
       </div>
 
-      <SecaoEventos
-        titulo="Eventos Próximos"
-        eventos={eventosProximos}
-        onEventoClick={abrirModalDetalhes}
+      <input
+        type="text"
+        placeholder="Pesquisar por título"
+        value={filtroTitulo}
+        onChange={handleFiltroChange}
+        style={{
+          padding: '6px 10px',
+          fontSize: '16px',
+          borderRadius: '4px',
+          border: '1px solid #ccc',
+          width: '250px',
+        }}
       />
-      <SecaoEventos
-        titulo="Eventos Gravados"
-        eventos={eventosGravados}
-        onEventoClick={abrirModalDetalhes}
-      />
+    </div>
 
-      {mostrarModalAdicionar && (
-        <div className="modal-overlay">
-          <div className="modal">
-            <h3>Novo Evento</h3>
-            <form onSubmit={handleSubmit}>
-              <input
-                type="text" name="titulo" placeholder="Título"
-                value={form.titulo} onChange={handleChange} required
-              />
-              <h5>Data e Hora de início</h5>
-              <input
-                type="datetime-local" name="dataInicio" value={form.dataInicio}
-                onChange={(e) => {
-                  const novaDataInicio = e.target.value;
-                  setForm(prev => ({ ...prev, dataInicio: novaDataInicio, ...(prev.dataFim && prev.dataFim < novaDataInicio && { dataFim: "" }) }));
-                }}
-                min={new Date(new Date().getTime() - (new Date().getTimezoneOffset() * 60000)).toISOString().slice(0, 16)} // Define min como a hora atual
-                required
-              />
-              <h5>Data e Hora de término</h5>
-              <input
-                type="datetime-local" name="dataFim" value={form.dataFim}
-                onChange={handleChange}
-                min={form.dataInicio || new Date(new Date().getTime() - (new Date().getTimezoneOffset() * 60000)).toISOString().slice(0, 16)} // Define min como a data de início ou a hora atual
-                required
-              />
-              <textarea
-                name="detalhe" placeholder="Detalhes"
-                value={form.detalhe} onChange={handleChange} required
-              />
-              <textarea
-                name="topicos"
-                placeholder="Tópicos (um por linha)"
-                value={form.topicos}
-                onChange={handleChange}
-                rows="4"
-              />
-              <input
-                type="text" name="link" placeholder="Link do evento (opcional)"
-                value={form.link} onChange={handleChange}
-              />
-              <div>
-                <label style={{ display: "block", marginBottom: "8px", fontWeight: "500" }}>
-                  Evento será gravado?
+    <SecaoEventos
+      titulo="Eventos Próximos"
+      eventos={eventosProximos}
+      onEventoClick={abrirModalDetalhes}
+      somenteFavoritos={filtroFavoritos}
+    />
+    <SecaoEventos
+      titulo="Eventos Gravados"
+      eventos={eventosGravados}
+      onEventoClick={abrirModalDetalhes}
+      somenteFavoritos={filtroFavoritos}
+    />
+
+    {/* Modais */}
+    {mostrarModalAdicionar && (
+      <div className="modal-overlay">
+        <div className="modal">
+          <h3>Novo Evento</h3>
+          <form onSubmit={handleSubmit}>
+            <input
+              type="text" name="titulo" placeholder="Título"
+              value={form.titulo} onChange={handleChange} required
+            />
+            <h5>Data e Hora de início</h5>
+            <input
+              type="datetime-local" name="dataInicio" value={form.dataInicio}
+              onChange={(e) => {
+                const novaDataInicio = e.target.value;
+                setForm(prev => ({ ...prev, dataInicio: novaDataInicio, ...(prev.dataFim && prev.dataFim < novaDataInicio && { dataFim: "" }) }));
+              }}
+              min={new Date(new Date().getTime() - (new Date().getTimezoneOffset() * 60000)).toISOString().slice(0, 16)}
+              required
+            />
+            <h5>Data e Hora de término</h5>
+            <input
+              type="datetime-local" name="dataFim" value={form.dataFim}
+              onChange={handleChange}
+              min={form.dataInicio || new Date(new Date().getTime() - (new Date().getTimezoneOffset() * 60000)).toISOString().slice(0, 16)}
+              required
+            />
+            <textarea
+              name="detalhe" placeholder="Detalhes"
+              value={form.detalhe} onChange={handleChange} required
+            />
+            <textarea
+              name="topicos"
+              placeholder="Tópicos (um por linha)"
+              value={form.topicos}
+              onChange={handleChange}
+              rows="4"
+            />
+            <input
+              type="text" name="link" placeholder="Link do evento (opcional)"
+              value={form.link} onChange={handleChange}
+            />
+            <div>
+              <label style={{ display: "block", marginBottom: "8px", fontWeight: "500" }}>
+                Evento será gravado?
+              </label>
+              <div style={{ display: "flex", gap: "24px", alignItems: "center", marginBottom: "16px" }}>
+                <label style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                  <input
+                    type="radio" name="gravado" value="true"
+                    checked={form.gravado === true}
+                    onChange={() => setForm({ ...form, gravado: true })}
+                  /> Sim
                 </label>
-                <div style={{ display: "flex", gap: "24px", alignItems: "center", marginBottom: "16px" }}>
-                  <label style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-                    <input
-                      type="radio" name="gravado" value="true"
-                      checked={form.gravado === true}
-                      onChange={() => setForm({ ...form, gravado: true })}
-                    /> Sim
-                  </label>
-                  <label style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-                    <input
-                      type="radio" name="gravado" value="false"
-                      checked={form.gravado === false}
-                      onChange={() => setForm({ ...form, gravado: false })}
-                    /> Não
-                  </label>
-                </div>
+                <label style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                  <input
+                    type="radio" name="gravado" value="false"
+                    checked={form.gravado === false}
+                    onChange={() => setForm({ ...form, gravado: false })}
+                  /> Não
+                </label>
               </div>
-              <div className="modal-actions">
-                <button type="submit" className="save-btn">Salvar</button>
-                <button type="button" onClick={fecharModalAdicionar} className="cancel-btn">Cancelar</button>
-              </div>
-            </form>
-          </div>
+            </div>
+            <div className="modal-actions">
+              <button type="submit" className="save-btn">Salvar</button>
+              <button type="button" onClick={fecharModalAdicionar} className="cancel-btn">Cancelar</button>
+            </div>
+          </form>
         </div>
-      )}
+      </div>
+    )}
 
-      {mostrarModalDetalhes && eventoSelecionado && (
-        <ModalDetalhesEvento evento={eventoSelecionado} onClose={fecharModalDetalhes} />
-      )}
-    </main>
-  );
+    {mostrarModalDetalhes && eventoSelecionado && (
+      <ModalDetalhesEvento evento={eventoSelecionado} onClose={fecharModalDetalhes} />
+    )}
+  </main>
+);
+
 }
 
 export default Eventos;

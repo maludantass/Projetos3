@@ -362,7 +362,7 @@ main {
 }
 
 .modal-detalhado .topicos-evento { /* Seção de tópicos (CODIGO 2) */
-  margin-top: 1rem;
+  margin-top: 0.5rem; /* ou até 0 se quiser colado */
   margin-bottom: 1.5rem;
 }
 .modal-detalhado .topicos-evento ul {
@@ -481,4 +481,107 @@ main {
   font-weight: 500;
   margin-top: 0.5rem;
   margin-bottom: 1rem;
+}
+
+
+.imagem-e-icone {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  gap: 32px;
+  margin-left: 16px;
+}
+
+.icone-notificacao,
+.icone-em-andamento {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 4px;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+.icone-notificacao {
+  margin-top: 7px; /* ajuste personalizado apenas para o sino */
+}
+
+.icone-notificacao.ativo .sino-icon {
+  fill: black;
+}
+
+.sino-icon,
+.bookmark-icon {
+  width: 26px;
+  height: 26px;
+}
+
+.icone-em-andamento {
+  font-weight: 600;
+  font-size: 14px;
+  color: #000;
+  white-space: nowrap;
+}
+
+.imagem-evento-direita {
+  width: 180px;
+  border-radius: 8px;
+  object-fit: cover;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.bookmark-filter-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bookmark-filter-btn:hover {
+  opacity: 0.8;
+}
+
+
+.bookmark-icon {
+  width: 26px;
+  height: 26px;
+  transition: fill 0.3s, stroke 0.3s, transform 0.2s;
+}
+
+.icone-notificacao:hover .bookmark-icon,
+.icone-notificacao.ativo .bookmark-icon {
+  transform: scale(1.1);
+}
+
+.mensagem-sem-eventos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin: 30px auto;
+  padding: 16px 24px;
+
+  max-width: 500px;
+  width: fit-content;
+
+  font-size: 1.1rem;
+  font-style: italic;
+  font-weight: 500;
+  text-align: center;
+
+  background-color: #e8f5e9;
+  border: 1px solid #c8e6c9;
+  color: #2E7D32;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+.grid-container .mensagem-sem-eventos {
+  grid-column: 1 / -1; /* Ocupa todas as colunas */
+  justify-self: center; /* Centraliza horizontalmente */
 }
