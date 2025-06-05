@@ -94,3 +94,11 @@ export const deleteComment = async (commentId) => {
   });
   return res.data;
 };
+
+export const getPostById = async (postId) => {
+  const res = await axios.get(`${API}/posts/${postId}`, {
+    headers: getAuthHeader(),
+  });
+  return res.data;
+};
+
