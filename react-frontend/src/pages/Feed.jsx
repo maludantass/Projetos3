@@ -10,6 +10,7 @@ import {
 import {
   faHeart as solidHeart,
   faBookmark as solidBookmark,
+  faCircleHalfStroke, // ✅ Agora da fonte correta
 } from '@fortawesome/free-solid-svg-icons';
 import SearchBar from './SearchBar';
 import {
@@ -26,6 +27,7 @@ const Feed = () => {
   const [expandedPosts, setExpandedPosts] = useState({});
   const [novoPost, setNovoPost] = useState('');
   const [mostrarFormulario, setMostrarFormulario] = useState(false);
+  const [darkMode, setDarkMode] = useState(false);
 
   const handleCriarPost = () => {
     if (novoPost.trim() === '') return;
@@ -80,8 +82,6 @@ const Feed = () => {
   }, []);
 
   const toggleLike = (postId) => {
-    console.log("Clicou no botão de like para o post:", postId);
-
     toggleLikeAPI(1, postId)
       .then(() => {
         setLikedPosts((prev) => ({
@@ -110,7 +110,11 @@ const Feed = () => {
   };
 
   return (
-    <div>
+    <div className={darkMode ? 'feed dark-mode' : 'feed light-mode'}>
+      <button className="toggle-theme" onClick={() => setDarkMode(!darkMode)}>
+        <FontAwesomeIcon icon={faCircleHalfStroke} />
+      </button>
+
       <div className="top-search-bar">
         <div className="icon-group">
           <button className="icon-btn" onClick={() => setMostrarFormulario(true)}>

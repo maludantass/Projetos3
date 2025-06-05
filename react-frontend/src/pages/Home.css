@@ -453,3 +453,108 @@ body {
 .social-icons a:hover {
     color: #e1306c; 
 }
+/* === DARK MODE === */
+.dark-mode {
+  background-color: #48844B;
+  color: #e0e0e0;
+}
+
+.dark-mode .top-bar,
+.dark-mode .bottom-bar {
+  background-color: #48844B;
+  color: #000000;
+}
+
+.dark-mode .navbar {
+  background-color: #48844B;
+  border-bottom: 1px solid #333;
+}
+
+.dark-mode .nav-links li a {
+  color: #e0e0e0;
+}
+
+.dark-mode .btn-signin {
+  color: #e0e0e0;
+}
+
+.dark-mode .btn-signup {
+  background-color: #555;
+  color: white;
+}
+
+.dark-mode .btn-signup:hover {
+  background-color: #888;
+}
+
+.dark-mode .highlight,
+.dark-mode .feedback,
+.dark-mode .call-to-action,
+.dark-mode .footer {
+  background-color: #48844B;
+  color: #000000;
+}
+
+.dark-mode .call-to-action {
+  background-color: #fec200;
+}
+
+.dark-mode .call-to-action .button {
+  background-color: #FEC200;
+  color: #121212;
+}
+
+.dark-mode .footer {
+  background-color: #FEC200;
+  color: #000000;
+}
+
+.dark-mode .social-icons a {
+  color: #000000;
+}
+
+.dark-mode .social-icons a:hover {
+  color: #fec200;
+}
+
+.dark-mode .video-box {
+  background-color: #333;
+}
+
+.dark-mode .dot {
+  background-color: #666;
+}
+
+.dark-mode .dot.active {
+  background-color: #fec200;
+}
+
+.dark-mode .Brasfiverde {
+  filter: brightness(0.85);
+}
+.toggle-theme {
+  position: fixed;
+  top: 120px;
+  right: 24px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #333;
+  cursor: pointer;
+  z-index: 1001;
+  padding: 6px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.toggle-theme:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.dark-mode .toggle-theme {
+  color: #e0e0e0;
+}
+
+.dark-mode .toggle-theme:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}

@@ -21,6 +21,7 @@ const formatDateTime = (isoString) => {
   });
 };
 
+
 // ModalDetalhesEvento
 function ModalDetalhesEvento({ evento, onClose }) {
   const getTopicosList = (topicosString) => {
@@ -136,6 +137,7 @@ function ModalDetalhesEvento({ evento, onClose }) {
 
 // SecaoEventos
 function SecaoEventos({ titulo, eventos, onEventoClick }) {
+  
   const hoje = new Date(); 
 
   const INITIAL_ITEMS_COUNT = 4;

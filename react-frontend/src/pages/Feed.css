@@ -223,3 +223,37 @@
   padding: 8px;
   cursor: pointer;
 }
+/* === DARK MODE VERDE BRASFI === */
+/* Fundo verde escuro para o modo dark em toda a tela */
+.feed.dark-mode {
+  background-color: #48844B;
+  color: #E0F2E9;
+  min-height: 100vh;
+}
+
+/* Faz o fundo da área de feed também herdar a cor do body */
+.feed.dark-mode .feed-container {
+  background-color: transparent;
+  min-height: 100vh;
+  padding: 20px 0;
+}
+
+/* Corrige os cards para manter o destaque claro */
+.feed.dark-mode .post-card {
+  background-color: #90B89B; /* mesmo estilo, só muda a tonalidade */
+  color: #111;
+  border-radius: 12px;
+  padding: 16px;
+  margin: 20px auto;
+  width: 90%;
+  max-width: 800px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ccc;
+}
+
+/* Ícones brancos no modo escuro */
+.feed.dark-mode .icon-btn svg,
+.feed.dark-mode .icon-btn1 svg {
+  filter: brightness(0) invert(1); /* torna imagem branca */
+  color: white !important;
+}
