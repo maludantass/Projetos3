@@ -11,7 +11,7 @@ import Faq from "./pages/Faq";
 import Home from "./pages/Home"; 
 import CommunityPosts from "./pages/CommunityPosts";
 import TodosForuns from './pages/TodosForuns';
-
+import PostDetalhado from './pages/PostDetalhado';
 
 
 function App() {
@@ -53,6 +53,15 @@ function App() {
           <Route path="/eventos" element={<PrivateRoute><Eventos /></PrivateRoute>} />
           <Route path="/comunidade/:id" element={<PrivateRoute><CommunityPosts /></PrivateRoute>} />
           
+          <Route
+  path="/posts/:postId"
+  element={
+    <PrivateRoute>
+      <PostDetalhado />
+    </PrivateRoute>
+  }
+/>
+
 
 
           {isLoggedIn && (
