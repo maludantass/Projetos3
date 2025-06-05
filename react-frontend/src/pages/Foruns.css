@@ -187,4 +187,37 @@
   display: inline-block;
   transition: background-color 0.3s ease;
 }    
+.search-area {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+  background-color: white;
+  padding: 6px 10px;
+  border-radius: 20px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
 
+.search-input {
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  padding: 6px;
+  background: transparent;
+  width: 150px;
+}
+
+.filter-btn {
+  background-color: #1a7529;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  font-size: 1rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.filter-btn:hover {
+  background-color: #155c21;
+}
