@@ -19,6 +19,8 @@ import {
   getLikedPosts,
   toggleLikeAPI,
 } from '../services/feedService';
+import { toggleFavoriteAPI } from '../services/feedService'; // certifique-se de importar
+import { getFavoritedPosts } from '../services/feedService';
 
 const Feed = () => {
   const user = JSON.parse(localStorage.getItem('user'));
@@ -66,23 +68,34 @@ const Feed = () => {
       });
   };
 
-  useEffect(() => {
-    getGeneralFeed()
-      .then((response) => {
-        setPosts(response.data);
-        return getLikedPosts(userId);
-      })
-      .then((res) => {
-        const likedMap = {};
-        res.data.forEach(post => {
-          likedMap[post.id] = true;
-        });
-        setLikedPosts(likedMap);
-      })
-      .catch((error) => {
-        console.error('Erro ao carregar feed ou curtidas:', error);
+useEffect(() => {
+  getGeneralFeed()
+    .then((response) => {
+      setPosts(response.data);
+      return Promise.all([
+        getLikedPosts(userId),
+        getFavoritedPosts(userId)
+      ]);
+    })
+    .then(([likedRes, favoritedRes]) => {
+      const likedMap = {};
+      likedRes.data.forEach(post => {
+        likedMap[post.id] = true;
       });
-  }, [userId]);
+
+      const favoritedMap = {};
+      favoritedRes.data.forEach(post => {
+        favoritedMap[post.id] = true;
+      });
+
+      setLikedPosts(likedMap);
+      setFavoritedPosts(favoritedMap);
+    })
+    .catch((error) => {
+      console.error('Erro ao carregar feed, curtidas ou favoritos:', error);
+    });
+}, [userId]);
+
 
   const toggleLike = (postId) => {
     toggleLikeAPI(userId, postId)
@@ -98,12 +111,45 @@ const Feed = () => {
       });
   };
 
-  const toggleFavorite = (postId) => {
-    setFavoritedPosts((prev) => ({
-      ...prev,
-      [postId]: !prev[postId],
-    }));
-  };
+const handleMostrarFavoritos = () => {
+  Promise.all([
+    getFavoritedPosts(userId),
+    getLikedPosts(userId)
+  ])
+    .then(([favoritedRes, likedRes]) => {
+      const favoritedMap = {};
+      favoritedRes.data.forEach(post => {
+        favoritedMap[post.id] = true;
+      });
+
+      const likedMap = {};
+      likedRes.data.forEach(post => {
+        likedMap[post.id] = true;
+      });
+
+      setPosts(favoritedRes.data); // mostra só os salvos
+      setFavoritedPosts(favoritedMap);
+      setLikedPosts(likedMap); // mantém ícones de like corretos
+    })
+    .catch((err) => {
+      console.error("Erro ao buscar posts salvos:", err);
+      alert("Erro ao buscar posts salvos.");
+    });
+};
+
+
+const toggleFavorite = (postId) => {
+  toggleFavoriteAPI(userId, postId)
+    .then(() => {
+      setFavoritedPosts((prev) => ({
+        ...prev,
+        [postId]: !prev[postId],
+      }));
+    })
+    .catch((err) => {
+      console.error('Erro ao favoritar/desfavoritar post:', err);
+    });
+};
 
   const toggleComments = (postId) => {
     setExpandedPosts((prev) => ({
@@ -126,9 +172,10 @@ const Feed = () => {
           <button className="icon-btn heart-btn" onClick={handleMostrarCurtidos}>
             <FontAwesomeIcon icon={regularHeart} style={{ fontSize: '22px' }} />
           </button>
-          <button className="icon-btn1">
-            <FontAwesomeIcon icon={regularBookmark} className="action-icon" />
-          </button>
+<button className="icon-btn1" onClick={handleMostrarFavoritos}>
+  <FontAwesomeIcon icon={regularBookmark} className="action-icon" />
+</button>
+
         </div>
         <SearchBar />
       </div>
