@@ -1,5 +1,6 @@
-package com.brasfi.demo.dto; // Ou o seu pacote de DTOs
+package com.brasfi.demo.dto;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -19,11 +20,11 @@ public class ForumCommentRequestDTO {
     private String text;
 
     @NotNull(message = "O ID do post (ForumPost) é obrigatório.")
-    private Long postId; // ID do ForumPost ao qual este comentário está associado
+    private Long postId;
 
-    // O parentCommentId é opcional. Se for nulo, é um comentário de nível superior no post.
-    // Se fornecido, indica que este comentário é uma resposta a outro comentário.
     private Long parentCommentId;
 
-    // O ID do autor (User) será obtido do usuário autenticado no backend.
+    @NotBlank(message = "O email do autor não pode estar em branco.")
+    @Email(message = "O formato do email é inválido.")
+    private String authorEmail;
 }
