@@ -28,11 +28,12 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .cors(cors -> cors.configurationSource(corsConfigurationSource())) //cors
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/auth/**").permitAll()
-                .requestMatchers("/api/eventos/**").permitAll()
-                .requestMatchers("/feed/**").permitAll()
-                .anyRequest().authenticated()
-            );
+    .requestMatchers("/api/auth/**").permitAll()
+    .requestMatchers("/api/eventos/**").permitAll()
+    .requestMatchers("/feed/**").permitAll()
+    .requestMatchers("/api/forum/**").permitAll() // ⬅️ ADICIONE ISSO
+    .anyRequest().authenticated()
+);
 
         return http.build();
     }

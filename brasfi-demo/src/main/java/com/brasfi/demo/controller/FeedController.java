@@ -42,10 +42,19 @@ public class FeedController {
 
     // Endpoint para obter todos os posts curtidos por um usuário
     @GetMapping("/liked/{userId}")
-    public List<Post> getLikedPosts(@PathVariable Long userId) {
-        User user = getUserById(userId);
-        return feedService.getPostsLikedByUser(user);
-    }
+public List<Post> getLikedPosts(@PathVariable Long userId) {
+    User user = getUserById(userId);
+    List<Post> likedPosts = feedService.getPostsLikedByUser(user);
+
+    System.out.println("🔎 Posts curtidos por " + user.getUsername() + ": " + likedPosts.size());
+    likedPosts.forEach(p -> System.out.println(" - ID: " + p.getId() + ", Conteúdo: " + p.getContent()));
+
+    return likedPosts;
+}
+
+
+
+
 
 @PostMapping("/like")
 public ResponseEntity<Void> likeOrUnlikePost(@RequestParam Long userId, @RequestParam Long postId) {
@@ -95,7 +104,7 @@ public List<PostResponseDTO> getGeneralFeed() {
         }
 
         // Criação do post
-        Post savedPost = postService.createPost(post);
+Post savedPost = postService.createPost(userId, post);
         savedPost.setUser(user); // força garantir que o user esteja no JSON retornado
         return savedPost;
     }

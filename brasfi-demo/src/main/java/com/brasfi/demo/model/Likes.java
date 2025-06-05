@@ -11,7 +11,10 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Id;
 
 @Entity
-@Table(name = "likes")
+@Table(
+    name = "likes",
+    uniqueConstraints = @jakarta.persistence.UniqueConstraint(columnNames = {"user_id", "post_id"})
+)
 public class Likes {
 
     @Id
