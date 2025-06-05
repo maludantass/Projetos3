@@ -22,9 +22,3 @@ export const toggleLike = (userId, postId) =>
 
 export const toggleLikeAPI = (userId, postId) =>
   api.post(`/feed/like?userId=${userId}&postId=${postId}`);
-
-export const getFavoritedPosts = (userId) =>
-  api.get(`/feed/saved/${userId}`);
-
-export const toggleFavoriteAPI = (userId, postId) =>
-  api.post(`/feed/save?userId=${userId}&postId=${postId}`);

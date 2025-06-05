@@ -37,8 +37,7 @@ public class AuthController {
             throw new RuntimeException("Senha incorreta");
         }
 
-        // ✅ Agora inclui também o ID do usuário
-        return ResponseEntity.ok(new UserResponse(user.getId(), user.getUsername(), user.getEmail()));
+        return ResponseEntity.ok(new UserResponse(user.getUsername(), user.getEmail()));
     }
 
     public static class LoginRequest {
@@ -60,26 +59,20 @@ public class AuthController {
     }
 
     public static class UserResponse {
-        private Long id;
         private String username;
         private String email;
 
-        public UserResponse(Long id, String username, String email) {
-            this.id = id;
+        public UserResponse(String username, String email) {
             this.username = username;
             this.email = email;
-        }
-
-        public Long getId() {
-            return id;
         }
 
         public String getUsername() {
             return username;
         }
-
         public String getEmail() {
             return email;
         }
     }
 }
+
