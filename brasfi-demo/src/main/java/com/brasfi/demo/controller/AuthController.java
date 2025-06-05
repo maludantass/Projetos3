@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import com.brasfi.demo.model.User;
 import com.brasfi.demo.repository.UserRepository;
 import com.brasfi.demo.services.UserService;
+import com.brasfi.demo.dto.UserResponse;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -24,8 +25,9 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public User register(@RequestBody User user) {
-        return userService.registerUser(user);
+    public ResponseEntity<?> register(@RequestBody User user) {
+        User created = userService.registerUser(user);
+        return ResponseEntity.ok(new UserResponse(created.getId(), created.getUsername(), created.getEmail()));
     }
 
     @PostMapping("/login")
@@ -37,49 +39,18 @@ public class AuthController {
             throw new RuntimeException("Senha incorreta");
         }
 
-        // ✅ Agora inclui também o ID do usuário
         return ResponseEntity.ok(new UserResponse(user.getId(), user.getUsername(), user.getEmail()));
     }
 
+    // Requisição de login
     public static class LoginRequest {
         private String email;
         private String password;
 
-        public String getEmail() {
-            return email;
-        }
-        public void setEmail(String email) {
-            this.email = email;
-        }
-        public String getPassword() {
-            return password;
-        }
-        public void setPassword(String password) {
-            this.password = password;
-        }
-    }
+        public String getEmail() { return email; }
+        public void setEmail(String email) { this.email = email; }
 
-    public static class UserResponse {
-        private Long id;
-        private String username;
-        private String email;
-
-        public UserResponse(Long id, String username, String email) {
-            this.id = id;
-            this.username = username;
-            this.email = email;
-        }
-
-        public Long getId() {
-            return id;
-        }
-
-        public String getUsername() {
-            return username;
-        }
-
-        public String getEmail() {
-            return email;
-        }
+        public String getPassword() { return password; }
+        public void setPassword(String password) { this.password = password; }
     }
 }

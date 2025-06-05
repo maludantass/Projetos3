@@ -1,9 +1,13 @@
 package com.brasfi.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "posts")
@@ -13,71 +17,47 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
-
-    @Column(name = "post_type", nullable = false, length = 50)
-    private String postType;
-
-    @Column(columnDefinition = "TEXT")
     private String content;
 
-    @Column(name = "created_at", nullable = false, updatable = false)
-    private LocalDateTime createdAt;
+    @Column(name = "created_at")
+    private LocalDateTime createdAt = LocalDateTime.now();
 
-    @Column(name = "expires_at", nullable = false)
+    @Column(name = "expires_at")
     private LocalDateTime expiresAt;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<Likes> likes = new ArrayList<>(); // Adicionada inicialização
+    @Column(name = "post_type")
+    private String postType;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<Comment> comments = new ArrayList<>(); // Adicionada inicialização
+    // 🔗 Autor do post
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    @ManyToMany(mappedBy = "savedPosts", fetch = FetchType.LAZY)
-    private List<User> usersSaving = new ArrayList<>(); // Adicionada inicialização
+    // 🔗 Curtidas associadas ao post (agora Set para evitar erro do Hibernate)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties("post")
+    private Set<Likes> likes = new HashSet<>();
+
+    // 🔗 Comentários associados ao post
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties("post")
+    private List<Comment> comments = new ArrayList<>();
+
+    // 🔗 Usuários que salvaram este post
+    @ManyToMany(mappedBy = "savedPosts")
+    @JsonIgnoreProperties("savedPosts")
+    private List<User> usersWhoSaved = new ArrayList<>();
 
     public Post() {
-        // Construtor padrão
     }
 
-    public Post(User user, String postType, String content) {
-        this.user = user;
-        this.postType = postType;
-        this.content = content;
-    }
-
-    @PrePersist
-    protected void onCreate() {
-        this.createdAt = LocalDateTime.now();
-        this.expiresAt = this.createdAt.plusHours(24);
-    }
-
-    //Métodos getters/setters
-
+    // Getters e Setters (pode usar Lombok se quiser)
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public String getPostType() {
-        return postType;
-    }
-
-    public void setPostType(String postType) {
-        this.postType = postType;
     }
 
     public String getContent() {
@@ -92,6 +72,10 @@ public class Post {
         return createdAt;
     }
 
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
     public LocalDateTime getExpiresAt() {
         return expiresAt;
     }
@@ -100,11 +84,27 @@ public class Post {
         this.expiresAt = expiresAt;
     }
 
-    public List<Likes> getLikes() {
+    public String getPostType() {
+        return postType;
+    }
+
+    public void setPostType(String postType) {
+        this.postType = postType;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Set<Likes> getLikes() {
         return likes;
     }
 
-    public void setLikes(List<Likes> likes) {
+    public void setLikes(Set<Likes> likes) {
         this.likes = likes;
     }
 
@@ -116,11 +116,11 @@ public class Post {
         this.comments = comments;
     }
 
-    public List<User> getUsersSaving() {
-        return usersSaving;
+    public List<User> getUsersWhoSaved() {
+        return usersWhoSaved;
     }
 
-    public void setUsersSaving(List<User> usersSaving) {
-        this.usersSaving = usersSaving;
+    public void setUsersWhoSaved(List<User> usersWhoSaved) {
+        this.usersWhoSaved = usersWhoSaved;
     }
 }

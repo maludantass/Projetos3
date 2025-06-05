@@ -1,39 +1,48 @@
 package com.brasfi.demo.dto;
 
 import com.brasfi.demo.model.Post;
+import com.brasfi.demo.model.Comment;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import com.brasfi.demo.model.Comment;
 
 public class PostResponseDTO {
     private Long id;
     private String content;
     private String username;
     private String email;
-    private int likesCount; //Novo campo para contagem de likes
-    private int commentsCount; //Novo campo pra contagem de comentários
+    private int likesCount;
+    private int commentsCount;
     private List<CommentResponseDTO> commentsList;
 
+    // ✅ Construtor corrigido, seguro contra valores nulos
     public PostResponseDTO(Post post) {
-        this.id = post.getId();
-        this.content = post.getContent();
+    this.id = post.getId();
+    this.content = post.getContent();
+
+    if (post.getUser() != null) {
         this.username = post.getUser().getUsername();
         this.email = post.getUser().getEmail();
-        this.likesCount = post.getLikes() != null ? post.getLikes().size() : 0; //Nova inicialização
-        this.commentsCount = post.getComments() != null ? post.getComments().size() : 0;
-
-        if (post.getComments() != null) {
-            this.commentsList = post.getComments().stream()
-                                    .map(comment -> new CommentResponseDTO(comment)) // Cria um DTO para cada comentário
-                                    .collect(Collectors.toList());
-        } else {
-            this.commentsList = new ArrayList<>();
-        }
+    } else {
+        this.username = "Desconhecido";
+        this.email = "";
     }
 
+    this.likesCount = post.getLikes() != null ? post.getLikes().size() : 0;
+    this.commentsCount = post.getComments() != null ? post.getComments().size() : 0;
+
+    if (post.getComments() != null) {
+        this.commentsList = post.getComments().stream()
+            .map(CommentResponseDTO::new)
+            .collect(Collectors.toList());
+    } else {
+        this.commentsList = new ArrayList<>();
+    }
+}
+
+
+    // Getters
     public Long getId() {
         return id;
     }
@@ -50,7 +59,7 @@ public class PostResponseDTO {
         return email;
     }
 
-    public int getLikesCount() { //Novo método getter!
+    public int getLikesCount() {
         return likesCount;
     }
 
@@ -61,5 +70,4 @@ public class PostResponseDTO {
     public List<CommentResponseDTO> getCommentsList() {
         return commentsList;
     }
-
 }

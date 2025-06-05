@@ -14,54 +14,46 @@ function LoginCadastro({ setIsLoggedIn }) {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    try {
-      if (isLogin) {
-        console.log("Login com:", formData);
+  try {
+    if (isLogin) {
+      console.log("Enviando login para o backend com:", formData);
 
-        const response = await axios.post("http://localhost:8080/api/auth/login", {
-          email: formData.email,
-          password: formData.password,
-        });
+      const response = await axios.post("http://localhost:8080/api/auth/login", {
+        email: formData.email,
+        password: formData.password,
+      });
 
-        const { username, email } = response.data;  
+      console.log("Resposta do login:", response.data); // ⬅️ Veja se tem o ID aqui
 
-        localStorage.setItem("user", JSON.stringify({ username, email }));
+      // ✅ Salva tudo, inclusive o ID
+      localStorage.setItem("user", JSON.stringify(response.data));
 
-        setIsLoggedIn(true);
-        navigate("/feed");
-      } else {
-        const response = await axios.post("http://localhost:8080/api/auth/register", formData);
+      setIsLoggedIn(true);
+      navigate("/feed");
+    } else {
+      const response = await axios.post("http://localhost:8080/api/auth/register", formData);
 
-        localStorage.setItem("user", JSON.stringify({
-          email: response.data.email,
-          username: response.data.username,
-        }));
+      console.log("Resposta do cadastro:", response.data);
 
-        alert("Usuário cadastrado com sucesso!");
-        setIsLoggedIn(true);
-        navigate("/feed");
-      }
-      //ajeitar o tratamento de erro, ta errado
-    } catch (error) {
-      if (isLogin) {
-        if (error.response?.status === 400 && error.response?.data?.message === "Senha incorreta") {
-          alert("Erro: Senha incorreta.");
-        } else {
-          alert("Erro no login: " + (error.response?.data?.message || "Senha incorreta."));
-        }
-      }
-      //esse tambem ta errado
-      if (!isLogin) {
-        if (error.response?.status === 400 && error.response?.data?.message === "Email já registrado") {
-          alert("Erro: Este email já está registrado.");
-        } else {
-          alert("Erro no cadastro: " + (error.response?.data?.message || "Email já registrado."));
-        }
-      }
+      // ✅ Aqui também salva tudo
+      localStorage.setItem("user", JSON.stringify(response.data));
+
+      alert("Usuário cadastrado com sucesso!");
+      setIsLoggedIn(true);
+      navigate("/feed");
     }
-  };
+  } catch (error) {
+    console.error("Erro na requisição:", error);
+    if (error.response?.data?.message) {
+      alert(`Erro: ${error.response.data.message}`);
+    } else {
+      alert("Ocorreu um erro. Tente novamente.");
+    }
+  }
+};
+
 
   return (
     <div className="login-cadastro-container">

@@ -1,17 +1,17 @@
 package com.brasfi.demo.repository;
 
-import java.time.LocalDateTime;
+import com.brasfi.demo.model.Post;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
 import java.util.List;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-
-import com.brasfi.demo.model.Post;
-import com.brasfi.demo.model.User;
-
 public interface PostRepository extends JpaRepository<Post, Long> {
-    List<Post> findByUser(User user);
-    List<Post> findByUserId(Long userId);
-    List<Post> findByExpiresAtAfter(LocalDateTime dateTime);
-    List<Post> findByContentContainingIgnoreCase(String contentQuery); //Novo pra barra de pesquisa do feed!
-    List<Post> findByPostType(String postType); //Mesmo motivo q o de cima
+
+    // 🔍 Busca todos os posts já com os relacionamentos carregados
+    @Query("SELECT DISTINCT p FROM Post p " +
+           "LEFT JOIN FETCH p.user " +
+           "LEFT JOIN FETCH p.likes " +
+           "LEFT JOIN FETCH p.comments")
+    List<Post> findAllWithDetails();
 }

@@ -59,12 +59,19 @@ public class FeedController {
     }
 
     @GetMapping("/general")
-    public List<PostResponseDTO> getGeneralFeed() {
-        return feedService.getGeneralFeed()
-            .stream()
-            .map(PostResponseDTO::new)
-            .toList();
-    }
+public List<PostResponseDTO> getGeneralFeed() {
+    List<Post> posts = feedService.getGeneralFeed();
+    System.out.println("📦 Total de posts carregados: " + posts.size());
+
+    return posts.stream()
+        .map(post -> {
+            System.out.println("🔄 Convertendo postId=" + post.getId());
+            System.out.println("👤 Autor: " + (post.getUser() != null ? post.getUser().getUsername() : "null"));
+            return new PostResponseDTO(post);
+        })
+        .toList();
+}
+
 
     // ✅ CORRIGIDO: agora delega corretamente para PostService com o userId
     @PostMapping("/post")

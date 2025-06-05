@@ -15,17 +15,15 @@ import {
 import SearchBar from './SearchBar';
 import {
   getGeneralFeed,
-  createPost,
   getLikedPosts,
   toggleLikeAPI,
+  getFavoritedPosts,
+  toggleFavoriteAPI,
+  createPost
 } from '../services/feedService';
-import { toggleFavoriteAPI } from '../services/feedService'; // certifique-se de importar
-import { getFavoritedPosts } from '../services/feedService';
 
 const Feed = () => {
-  const user = JSON.parse(localStorage.getItem('user'));
-  const userId = user?.id;
-
+  const [userId, setUserId] = useState(null);
   const [posts, setPosts] = useState([]);
   const [likedPosts, setLikedPosts] = useState({});
   const [favoritedPosts, setFavoritedPosts] = useState({});
@@ -34,8 +32,49 @@ const Feed = () => {
   const [mostrarFormulario, setMostrarFormulario] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
 
+  // Recupera o userId do localStorage com segurança
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (!user?.id) {
+      alert("Usuário não autenticado. Faça login novamente.");
+      return;
+    }
+    setUserId(user.id);
+  }, []);
+
+  // Carrega o feed após carregar o userId
+  useEffect(() => {
+    if (!userId) return;
+
+    getGeneralFeed()
+      .then((response) => {
+        setPosts(response.data);
+        return Promise.all([
+          getLikedPosts(userId),
+          getFavoritedPosts(userId)
+        ]);
+      })
+      .then(([likedRes, favoritedRes]) => {
+        const likedMap = {};
+        likedRes.data.forEach(post => {
+          likedMap[post.id] = true;
+        });
+
+        const favoritedMap = {};
+        favoritedRes.data.forEach(post => {
+          favoritedMap[post.id] = true;
+        });
+
+        setLikedPosts(likedMap);
+        setFavoritedPosts(favoritedMap);
+      })
+      .catch((error) => {
+        console.error('Erro ao carregar feed, curtidas ou favoritos:', error);
+      });
+  }, [userId]);
+
   const handleCriarPost = () => {
-    if (novoPost.trim() === '') return;
+    if (!novoPost.trim() || !userId) return;
 
     const post = {
       content: novoPost,
@@ -59,43 +98,45 @@ const Feed = () => {
   };
 
   const handleMostrarCurtidos = () => {
+    if (!userId) return;
+
     getLikedPosts(userId)
       .then((res) => {
         setPosts(res.data);
       })
       .catch((err) => {
         console.error("Erro ao buscar posts curtidos:", err);
+        alert("Erro ao buscar posts curtidos.");
       });
   };
 
-useEffect(() => {
-  getGeneralFeed()
-    .then((response) => {
-      setPosts(response.data);
-      return Promise.all([
-        getLikedPosts(userId),
-        getFavoritedPosts(userId)
-      ]);
-    })
-    .then(([likedRes, favoritedRes]) => {
-      const likedMap = {};
-      likedRes.data.forEach(post => {
-        likedMap[post.id] = true;
+  const handleMostrarFavoritos = () => {
+    if (!userId) return;
+
+    Promise.all([
+      getFavoritedPosts(userId),
+      getLikedPosts(userId)
+    ])
+      .then(([favoritedRes, likedRes]) => {
+        const favoritedMap = {};
+        favoritedRes.data.forEach(post => {
+          favoritedMap[post.id] = true;
+        });
+
+        const likedMap = {};
+        likedRes.data.forEach(post => {
+          likedMap[post.id] = true;
+        });
+
+        setPosts(favoritedRes.data);
+        setFavoritedPosts(favoritedMap);
+        setLikedPosts(likedMap);
+      })
+      .catch((err) => {
+        console.error("Erro ao buscar posts salvos:", err);
+        alert("Erro ao buscar posts salvos.");
       });
-
-      const favoritedMap = {};
-      favoritedRes.data.forEach(post => {
-        favoritedMap[post.id] = true;
-      });
-
-      setLikedPosts(likedMap);
-      setFavoritedPosts(favoritedMap);
-    })
-    .catch((error) => {
-      console.error('Erro ao carregar feed, curtidas ou favoritos:', error);
-    });
-}, [userId]);
-
+  };
 
   const toggleLike = (postId) => {
     toggleLikeAPI(userId, postId)
@@ -106,50 +147,23 @@ useEffect(() => {
         }));
       })
       .catch((err) => {
-        console.error('Erro ao curtir/descurtir post:', err);
-        alert('Erro ao curtir/descurtir post.');
+        console.error('Erro ao curtir/descurtir post:', err.response?.data || err.message);
+        alert('Erro ao curtir/descurtir post: ' + (err.response?.data?.message || err.message));
       });
   };
 
-const handleMostrarFavoritos = () => {
-  Promise.all([
-    getFavoritedPosts(userId),
-    getLikedPosts(userId)
-  ])
-    .then(([favoritedRes, likedRes]) => {
-      const favoritedMap = {};
-      favoritedRes.data.forEach(post => {
-        favoritedMap[post.id] = true;
+  const toggleFavorite = (postId) => {
+    toggleFavoriteAPI(userId, postId)
+      .then(() => {
+        setFavoritedPosts((prev) => ({
+          ...prev,
+          [postId]: !prev[postId],
+        }));
+      })
+      .catch((err) => {
+        console.error('Erro ao favoritar/desfavoritar post:', err);
       });
-
-      const likedMap = {};
-      likedRes.data.forEach(post => {
-        likedMap[post.id] = true;
-      });
-
-      setPosts(favoritedRes.data); // mostra só os salvos
-      setFavoritedPosts(favoritedMap);
-      setLikedPosts(likedMap); // mantém ícones de like corretos
-    })
-    .catch((err) => {
-      console.error("Erro ao buscar posts salvos:", err);
-      alert("Erro ao buscar posts salvos.");
-    });
-};
-
-
-const toggleFavorite = (postId) => {
-  toggleFavoriteAPI(userId, postId)
-    .then(() => {
-      setFavoritedPosts((prev) => ({
-        ...prev,
-        [postId]: !prev[postId],
-      }));
-    })
-    .catch((err) => {
-      console.error('Erro ao favoritar/desfavoritar post:', err);
-    });
-};
+  };
 
   const toggleComments = (postId) => {
     setExpandedPosts((prev) => ({
@@ -172,10 +186,9 @@ const toggleFavorite = (postId) => {
           <button className="icon-btn heart-btn" onClick={handleMostrarCurtidos}>
             <FontAwesomeIcon icon={regularHeart} style={{ fontSize: '22px' }} />
           </button>
-<button className="icon-btn1" onClick={handleMostrarFavoritos}>
-  <FontAwesomeIcon icon={regularBookmark} className="action-icon" />
-</button>
-
+          <button className="icon-btn1" onClick={handleMostrarFavoritos}>
+            <FontAwesomeIcon icon={regularBookmark} className="action-icon" />
+          </button>
         </div>
         <SearchBar />
       </div>
