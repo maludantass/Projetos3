@@ -22,9 +22,10 @@ const Foruns = () => {
 
       {/* Sidebar fixa */}
       <div className="forum-sidebar">
-        <button className="forum-button" onClick={() => navigate('/foruns/todos')}>
-          ＋
-        </button>
+        <button className="forum-button" onClick={() => navigate('/foruns/novo')}>
+  ＋
+</button>
+
       </div>
 
       {/* Conteúdo principal */}
@@ -62,8 +63,9 @@ const Foruns = () => {
                     <p>{comunidade.description || "Sem descrição disponível."}</p>
                   </div>
                   <div className="forum-members">
-                    Membros:<br />XX
-                  </div>
+  Membros:<br />{comunidade.memberCount ?? comunidade.members?.length ?? 0}
+</div>
+
                 </Link>
               ))}
             </div>
