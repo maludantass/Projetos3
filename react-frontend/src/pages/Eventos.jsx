@@ -218,13 +218,19 @@ function SecaoEventos({ titulo, eventos, onEventoClick, somenteFavoritos }) {
       <div className="grid-container">
         {eventosVisiveis.map((evento, i) => (
           <div
-            className="item"
-            key={evento.id || `evento-${titulo}-${i}`}
-            data-imagem={i % 4}
-            onClick={() => onEventoClick({ ...evento, imagem: imagens[i % 4] })}
-          >
-            {/* Conteúdo do card pode ser expandido aqui */}
-          </div>
+  className="item"
+  key={evento.id || `evento-${titulo}-${i}`}
+  onClick={() => onEventoClick(evento)}
+>
+  <img
+    src={evento.imagem}
+    alt={`Imagem do evento ${evento.titulo}`}
+    className="imagem-capa-evento"
+    draggable="false"
+  />
+  <h4>{evento.titulo}</h4>
+</div>
+
         ))}
         {eventosVisiveis.length === 0 && (
           <div className="mensagem-sem-eventos">
@@ -269,7 +275,13 @@ const toggleFiltroFavoritos = () => {
       const resposta = await fetch('http://localhost:8080/api/eventos');
       if (!resposta.ok) throw new Error(`HTTP error! status: ${resposta.status}`);
       const dados = await resposta.json();
-      setTodosEventos(dados);
+      const eventosComImagens = dados.map((ev, index) => ({
+  ...ev,
+  imagem: imagens[index % imagens.length]
+}));
+setTodosEventos(eventosComImagens);
+
+
     } catch (erro) {
       console.error("Erro ao buscar eventos:", erro);
     }
