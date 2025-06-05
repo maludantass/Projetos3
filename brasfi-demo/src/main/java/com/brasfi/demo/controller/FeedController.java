@@ -16,6 +16,7 @@ import org.springframework.http.HttpStatus;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/feed")
 public class FeedController {
@@ -46,10 +47,12 @@ public class FeedController {
         return feedService.getPostsLikedByUser(user);
     }
 
-    @PostMapping("/like")
-    public void likeOrUnlikePost(@RequestParam Long userId, @RequestParam Long postId) {
-        postService.toggleLike(userId, postId);
-    }
+@PostMapping("/like")
+public ResponseEntity<Void> likeOrUnlikePost(@RequestParam Long userId, @RequestParam Long postId) {
+    System.out.println("🟢 Chegou no endpoint /feed/like: userId=" + userId + ", postId=" + postId);
+    postService.toggleLike(userId, postId);
+    return ResponseEntity.ok().build();
+}
 
     // Endpoint para os vídeos salvos do usuário
     @GetMapping("/saved/{userId}")
