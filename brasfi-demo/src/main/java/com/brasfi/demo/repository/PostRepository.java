@@ -17,14 +17,13 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     List<Post> findAllWithDetails();
 
     @Query("""
-    SELECT DISTINCT p FROM Likes l 
-    JOIN l.post p 
-    LEFT JOIN FETCH p.user 
-    LEFT JOIN FETCH p.likes 
-    LEFT JOIN FETCH p.comments 
-    WHERE l.user.id = :userId
+SELECT DISTINCT p FROM Post p
+JOIN p.likes l
+JOIN FETCH p.user
+WHERE l.user.id = :userId
 """)
 List<Post> findLikedPostsWithUserByUserId(@Param("userId") Long userId);
+
 
 
 }

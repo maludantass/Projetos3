@@ -223,7 +223,7 @@ const Feed = () => {
           <div className="post-card" key={post.id}>
             <div className="user-info">
               <span className="user-name">
-                <strong>{post.user?.username || 'Usuário'}</strong> | <span>{post.user?.email || ''}</span>
+<strong>{post.username || 'Usuário'}</strong> | <span>{post.email || ''}</span>
               </span>
             </div>
 
