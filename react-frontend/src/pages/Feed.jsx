@@ -10,7 +10,7 @@ import {
 import {
   faHeart as solidHeart,
   faBookmark as solidBookmark,
-  faCircleHalfStroke, // ✅ Agora da fonte correta
+  faCircleHalfStroke,
 } from '@fortawesome/free-solid-svg-icons';
 import SearchBar from './SearchBar';
 import {
@@ -21,6 +21,9 @@ import {
 } from '../services/feedService';
 
 const Feed = () => {
+  const user = JSON.parse(localStorage.getItem('user'));
+  const userId = user?.id;
+
   const [posts, setPosts] = useState([]);
   const [likedPosts, setLikedPosts] = useState({});
   const [favoritedPosts, setFavoritedPosts] = useState({});
@@ -37,7 +40,7 @@ const Feed = () => {
       postType: 'text',
     };
 
-    createPost(1, post)
+    createPost(userId, post)
       .then((res) => {
         console.log('Post criado com sucesso:', res.data);
         setNovoPost('');
@@ -54,7 +57,7 @@ const Feed = () => {
   };
 
   const handleMostrarCurtidos = () => {
-    getLikedPosts(1)
+    getLikedPosts(userId)
       .then((res) => {
         setPosts(res.data);
       })
@@ -67,7 +70,7 @@ const Feed = () => {
     getGeneralFeed()
       .then((response) => {
         setPosts(response.data);
-        return getLikedPosts(1);
+        return getLikedPosts(userId);
       })
       .then((res) => {
         const likedMap = {};
@@ -79,10 +82,10 @@ const Feed = () => {
       .catch((error) => {
         console.error('Erro ao carregar feed ou curtidas:', error);
       });
-  }, []);
+  }, [userId]);
 
   const toggleLike = (postId) => {
-    toggleLikeAPI(1, postId)
+    toggleLikeAPI(userId, postId)
       .then(() => {
         setLikedPosts((prev) => ({
           ...prev,
