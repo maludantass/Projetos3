@@ -12,7 +12,9 @@ const getAuthHeader = () => {
 
 // Buscar todas as comunidades do fórum
 export const getCommunities = async () => {
-  const res = await axios.get(`${API}/communities`);
+  const res = await axios.get(`${API}/communities`, {
+    headers: getAuthHeader()
+  });
   return res.data.content;
 };
 
@@ -99,6 +101,12 @@ export const getPostById = async (postId) => {
   const res = await axios.get(`${API}/posts/${postId}`, {
     headers: getAuthHeader(),
   });
+  return res.data;
+};
+
+
+export const createCommunity = async (communityData) => {
+  const res = await axios.post(`${API}/communities`, communityData); // ✅ sem headers
   return res.data;
 };
 
