@@ -1,6 +1,8 @@
 import './Feed.css';
 import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
+
 import {
   faHeart as regularHeart,
   faComment,
@@ -12,14 +14,14 @@ import {
   faBookmark as solidBookmark,
   faCircleHalfStroke,
 } from '@fortawesome/free-solid-svg-icons';
-import SearchBar from './SearchBar';
 import {
   getGeneralFeed,
   getLikedPosts,
   toggleLikeAPI,
   getFavoritedPosts,
   toggleFavoriteAPI,
-  createPost
+  createPost,
+  addComment
 } from '../services/feedService';
 
 const Feed = () => {
@@ -31,6 +33,10 @@ const Feed = () => {
   const [novoPost, setNovoPost] = useState('');
   const [mostrarFormulario, setMostrarFormulario] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
+  const [query, setQuery] = useState('');
+  const [type, setType] = useState('posts');
+  const [newComments, setNewComments] = useState({});
+  const [commentFormsVisible, setCommentFormsVisible] = useState({});
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'));
@@ -45,8 +51,8 @@ const Feed = () => {
     if (!userId) return;
 
     getGeneralFeed()
-      .then((response) => {
-        setPosts(response.data);
+      .then((posts) => {
+        setPosts(posts);
         return getLikedPosts(userId);
       })
       .then((likedRes) => {
@@ -55,7 +61,6 @@ const Feed = () => {
           likedMap[post.id] = true;
         });
         setLikedPosts(likedMap);
-
         return getFavoritedPosts(userId);
       })
       .then((favoritedRes) => {
@@ -66,7 +71,7 @@ const Feed = () => {
         setFavoritedPosts(favoritedMap);
       })
       .catch((error) => {
-        console.error('Erro ao carregar feed, curtidas ou favoritos:', error);
+        console.error('Erro ao carregar feed:', error);
       });
   }, [userId]);
 
@@ -101,6 +106,13 @@ const Feed = () => {
     }));
   };
 
+  const toggleCommentForm = (postId) => {
+    setCommentFormsVisible(prev => ({
+      ...prev,
+      [postId]: !prev[postId]
+    }));
+  };
+
   const handleCriarPost = () => {
     if (!novoPost.trim() || !userId) return;
 
@@ -110,15 +122,13 @@ const Feed = () => {
     };
 
     createPost(userId, post)
-      .then((res) => {
-        console.log('Post criado com sucesso:', res.data);
+      .then(() => {
         setNovoPost('');
         setMostrarFormulario(false);
         return getGeneralFeed();
       })
       .then((res) => {
-        const novosPosts = res.data;
-        setPosts(novosPosts);
+        setPosts(res.data);
         return getLikedPosts(userId);
       })
       .then((likedRes) => {
@@ -134,9 +144,42 @@ const Feed = () => {
       });
   };
 
+const handleAddComment = async (postId) => {
+  const text = newComments[postId];
+  if (!text || !userId) return;
+
+  try {
+    await addComment(postId, userId, text);
+
+    setPosts((prevPosts) =>
+      prevPosts.map((post) =>
+        post.id === postId
+          ? {
+              ...post,
+              comments: [
+  ...(post.comments || []),
+  {
+    username: 'Você',
+    commentText: text,
+    createdAt: new Date().toISOString()
+  }
+],
+            }
+          : post
+      )
+    );
+
+    setNewComments((prev) => ({ ...prev, [postId]: '' }));
+    setCommentFormsVisible((prev) => ({ ...prev, [postId]: false })); // fecha campo após comentar
+    setExpandedPosts((prev) => ({ ...prev, [postId]: true })); // expande para mostrar todos
+  } catch (err) {
+    console.error("Erro ao adicionar comentário:", err);
+    alert("Erro ao adicionar comentário.");
+  }
+};
+
   const handleMostrarCurtidos = () => {
     if (!userId) return;
-
     getLikedPosts(userId)
       .then((res) => {
         setPosts(res.data);
@@ -149,7 +192,6 @@ const Feed = () => {
 
   const handleMostrarFavoritos = () => {
     if (!userId) return;
-
     getFavoritedPosts(userId)
       .then((favoritedRes) => {
         const savedPosts = favoritedRes.data;
@@ -174,17 +216,53 @@ const Feed = () => {
       });
   };
 
+  const handleSearch = async () => {
+    if (!query.trim()) return;
+
+    try {
+      const res = await fetch(`http://localhost:8080/feed/filter?type=${type}&query=${query}`, {
+        headers: {
+          'Authorization': `Bearer ${JSON.parse(localStorage.getItem('user')).token}`
+        }
+      });
+
+      if (!res.ok) throw new Error('Erro ao buscar');
+
+      const data = await res.json();
+      setPosts(data);
+
+      const [likedRes, favoritedRes] = await Promise.all([
+        getLikedPosts(userId),
+        getFavoritedPosts(userId),
+      ]);
+
+      const likedMap = {};
+      likedRes.data.forEach(post => {
+        likedMap[post.id] = true;
+      });
+      setLikedPosts(likedMap);
+
+      const favoritedMap = {};
+      favoritedRes.data.forEach(post => {
+        favoritedMap[post.id] = true;
+      });
+      setFavoritedPosts(favoritedMap);
+
+    } catch (err) {
+      console.error("Erro na busca:", err);
+      alert("Erro ao realizar busca.");
+    }
+  };
+
   return (
-    <div className={darkMode ? 'feed dark-mode' : 'feed light-mode'}>
+<div className={darkMode ? 'feed dark-mode' : 'feed light-mode'}>
       <button className="toggle-theme" onClick={() => setDarkMode(!darkMode)}>
         <FontAwesomeIcon icon={faCircleHalfStroke} />
       </button>
 
       <div className="top-search-bar">
         <div className="icon-group">
-          <button className="icon-btn" onClick={() => setMostrarFormulario(true)}>
-            <img src="/static/images/postar.png" alt="Postar" className="icon-image" />
-          </button>
+          <button className="add-post-btn" onClick={() => setMostrarFormulario(true)}>+</button>
           <button className="icon-btn heart-btn" onClick={handleMostrarCurtidos}>
             <FontAwesomeIcon icon={regularHeart} style={{ fontSize: '22px' }} />
           </button>
@@ -192,7 +270,24 @@ const Feed = () => {
             <FontAwesomeIcon icon={regularBookmark} className="action-icon" />
           </button>
         </div>
-        <SearchBar />
+
+        <div className="search-bar">
+          <input
+            className="search-input"
+            type="text"
+            placeholder="Pesquise"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            onKeyDown={(e) => { if (e.key === 'Enter') handleSearch(); }}
+          />
+          <select className="search-select" value={type} onChange={(e) => setType(e.target.value)}>
+            <option value="posts">Posts</option>
+            <option value="users">Usuários</option>
+          </select>
+          <button className="search-btn" onClick={handleSearch}>
+            <FontAwesomeIcon icon={faSearch} />
+          </button>
+        </div>
       </div>
 
       {mostrarFormulario && (
@@ -222,35 +317,67 @@ const Feed = () => {
               <div className="actions-left">
                 <FontAwesomeIcon
                   icon={likedPosts[post.id] ? solidHeart : regularHeart}
-                  className="action-icon"
-                  style={{ color: likedPosts[post.id] ? 'red' : 'black', cursor: 'pointer' }}
+                  className={`action-icon ${likedPosts[post.id] ? 'icon-liked' : ''}`}
                   onClick={() => toggleLike(post.id)}
                 />
-                <FontAwesomeIcon icon={faComment} className="action-icon" style={{ cursor: 'pointer' }} />
+                <FontAwesomeIcon
+                  icon={faComment}
+                  className="action-icon"
+                  style={{ cursor: 'pointer' }}
+                  onClick={() => toggleCommentForm(post.id)}
+                />
                 <FontAwesomeIcon icon={faPaperPlane} className="action-icon" style={{ cursor: 'pointer' }} />
               </div>
               <div className="actions-right">
                 <FontAwesomeIcon
-                  icon={favoritedPosts[post.id] ? solidBookmark : regularBookmark}
-                  className="action-icon"
-                  style={{ cursor: 'pointer' }}
-                  onClick={() => toggleFavorite(post.id)}
-                />
+                    icon={favoritedPosts[post.id] ? solidBookmark : regularBookmark}
+                    className={`action-icon ${favoritedPosts[post.id] ? 'icon-favorited' : ''}`}
+                    onClick={() => toggleFavorite(post.id)}
+                  />
               </div>
             </div>
 
             <div className="comment-section">
               {(expandedPosts[post.id] ? (post.comments || []) : (post.comments || []).slice(0, 1)).map((c, i) => (
                 <p key={i}>
-                  <strong>{c.user}</strong> {c.text}
+                  <strong>{c.username}</strong> {c.commentText}
+                  <br />
+                  <span style={{ fontSize: '12px', color: '#777' }}>
+                    {new Date(c.createdAt).toLocaleString('pt-BR', {
+                      day: '2-digit',
+                      month: '2-digit',
+                      year: 'numeric',
+                      hour: '2-digit',
+                      minute: '2-digit',
+                      hour12: false
+                    })}
+                  </span>
                 </p>
               ))}
+
               {(post.comments || []).length > 1 && (
                 <span className="ver-mais" onClick={() => toggleComments(post.id)}>
                   {expandedPosts[post.id] ? '▲ Ver Menos comentários' : '▼ Ver Mais comentários'}
                 </span>
               )}
             </div>
+
+            {commentFormsVisible[post.id] && (
+              <div className="add-comment">
+                <input
+                  type="text"
+                  placeholder="Adicionar um comentário..."
+                  value={newComments[post.id] || ''}
+                  onChange={(e) =>
+                    setNewComments((prev) => ({ ...prev, [post.id]: e.target.value }))
+                  }
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') handleAddComment(post.id);
+                  }}
+                />
+                <button onClick={() => handleAddComment(post.id)}>Comentar</button>
+              </div>
+            )}
           </div>
         ))}
       </div>

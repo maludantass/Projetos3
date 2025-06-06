@@ -12,9 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
+import java.util.Map;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
 
 @CrossOrigin(origins = "http://localhost:5173")
 @RestController
@@ -35,30 +37,29 @@ public class FeedController {
 
     @GetMapping("/{userId}")
     public List<Post> getFeed(@PathVariable Long userId) {
-        User user = getUserById(userId);
+        User user = userRepository.findById(userId)
+            .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
         return feedService.getPostsWithLikesAndComments(user);
     }
 
     @GetMapping("/liked/{userId}")
     public List<PostResponseDTO> getLikedPosts(@PathVariable Long userId) {
-        User user = getUserById(userId);
+        User user = userRepository.findById(userId)
+            .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
         List<Post> likedPosts = feedService.getPostsLikedByUser(user);
-
-        System.out.println("🔎 Posts curtidos por " + user.getUsername() + ": " + likedPosts.size());
-        likedPosts.forEach(p -> System.out.println(" - ID: " + p.getId() + ", Conteúdo: " + p.getContent()));
-
-        return likedPosts.stream()
-                .map(PostResponseDTO::new)
-                .collect(Collectors.toList());
+        return likedPosts.stream().map(PostResponseDTO::new).collect(Collectors.toList());
     }
 
     @PostMapping("/save")
     public ResponseEntity<String> toggleSavePost(@RequestParam Long userId, @RequestParam Long postId) {
-        User user = getUserById(userId);
+        User user = userRepository.findById(userId)
+            .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
         Post post = postService.getPostById(postId);
 
         List<Post> saved = new ArrayList<>(user.getSavedPosts());
-
         if (saved.stream().anyMatch(p -> p.getId().equals(post.getId()))) {
             saved.removeIf(p -> p.getId().equals(post.getId()));
         } else {
@@ -72,15 +73,19 @@ public class FeedController {
 
     @GetMapping("/saved/{userId}")
     public List<PostResponseDTO> getSavedPosts(@PathVariable Long userId) {
-        User user = getUserById(userId);
+        User user = userRepository.findById(userId)
+            .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
         return user.getSavedPosts().stream()
-                .map(PostResponseDTO::new)
-                .collect(Collectors.toList());
+            .map(PostResponseDTO::new)
+            .collect(Collectors.toList());
     }
 
     @PostMapping("/like")
     public ResponseEntity<String> toggleLikePost(@RequestParam Long userId, @RequestParam Long postId) {
-        User user = getUserById(userId);
+        User user = userRepository.findById(userId)
+            .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
         Post post = postService.getPostById(postId);
         feedService.toggleLike(user, post);
         return ResponseEntity.ok("Like atualizado com sucesso.");
@@ -92,17 +97,19 @@ public class FeedController {
         System.out.println("📦 Total de posts carregados: " + posts.size());
 
         return posts.stream()
-                .map(post -> {
-                    System.out.println("🔄 Convertendo postId=" + post.getId());
-                    System.out.println("👤 Autor: " + (post.getUser() != null ? post.getUser().getUsername() : "null"));
-                    return new PostResponseDTO(post);
-                })
-                .toList();
+            .map(post -> {
+                System.out.println("🔄 Convertendo postId=" + post.getId());
+                System.out.println("👤 Autor: " + (post.getUser() != null ? post.getUser().getUsername() : "null"));
+                return new PostResponseDTO(post);
+            })
+            .collect(Collectors.toList());
     }
 
     @PostMapping("/post")
     public Post createPost(@RequestParam Long userId, @RequestBody Post post) {
-        User user = getUserById(userId);
+        User user = userRepository.findById(userId)
+            .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
         post.setUser(user);
 
         if (post.getPostType() == null || (!post.getPostType().equals("text") && !post.getPostType().equals("photo"))) {
@@ -118,15 +125,27 @@ public class FeedController {
         return savedPost;
     }
 
-    @PostMapping("/comment")
-    public Comment createCommentForPost(@RequestParam Long userId, @RequestParam Long postId, @RequestBody String commentText) {
-        User user = getUserById(userId);
-        Post post = postService.findPostById(postId)
-                .orElseThrow(() -> new RuntimeException("Post não encontrado com ID: " + postId));
+@PostMapping("/comment")
+public ResponseEntity<?> createCommentForPost(@RequestBody Map<String, String> payload) {
+    Long userId = Long.parseLong(payload.get("userId"));
+    Long postId = Long.parseLong(payload.get("postId"));
+    String commentText = payload.get("text");
 
-        Comment comment = new Comment(user, post, commentText);
-        return commentService.createComment(comment);
+    if (commentText == null || commentText.trim().isEmpty()) {
+        return ResponseEntity.badRequest().body("Texto do comentário não pode ser vazio.");
     }
+
+    User user = userRepository.findById(userId)
+        .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
+    Post post = postService.findPostById(postId)
+        .orElseThrow(() -> new RuntimeException("Post não encontrado com ID: " + postId));
+
+    Comment comment = new Comment(user, post, commentText);
+    commentService.createComment(comment);
+
+    return ResponseEntity.ok().build();
+}
 
     @GetMapping("/posts/{postId}/comments")
     public List<Comment> getCommentsByPostId(@PathVariable Long postId) {
@@ -142,26 +161,19 @@ public class FeedController {
 
     @GetMapping("/search")
     public List<PostResponseDTO> searchPosts(@RequestParam String keyword) {
-        List<Post> posts = feedService.searchPostsByKeyword(keyword);
-        return posts.stream()
-                .map(PostResponseDTO::new)
-                .collect(Collectors.toList());
+        return feedService.searchPostsByKeyword(keyword);
     }
 
     @GetMapping("/filter")
     public ResponseEntity<?> filterContent(
-            @RequestParam(required = false) String type,
-            @RequestParam(required = false) String query) {
+        @RequestParam(required = false) String type,
+        @RequestParam(required = false) String query) {
 
         if (type == null || type.trim().isEmpty()) {
-            return ResponseEntity.badRequest().body("Parâmetro 'type' é obrigatório (posts, users, media).");
+            return ResponseEntity.badRequest().body("Parâmetro 'type' é obrigatório (posts, users).");
         }
 
         Object result = feedService.performSearch(type, query);
         return ResponseEntity.ok(result);
-    }
-
-    private User getUserById(Long userId) {
-        return userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
     }
 }

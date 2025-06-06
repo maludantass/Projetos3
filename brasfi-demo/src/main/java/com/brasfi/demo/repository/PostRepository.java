@@ -24,6 +24,8 @@ WHERE l.user.id = :userId
 """)
 List<Post> findLikedPostsWithUserByUserId(@Param("userId") Long userId);
 
+List<Post> findByContentContainingIgnoreCase(String keyword);
+List<Post> findByPostTypeIgnoreCase(String type);
 
 
 }

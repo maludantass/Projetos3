@@ -13,7 +13,9 @@ const getAuthHeader = () => {
 };
 
 // Obter o feed geral
-export const getGeneralFeed = () => api.get('/feed/general');
+export const getGeneralFeed = () =>
+  api.get('/feed/general').then(res => res.data);
+
 
 // Criar novo post
 export const createPost = (userId, postData) =>
@@ -43,4 +45,10 @@ export const getFavoritedPosts = (userId) =>
 export const toggleFavoriteAPI = (userId, postId) =>
   api.post(`/feed/save?userId=${userId}&postId=${postId}`, {}, {
     headers: getAuthHeader()
+  });
+export const addComment = (postId, userId, text) =>
+  api.post('/feed/comment', {
+    postId: postId.toString(),
+    userId: userId.toString(),
+    text
   });

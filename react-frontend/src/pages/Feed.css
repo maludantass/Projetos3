@@ -1,9 +1,8 @@
 .feed-container {
-  padding: 20px 20px 20px 20px;
+  padding: 20px;
   min-height: 100vh;
   font-family: Arial, sans-serif;
-  /* Remover centralização */
-  display: block; /* ou simplesmente remova a linha */
+  display: block;
 }
 
 .post-card {
@@ -64,144 +63,217 @@
   margin-bottom: 8px;
 }
 
-.action-icon {
-  margin-right: 12px;
-  font-size: 18px;
-}
-
-.comment-section {
-  margin-top: 8px;
-  font-size: 14px;
-  color: #222;
-}
-
-.comment-section p {
-  margin: 4px 0;
-}
-
-.ver-mais {
-  display: block;
-  margin-top: 8px;
-  font-size: 13px;
-  color: #2d6a4f;
-  cursor: pointer;
-}
-
-.refresh {
-  display: flex;
-  justify-content: center;
-  margin: 30px 0;
-}
-
-/* Ícones organizados como na imagem */
 .actions-left, .actions-right {
   display: flex;
   align-items: center;
 }
 
-/* Comentários negrito para nome e texto após */
+.comment-section {
+  margin-top: 10px;
+  padding: 5px 15px;
+  border-left: 3px solid #d3d3d3;
+  font-size: 14px;
+  color: #333;
+}
+
+.comment-section p {
+  margin: 6px 0;
+  line-height: 1.4;
+}
+
 .comment-section strong {
-  font-weight: bold;
-  margin-right: 4px;
-}
-/* Barra fixa e navbar */
-.navbar-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 1000;
+  color: #2e5e36;
+  margin-right: 6px;
 }
 
-.top-bar {
-  background-color: #b0dab6;
-  text-align: center;
-  padding: 6px;
-  font-weight: bold;
+.ver-mais {
+  display: block;
+  margin-top: 5px;
+  color: #2e5e36;
   font-size: 13px;
+  cursor: pointer;
+  user-select: none;
 }
 
-.navbar {
-  background-color: white;
+.ver-mais:hover {
+  text-decoration: underline;
+}
+
+.add-comment {
   display: flex;
-  justify-content: space-between;
-  padding: 12px 24px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  gap: 8px;
+  margin-top: 10px;
 }
 
-.loading-icon {
-  width: 40px;
-  height: 40px;
-  animation: spin 1s linear infinite;
-}
-.top-search-bar {
-  margin-top: 100px; /* ou padding-top se preferir */
-  position: relative;
-  z-index: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center; /* IMPORTANTE: mantém os ícones centralizados verticalmente */
-  gap: 30px;
-  padding: 10px 0;
-  flex-wrap: nowrap; /* Impede que vá para a linha de baixo */
-}
-.flag-icon {
-  width: 28px;
-  height: 28px;
+.add-comment input {
+  flex: 1;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
 }
 
+.add-comment button {
+  padding: 6px 12px;
+  background-color: #4caf50;
+  border: none;
+  color: white;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.add-comment button:hover {
+  background-color: #3c9141;
+}
 
 .icon-group {
   display: flex;
   gap: 20px;
 }
 
-.icon-btn {
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-}
+.icon-btn,
 .icon-btn1 {
-  margin-left: 16px;
   background: none;
   border: none;
   padding: 0;
   cursor: pointer;
 }
 
-.search-group {
+.search-bar {
   display: flex;
+  align-items: center;
+  background-color: #b7d7be;
+  padding: 8px 12px;
   border-radius: 30px;
-  overflow: hidden;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
 .search-input {
-  padding: 10px 16px;
+  padding: 8px 12px;
   border: none;
-  background-color: #b7d7be;
-  font-size: 16px;
+  border-radius: 30px;
+  background-color: transparent;
   color: #2e5e36;
-  width: 300px;
+  font-size: 16px;
+  flex: 1;
+  min-width: 200px;
   outline: none;
 }
 
-.filter-btn {
+.search-select {
   background-color: #4a804b;
   color: white;
   border: none;
-  display: flex;
-  align-items: center;
-  padding: 0 16px;
-  font-size: 18px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 14px;
   cursor: pointer;
-  gap: 8px;
 }
 
-.icon-image {
-  width: 28px;
-  height: 28px;
+.search-btn {
+  background-color: #4a804b;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
 }
+
+.feed.dark-mode .search-btn {
+  background-color: #b7d7be;
+  color: #2e5e36;
+}
+
+/* === Botão "+" Criar Post === */
+.add-post-btn {
+  background-color: #2E7D32;
+  color: white;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s;
+}
+
+.add-post-btn:hover {
+  background-color: #4CAF50;
+  transform: scale(1.1);
+}
+
+.feed.dark-mode .add-post-btn {
+  background-color: #66bb6a;
+  color: #1b1b1b;
+}
+
+.feed.dark-mode .add-post-btn:hover {
+  background-color: #81c784;
+}
+
+/* === Modo Escuro === */
+.feed.dark-mode {
+  background-color: #48844B;
+  color: #E0F2E9;
+  min-height: 100vh;
+}
+
+.feed.dark-mode .feed-container {
+  background-color: transparent;
+  padding: 20px 0;
+}
+
+.feed.dark-mode .post-card {
+  background-color: #90B89B;
+  color: #111;
+}
+
+/* === Ícones de ação: Curtida e Favorito === */
+.action-icon {
+  font-size: 20px;
+  cursor: pointer;
+  transition: transform 0.2s ease, color 0.3s ease;
+  padding: 6px;
+  border-radius: 50%;
+}
+
+.action-icon:hover {
+  transform: scale(1.2);
+  background-color: rgba(46, 125, 50, 0.15);
+}
+
+.icon-liked {
+  color: red !important;
+  background-color: rgba(255, 0, 0, 0.1);
+}
+
+.feed.dark-mode .icon-liked {
+  color: #ff8a80 !important;
+  background-color: rgba(255, 138, 128, 0.2);
+}
+
+.icon-favorited {
+  color: #2E7D32 !important;
+  background-color: rgba(46, 125, 50, 0.1);
+}
+
+.feed.dark-mode .icon-favorited {
+  color: #a5d6a7 !important;
+  background-color: rgba(165, 214, 167, 0.2);
+}
+
+/* === Formulário de Novo Post === */
 .form-novo-post {
   background-color: #f0f0f0;
   margin: 20px auto;
@@ -225,37 +297,21 @@
   padding: 8px;
   cursor: pointer;
 }
-/* === DARK MODE VERDE BRASFI === */
-/* Fundo verde escuro para o modo dark em toda a tela */
-.feed.dark-mode {
-  background-color: #48844B;
-  color: #E0F2E9;
-  min-height: 100vh;
-}
 
-/* Faz o fundo da área de feed também herdar a cor do body */
-.feed.dark-mode .feed-container {
+/* === Barra superior === */
+.top-search-bar {
+  margin-top: 110px;
+  margin-bottom: 20px;
+  padding: 10px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
   background-color: transparent;
-  min-height: 100vh;
-  padding: 20px 0;
-}
-
-/* Corrige os cards para manter o destaque claro */
-.feed.dark-mode .post-card {
-  background-color: #90B89B; /* mesmo estilo, só muda a tonalidade */
-  color: #111;
-  border-radius: 12px;
-  padding: 16px;
-  margin: 20px auto;
+  border-radius: 0;
+  box-shadow: none;
   width: 90%;
-  max-width: 800px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  border: 1px solid #ccc;
-}
-
-/* Ícones brancos no modo escuro */
-.feed.dark-mode .icon-btn svg,
-.feed.dark-mode .icon-btn1 svg {
-  filter: brightness(0) invert(1); /* torna imagem branca */
-  color: white !important;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
 }
