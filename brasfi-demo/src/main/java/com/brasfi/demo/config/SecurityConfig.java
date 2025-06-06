@@ -26,21 +26,12 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .csrf(csrf -> csrf.disable()) // Desabilita CSRF, comum para APIs stateless
-            .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Aplica sua configuração de CORS
+            .csrf(csrf -> csrf.disable()) 
+            .cors(cors -> cors.configurationSource(corsConfigurationSource())) 
 
-            // --- MUDANÇA PRINCIPAL AQUI ---
-
-            // 1. Define que a API é "stateless" (não guarda estado/sessão no servidor)
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             
-            // 2. Define as regras de autorização
-            .authorizeHttpRequests(auth -> auth
-                // Permite acesso a TODAS as requisições.
-                // A identificação do usuário é feita via 'userId' na URL,
-                // e não mais pelo framework de segurança.
-                .anyRequest().permitAll()
-            );
+            .authorizeHttpRequests(auth -> auth.anyRequest().permitAll());
 
         return http.build();
     }
@@ -48,13 +39,13 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:5173")); // Seu frontend
+        configuration.setAllowedOrigins(List.of("http://localhost:5173")); 
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
         configuration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration); // Aplica a configuração para todas as rotas
+        source.registerCorsConfiguration("/**", configuration);
         return source;
     }
 }

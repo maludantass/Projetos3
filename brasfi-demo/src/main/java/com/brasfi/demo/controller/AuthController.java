@@ -42,7 +42,6 @@ public class AuthController {
         return ResponseEntity.ok(new UserResponse(user.getId(), user.getUsername(), user.getEmail()));
     }
 
-    // Requisição de login
     public static class LoginRequest {
         private String email;
         private String password;
