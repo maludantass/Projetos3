@@ -22,10 +22,12 @@ public class ForumCommunityController {
     private final ForumCommunityService forumCommunityService;
 
     // Endpoint para CRIAR uma nova comunidade
-    @PostMapping
-    public ResponseEntity<ForumCommunityResponseDTO> createCommunity(@Valid @RequestBody ForumCommunityRequestDTO requestDTO) {
-        log.info("API request para criar nova ForumCommunity com título: {}", requestDTO.getTitle());
-        ForumCommunityResponseDTO createdCommunity = forumCommunityService.createCommunity(requestDTO);
+    @PostMapping("/{authorId}")
+    public ResponseEntity<ForumCommunityResponseDTO> createCommunity(
+            @PathVariable Long authorId,
+            @Valid @RequestBody ForumCommunityRequestDTO requestDTO) {
+        log.info("API request para criar nova ForumCommunity pelo autor ID: {}", authorId);
+        ForumCommunityResponseDTO createdCommunity = forumCommunityService.createCommunity(authorId, requestDTO);
         return new ResponseEntity<>(createdCommunity, HttpStatus.CREATED);
     }
 

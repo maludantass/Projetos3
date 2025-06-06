@@ -104,9 +104,8 @@ export const getPostById = async (postId) => {
   return res.data;
 };
 
-
-export const createCommunity = async (communityData) => {
-  const res = await axios.post(`${API}/communities`, communityData); // ✅ sem headers
+export const createCommunity = async (authorId, communityData) => {
+  const res = await axios.post(`${API}/communities/${authorId}`, communityData);
   return res.data;
 };
 
