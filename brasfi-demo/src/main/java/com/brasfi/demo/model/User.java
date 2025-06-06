@@ -12,6 +12,8 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore; // 👈 ADICIONAR ESTA IMPORTAÇÃO
+
 @Entity
 @Table(name = "users")
 public class User {
@@ -24,7 +26,6 @@ public class User {
     private String password;
     private String email;
 
-    // Modificações para parte do feed:
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Post> posts;
 
@@ -33,14 +34,14 @@ public class User {
 
     @ManyToMany
     @JoinTable(
-    name = "user_saved_posts",
-    joinColumns = @JoinColumn(name = "user_id"),
-    inverseJoinColumns = @JoinColumn(name = "post_id")
-)
-private List<Post> savedPosts;
+        name = "user_saved_posts",
+        joinColumns = @JoinColumn(name = "user_id"),
+        inverseJoinColumns = @JoinColumn(name = "post_id")
+    )
+    @JsonIgnore // ✅ ISSO EVITA LOOP INFINITO DE SERIALIZAÇÃO
+    private List<Post> savedPosts;
 
-    public User() {
-    }
+    public User() {}
 
     public User(Long id, String username, String password, String email) {
         this.id = id;
@@ -81,7 +82,6 @@ private List<Post> savedPosts;
         this.email = email;
     }
 
-    // Novos métodos getters e setters (parte do feed):
     public List<Post> getPosts() {
         return posts;
     }

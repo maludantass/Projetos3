@@ -108,4 +108,11 @@ return postRepository.findLikedPostsWithUserByUserId(userId);
     public List<Post> findAllPosts() {
         return postRepository.findAll();
     }
+
+    // PostService.java
+public Post getPostById(Long postId) {
+    return postRepository.findById(postId)
+        .orElseThrow(() -> new RuntimeException("Post não encontrado com ID: " + postId));
+}
+
 }

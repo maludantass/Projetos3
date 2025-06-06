@@ -33,7 +33,7 @@ public class Post {
     @JoinColumn(name = "user_id")
     private User user;
 
-    // 🔗 Curtidas associadas ao post (agora Set para evitar erro do Hibernate)
+    // 🔗 Curtidas associadas ao post
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties("post")
     private Set<Likes> likes = new HashSet<>();
@@ -51,7 +51,7 @@ public class Post {
     public Post() {
     }
 
-    // Getters e Setters (pode usar Lombok se quiser)
+    // Getters e Setters
     public Long getId() {
         return id;
     }
@@ -123,4 +123,21 @@ public class Post {
     public void setUsersWhoSaved(List<User> usersWhoSaved) {
         this.usersWhoSaved = usersWhoSaved;
     }
+
+    // Métodos para comparação baseada no ID
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Post post = (Post) o;
+        return id != null && id.equals(post.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
+    }
+
+    
 }

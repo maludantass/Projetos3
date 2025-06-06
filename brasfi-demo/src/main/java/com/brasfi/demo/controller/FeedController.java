@@ -14,8 +14,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.Set;
+
 
 @CrossOrigin(origins = "http://localhost:5173")
 @RestController
@@ -34,6 +37,9 @@ public class FeedController {
     @Autowired
     private CommentService commentService;
 
+
+
+    
     // Endpoint para obter todos os posts com seus likes e comentários de um usuário
     @GetMapping("/{userId}")
     public List<Post> getFeed(@PathVariable Long userId) {
@@ -60,19 +66,45 @@ public List<PostResponseDTO> getLikedPosts(@PathVariable Long userId) {
 
 
 
-@PostMapping("/like")
-public ResponseEntity<Void> likeOrUnlikePost(@RequestParam Long userId, @RequestParam Long postId) {
-    System.out.println("🟢 Chegou no endpoint /feed/like: userId=" + userId + ", postId=" + postId);
-    postService.toggleLike(userId, postId);
-    return ResponseEntity.ok().build();
+@PostMapping("/save")
+public ResponseEntity<String> toggleSavePost(@RequestParam Long userId, @RequestParam Long postId) {
+    User user = getUserById(userId);
+    Post post = postService.getPostById(postId);
+
+List<Post> saved = new ArrayList<>(user.getSavedPosts());
+
+    if (saved.stream().anyMatch(p -> p.getId().equals(post.getId()))) {
+    saved.removeIf(p -> p.getId().equals(post.getId()));
+} else {
+    saved.add(post);
 }
+user.setSavedPosts(saved);
+userRepository.save(user);
+
+
+    return ResponseEntity.ok("Post salvo/desfavoritado com sucesso.");
+}
+
+
 
     // Endpoint para os vídeos salvos do usuário
     @GetMapping("/saved/{userId}")
-    public List<Post> getSavedPosts(@PathVariable Long userId) {
-        User user = getUserById(userId);
-        return user.getSavedPosts();
-    }
+public List<PostResponseDTO> getSavedPosts(@PathVariable Long userId) {
+    User user = getUserById(userId);
+    return user.getSavedPosts().stream()
+        .map(PostResponseDTO::new)
+        .collect(Collectors.toList());
+}
+
+@PostMapping("/like")
+public ResponseEntity<String> toggleLikePost(@RequestParam Long userId, @RequestParam Long postId) {
+    User user = getUserById(userId);
+    Post post = postService.getPostById(postId);
+    feedService.toggleLike(user, post);
+    return ResponseEntity.ok("Like atualizado com sucesso.");
+}
+
+
 
     // Endpoint para obter o feed geral (posts que ainda não expiraram) 
     @GetMapping("/general")
@@ -130,12 +162,7 @@ Post savedPost = postService.createPost(userId, post);
         return commentService.findCommentsByPostId(postId); //
     }
 
-    //Novo end point pro frontend expor posts salvos no perfil do usuário!
-    @PostMapping("/save")
-    public ResponseEntity<Void> toggleSavedPost(@RequestParam Long userId, @RequestParam Long postId) {
-        postService.toggleSavedPost(userId, postId);
-        return ResponseEntity.ok().build(); // Retorna 200 OK sem conteúdo específico
-    }
+
 
     //Novo end point pra repostar posts!
     @PostMapping("/repost")
