@@ -134,17 +134,50 @@
   height: 40px;
   animation: spin 1s linear infinite;
 }
-.top-search-bar {
-  margin-top: 100px; /* ou padding-top se preferir */
-  position: relative;
-  z-index: 1;
+.icon-group {
   display: flex;
-  justify-content: center;
-  align-items: center; /* IMPORTANTE: mantém os ícones centralizados verticalmente */
-  gap: 30px;
-  padding: 10px 0;
-  flex-wrap: nowrap; /* Impede que vá para a linha de baixo */
+  gap: 20px;
 }
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  background-color: #b7d7be;
+  border-radius: 30px;
+  overflow: hidden;
+  padding: 4px 10px;
+}
+
+.search-bar input {
+  border: none;
+  outline: none;
+  padding: 8px 12px;
+  background: transparent;
+  color: #2e5e36;
+  font-size: 16px;
+  width: 200px;
+}
+
+.search-bar select {
+  border: none;
+  background-color: #4a804b;
+  color: white;
+  padding: 8px 12px;
+  margin-left: 8px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.search-bar button {
+  border: none;
+  background-color: transparent;
+  margin-left: 8px;
+  color: #2e5e36;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+
 .flag-icon {
   width: 28px;
   height: 28px;
@@ -259,3 +292,79 @@
   filter: brightness(0) invert(1); /* torna imagem branca */
   color: white !important;
 }
+
+
+.top-search-bar {
+  margin-top: 110px; /* empurra para baixo da navbar */
+  margin-bottom: 20px; /* espaçamento antes dos posts */
+  padding: 10px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.search-bar {
+  display: flex;
+  align-items: center;
+  background-color: #b7d7be;
+  padding: 8px 12px;
+  border-radius: 30px;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.search-input {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 30px;
+  background-color: transparent;
+  color: #2e5e36;
+  font-size: 16px;
+  flex: 1;
+  min-width: 200px;
+  outline: none;
+}
+
+.search-select {
+  background-color: #4a804b;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.search-btn {
+  background-color: #4a804b;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
+}
+
+.search-btn:hover {
+  background-color: #3b6a3d;
+}
+
+.feed.dark-mode .search-btn {
+  background-color: #b7d7be;
+  color: #2e5e36;
+}
+
+
+
+
+

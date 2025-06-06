@@ -13,7 +13,9 @@ const getAuthHeader = () => {
 };
 
 // Obter o feed geral
-export const getGeneralFeed = () => api.get('/feed/general');
+export const getGeneralFeed = () =>
+  api.get('/feed/general').then(res => res.data);
+
 
 // Criar novo post
 export const createPost = (userId, postData) =>

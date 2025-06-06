@@ -4,6 +4,7 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import com.brasfi.demo.model.User; // Sua entidade User
 import org.springframework.stereotype.Repository; // Boa prática adicionar @Repository
+import java.util.List;
 
 @Repository // Adicionar a anotação @Repository é uma boa prática
 public interface UserRepository extends JpaRepository<User, Long> {
@@ -32,6 +33,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
      */
     Optional<User> findByUsername(String username); // Novo método adicionado
 
-    Optional<User> findByUsernameContainingIgnoreCase(String username); //Para busca no feed com barra de pesquisa
+    List<User> findByUsernameContainingIgnoreCase(String username);
 
+    
 }

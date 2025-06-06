@@ -1,6 +1,8 @@
 import './Feed.css';
 import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
+
 import {
   faHeart as regularHeart,
   faComment,
@@ -12,7 +14,6 @@ import {
   faBookmark as solidBookmark,
   faCircleHalfStroke,
 } from '@fortawesome/free-solid-svg-icons';
-import SearchBar from './SearchBar';
 import {
   getGeneralFeed,
   getLikedPosts,
@@ -32,6 +33,9 @@ const Feed = () => {
   const [mostrarFormulario, setMostrarFormulario] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
 
+  const [query, setQuery] = useState('');
+  const [type, setType] = useState('posts');
+
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'));
     if (!user?.id) {
@@ -45,29 +49,30 @@ const Feed = () => {
     if (!userId) return;
 
     getGeneralFeed()
-      .then((response) => {
-        setPosts(response.data);
-        return getLikedPosts(userId);
-      })
-      .then((likedRes) => {
-        const likedMap = {};
-        likedRes.data.forEach(post => {
-          likedMap[post.id] = true;
-        });
-        setLikedPosts(likedMap);
+  .then((posts) => {
+    setPosts(posts); // << já está no formato correto
+    return getLikedPosts(userId);
+  })
+  .then((likedRes) => {
+    const likedMap = {};
+    likedRes.data.forEach(post => {
+      likedMap[post.id] = true;
+    });
+    setLikedPosts(likedMap);
 
-        return getFavoritedPosts(userId);
-      })
-      .then((favoritedRes) => {
-        const favoritedMap = {};
-        favoritedRes.data.forEach(post => {
-          favoritedMap[post.id] = true;
-        });
-        setFavoritedPosts(favoritedMap);
-      })
-      .catch((error) => {
-        console.error('Erro ao carregar feed, curtidas ou favoritos:', error);
-      });
+    return getFavoritedPosts(userId);
+  })
+  .then((favoritedRes) => {
+    const favoritedMap = {};
+    favoritedRes.data.forEach(post => {
+      favoritedMap[post.id] = true;
+    });
+    setFavoritedPosts(favoritedMap);
+  })
+  .catch((error) => {
+    console.error('Erro ao carregar feed, curtidas ou favoritos:', error);
+  });
+
   }, [userId]);
 
   const toggleLike = (postId) => {
@@ -111,14 +116,12 @@ const Feed = () => {
 
     createPost(userId, post)
       .then((res) => {
-        console.log('Post criado com sucesso:', res.data);
         setNovoPost('');
         setMostrarFormulario(false);
         return getGeneralFeed();
       })
       .then((res) => {
-        const novosPosts = res.data;
-        setPosts(novosPosts);
+        setPosts(res.data);
         return getLikedPosts(userId);
       })
       .then((likedRes) => {
@@ -174,6 +177,46 @@ const Feed = () => {
       });
   };
 
+  const handleSearch = async () => {
+  if (!query.trim()) return;
+
+  try {
+    const res = await fetch(`http://localhost:8080/feed/filter?type=${type}&query=${query}`, {
+      headers: {
+        'Authorization': `Bearer ${JSON.parse(localStorage.getItem('user')).token}`
+      }
+    });
+
+    if (!res.ok) throw new Error('Erro ao buscar');
+
+    const data = await res.json();
+    setPosts(data);
+
+    // Atualiza likes e favoritos após busca
+    const [likedRes, favoritedRes] = await Promise.all([
+      getLikedPosts(userId),
+      getFavoritedPosts(userId),
+    ]);
+
+    const likedMap = {};
+    likedRes.data.forEach(post => {
+      likedMap[post.id] = true;
+    });
+    setLikedPosts(likedMap);
+
+    const favoritedMap = {};
+    favoritedRes.data.forEach(post => {
+      favoritedMap[post.id] = true;
+    });
+    setFavoritedPosts(favoritedMap);
+
+  } catch (err) {
+    console.error("Erro na busca:", err);
+    alert("Erro ao realizar busca.");
+  }
+};
+
+
   return (
     <div className={darkMode ? 'feed dark-mode' : 'feed light-mode'}>
       <button className="toggle-theme" onClick={() => setDarkMode(!darkMode)}>
@@ -192,8 +235,26 @@ const Feed = () => {
             <FontAwesomeIcon icon={regularBookmark} className="action-icon" />
           </button>
         </div>
-        <SearchBar />
-      </div>
+
+        {/* Barra de busca com filtro */}
+        <div className="search-bar">
+  <input
+    className="search-input"
+    type="text"
+    placeholder="Pesquise"
+    value={query}
+    onChange={(e) => setQuery(e.target.value)}
+    onKeyDown={(e) => { if (e.key === 'Enter') handleSearch(); }}
+  />
+  <select className="search-select" value={type} onChange={(e) => setType(e.target.value)}>
+    <option value="posts">Posts</option>
+    <option value="users">Usuários</option>
+  </select>
+  <button className="search-btn" onClick={handleSearch}>
+    <FontAwesomeIcon icon={faSearch} />
+  </button>
+</div>
+</div>
 
       {mostrarFormulario && (
         <div className="form-novo-post">

@@ -1,5 +1,6 @@
 package com.brasfi.demo.services;
 
+import com.brasfi.demo.dto.PostResponseDTO;
 import com.brasfi.demo.model.Likes;
 import com.brasfi.demo.model.Post;
 import com.brasfi.demo.model.User;
@@ -57,18 +58,36 @@ public class FeedService {
         userRepository.save(user);
     }
 
-    public List<Post> searchPostsByKeyword(String keyword) {
-        return postRepository.findAllWithDetails().stream()
-            .filter(p -> p.getContent().toLowerCase().contains(keyword.toLowerCase()))
-            .toList();
-    }
+    public List<PostResponseDTO> searchPostsByKeyword(String keyword) {
+    return postRepository.findByContentContainingIgnoreCase(keyword)
+        .stream()
+        .map(PostResponseDTO::new)
+        .collect(Collectors.toList());
+}
 
-    public Object performSearch(String type, String query) {
-        if ("posts".equalsIgnoreCase(type)) {
-            return searchPostsByKeyword(query);
-        }
-        return Collections.emptyList();
+
+public Object performSearch(String type, String query) {
+    switch (type.toLowerCase()) {
+        case "posts":
+            return postRepository.findByContentContainingIgnoreCase(query)
+                    .stream()
+                    .map(PostResponseDTO::new)
+                    .collect(Collectors.toList());
+
+        case "users":
+            // Busca todos os posts cujo autor tem username semelhante
+            return postRepository.findAllWithDetails().stream()
+                    .filter(p -> p.getUser() != null &&
+                                 p.getUser().getUsername().toLowerCase().contains(query.toLowerCase()))
+                    .map(PostResponseDTO::new)
+                    .collect(Collectors.toList());
+
+        default:
+            return Collections.emptyList();
     }
+}
+
+
 
     public Post repost(Post original, User newAuthor) {
         Post repost = new Post();
@@ -87,5 +106,6 @@ public class FeedService {
             .filter(post -> post.getExpiresAt() == null || post.getExpiresAt().isAfter(LocalDateTime.now()))
             .collect(Collectors.toList());
 }
+
 
 }
