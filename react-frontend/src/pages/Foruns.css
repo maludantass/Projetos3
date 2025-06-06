@@ -83,6 +83,9 @@
   font-family: sans-serif;
   background-color: white;
   min-height: 100vh;
+  padding-top: 6rem; /* Desce tudo abaixo da navbar */
+  padding-left: 2rem;
+  padding-right: 2rem;
 }
 
 .forum-header h1 {
@@ -220,4 +223,9 @@
 
 .filter-btn:hover {
   background-color: #155c21;
+}
+.forum-title {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  padding-top: 100px;
 }
