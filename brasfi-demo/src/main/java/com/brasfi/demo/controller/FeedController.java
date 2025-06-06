@@ -60,12 +60,6 @@ public List<PostResponseDTO> getLikedPosts(@PathVariable Long userId) {
         .map(PostResponseDTO::new)
         .collect(Collectors.toList());
 }
-
-
-
-
-
-
 @PostMapping("/save")
 public ResponseEntity<String> toggleSavePost(@RequestParam Long userId, @RequestParam Long postId) {
     User user = getUserById(userId);
@@ -175,9 +169,13 @@ Post savedPost = postService.createPost(userId, post);
 
     //Novo end point para busca de posts no feed com aquela barra de pesquisa la!
     @GetMapping("/search")
-    public List<PostResponseDTO> searchPosts(@RequestParam String keyword) {
-        return feedService.searchPostsByKeyword(keyword);
-    }
+public List<PostResponseDTO> searchPosts(@RequestParam String keyword) {
+    List<Post> posts = feedService.searchPostsByKeyword(keyword);
+    return posts.stream()
+        .map(PostResponseDTO::new)
+        .collect(Collectors.toList());
+}
+
 
     @GetMapping("/filter")
     public ResponseEntity<?> filterContent(
