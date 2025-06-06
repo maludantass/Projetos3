@@ -38,17 +38,12 @@ const Foruns = () => {
       </div>
 
       {estaInscrito ? (
-        <div className="forum-main">
-          <div className="forum-header">
-            <h1>Seus Fóruns</h1>
-            <div className="forum-topics">
-              <button className="topic active">Todos</button>
-              <button className="topic">Tópico 1</button>
-              <button className="topic">Tópico 2</button>
-              <button className="topic">Tópico 3</button>
-              <button className="topic">Tópico 4</button>
-              <button className="topic">Tópico 5</button>
+       <div className="forum-main">
+  <h1 className="forum-title">Seus Fóruns</h1>
 
+  <div className="forum-header">
+            <div className="forum-topics">
+             
               {/* 👉 Campo de busca */}
               <div className="search-area">
                 <input
