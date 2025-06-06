@@ -8,15 +8,16 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort; 
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/forum/communities") // Caminho base para este controlador
-@RequiredArgsConstructor // Injeção de dependência via construtor (Lombok)
-@Slf4j // Logging (Lombok)
+@RequestMapping("/api/forum/communities")
+@RequiredArgsConstructor
+@Slf4j
 public class ForumCommunityController {
 
     private final ForumCommunityService forumCommunityService;
@@ -32,10 +33,9 @@ public class ForumCommunityController {
     }
 
     // Endpoint para LISTAR todas as comunidades (com paginação)
-    // Exemplo de URL: /api/forum/communities?page=0&size=10&sort=createdAt,desc
     @GetMapping
     public ResponseEntity<Page<ForumCommunityResponseDTO>> getAllCommunities(
-            @PageableDefault(size = 10, sort = "createdAt,desc") Pageable pageable) {
+            @PageableDefault(size = 10, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
         log.info("API request para listar todas as ForumCommunities paginadas: {}", pageable);
         Page<ForumCommunityResponseDTO> communities = forumCommunityService.getAllCommunities(pageable);
         return ResponseEntity.ok(communities);
@@ -50,22 +50,20 @@ public class ForumCommunityController {
     }
 
     // Endpoint para PESQUISAR comunidades por título (com paginação)
-    // Exemplo de URL: /api/forum/communities/search?titleQuery=Tecnologia&page=0&size=5
     @GetMapping("/search")
     public ResponseEntity<Page<ForumCommunityResponseDTO>> searchCommunitiesByTitle(
             @RequestParam String titleQuery,
-            @PageableDefault(size = 10, sort = "createdAt,desc") Pageable pageable) {
+            @PageableDefault(size = 10, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
         log.info("API request para pesquisar ForumCommunities com título: {}, paginação: {}", titleQuery, pageable);
         Page<ForumCommunityResponseDTO> communities = forumCommunityService.searchCommunitiesByTitle(titleQuery, pageable);
         return ResponseEntity.ok(communities);
     }
 
     // Endpoint para LISTAR comunidades por autor (username) (com paginação)
-    // Exemplo de URL: /api/forum/communities/author/nomeDoUsuario?page=0&size=5
     @GetMapping("/author/{username}")
     public ResponseEntity<Page<ForumCommunityResponseDTO>> getCommunitiesByAuthorUsername(
             @PathVariable String username,
-            @PageableDefault(size = 10, sort = "createdAt,desc") Pageable pageable) {
+            @PageableDefault(size = 10, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
         log.info("API request para listar ForumCommunities pelo autor: {}, paginação: {}", username, pageable);
         Page<ForumCommunityResponseDTO> communities = forumCommunityService.getCommunitiesByAuthorUsername(username, pageable);
         return ResponseEntity.ok(communities);
@@ -86,6 +84,6 @@ public class ForumCommunityController {
     public ResponseEntity<Void> deleteCommunity(@PathVariable Long communityId) {
         log.info("API request para deletar ForumCommunity ID: {}", communityId);
         forumCommunityService.deleteCommunity(communityId);
-        return ResponseEntity.noContent().build(); // Retorna 204 No Content
+        return ResponseEntity.noContent().build();
     }
 }
