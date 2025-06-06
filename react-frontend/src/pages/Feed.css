@@ -147,6 +147,66 @@
   overflow: hidden;
   padding: 4px 10px;
 }
+.comment-section {
+  margin-top: 10px;
+  padding: 5px 15px;
+  border-left: 3px solid #d3d3d3;
+  font-size: 14px;
+  color: #333;
+}
+
+.comment-section p {
+  margin: 6px 0;
+  line-height: 1.4;
+}
+
+.comment-section strong {
+  color: #2e5e36;
+  margin-right: 6px;
+}
+
+.ver-mais {
+  display: block;
+  margin-top: 5px;
+  color: #2e5e36;
+  font-size: 13px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.ver-mais:hover {
+  text-decoration: underline;
+}
+
+.add-comment {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.add-comment input {
+  flex: 1;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.add-comment button {
+  padding: 6px 12px;
+  background-color: #4caf50;
+  border: none;
+  color: white;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.add-comment button:hover {
+  background-color: #3c9141;
+}
+
 
 .search-bar input {
   border: none;

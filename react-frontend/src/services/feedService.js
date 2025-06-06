@@ -46,3 +46,9 @@ export const toggleFavoriteAPI = (userId, postId) =>
   api.post(`/feed/save?userId=${userId}&postId=${postId}`, {}, {
     headers: getAuthHeader()
   });
+export const addComment = (postId, userId, text) =>
+  api.post('/feed/comment', {
+    postId: postId.toString(),
+    userId: userId.toString(),
+    text
+  });

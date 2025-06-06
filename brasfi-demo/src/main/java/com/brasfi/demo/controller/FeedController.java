@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
-
+import java.util.Map;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -126,17 +126,27 @@ public class FeedController {
         return savedPost;
     }
 
-    @PostMapping("/comment")
-    public Comment createCommentForPost(@RequestParam Long userId, @RequestParam Long postId, @RequestBody String commentText) {
-        User user = userRepository.findById(userId)
-            .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+@PostMapping("/comment")
+public ResponseEntity<?> createCommentForPost(@RequestBody Map<String, String> payload) {
+    Long userId = Long.parseLong(payload.get("userId"));
+    Long postId = Long.parseLong(payload.get("postId"));
+    String commentText = payload.get("text");
 
-        Post post = postService.findPostById(postId)
-            .orElseThrow(() -> new RuntimeException("Post não encontrado com ID: " + postId));
-
-        Comment comment = new Comment(user, post, commentText);
-        return commentService.createComment(comment);
+    if (commentText == null || commentText.trim().isEmpty()) {
+        return ResponseEntity.badRequest().body("Texto do comentário não pode ser vazio.");
     }
+
+    User user = userRepository.findById(userId)
+        .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
+    Post post = postService.findPostById(postId)
+        .orElseThrow(() -> new RuntimeException("Post não encontrado com ID: " + postId));
+
+    Comment comment = new Comment(user, post, commentText);
+    commentService.createComment(comment);
+
+    return ResponseEntity.ok().build();
+}
 
     @GetMapping("/posts/{postId}/comments")
     public List<Comment> getCommentsByPostId(@PathVariable Long postId) {
