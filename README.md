@@ -45,6 +45,13 @@ Este é o repositório do projeto desenvolvido para a BRASFI (Aliança Brasileir
   </li>
 </ul>
 
+<ul>
+    <li> 
+    <a  href="https://docs.google.com/document/d/1DMogHVi2QWJmmTLRZJld-2m1zpT3e1lzhnW2SN3yYSc/edit?usp=sharing"
+      >Relatório de Programação em Pares</a>
+  </li>
+</ul>
+
 ***Histórias:***
 
 <details>
