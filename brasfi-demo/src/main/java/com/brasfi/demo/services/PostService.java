@@ -45,6 +45,9 @@ public class PostService {
     return postRepository.save(post);
 }
 
+public List<Post> getLikedPostsByUser(Long userId) {
+return postRepository.findLikedPostsWithUserByUserId(userId);
+}
 
     // Curtir ou descurtir um post
     public void toggleLike(Long userId, Long postId) {

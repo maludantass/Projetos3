@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "http://localhost:5173")
 @RestController
@@ -42,10 +43,22 @@ public class FeedController {
 
     // Endpoint para obter todos os posts curtidos por um usuário
     @GetMapping("/liked/{userId}")
-    public List<Post> getLikedPosts(@PathVariable Long userId) {
-        User user = getUserById(userId);
-        return feedService.getPostsLikedByUser(user);
-    }
+public List<PostResponseDTO> getLikedPosts(@PathVariable Long userId) {
+    User user = getUserById(userId);
+    List<Post> likedPosts = feedService.getPostsLikedByUser(user);
+
+    System.out.println("🔎 Posts curtidos por " + user.getUsername() + ": " + likedPosts.size());
+    likedPosts.forEach(p -> System.out.println(" - ID: " + p.getId() + ", Conteúdo: " + p.getContent()));
+
+    return likedPosts.stream()
+        .map(PostResponseDTO::new)
+        .collect(Collectors.toList());
+}
+
+
+
+
+
 
 @PostMapping("/like")
 public ResponseEntity<Void> likeOrUnlikePost(@RequestParam Long userId, @RequestParam Long postId) {
@@ -95,7 +108,7 @@ public List<PostResponseDTO> getGeneralFeed() {
         }
 
         // Criação do post
-        Post savedPost = postService.createPost(post);
+Post savedPost = postService.createPost(userId, post);
         savedPost.setUser(user); // força garantir que o user esteja no JSON retornado
         return savedPost;
     }

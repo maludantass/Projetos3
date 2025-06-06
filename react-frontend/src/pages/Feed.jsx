@@ -44,99 +44,112 @@ const Feed = () => {
 
   // Carrega o feed após carregar o userId
   useEffect(() => {
-    if (!userId) return;
+  if (!userId) return;
 
-    getGeneralFeed()
-      .then((response) => {
-        setPosts(response.data);
-        return Promise.all([
-          getLikedPosts(userId),
-          getFavoritedPosts(userId)
-        ]);
-      })
-      .then(([likedRes, favoritedRes]) => {
-        const likedMap = {};
-        likedRes.data.forEach(post => {
-          likedMap[post.id] = true;
-        });
-
-        const favoritedMap = {};
-        favoritedRes.data.forEach(post => {
-          favoritedMap[post.id] = true;
-        });
-
-        setLikedPosts(likedMap);
-        setFavoritedPosts(favoritedMap);
-      })
-      .catch((error) => {
-        console.error('Erro ao carregar feed, curtidas ou favoritos:', error);
+  getGeneralFeed()
+    .then((response) => {
+      setPosts(response.data);
+      return getLikedPosts(userId);
+    })
+    .then((likedRes) => {
+      console.log("✅ Liked posts vindos do backend:", likedRes.data);  // <--- ADICIONE
+      const likedMap = {};
+      likedRes.data.forEach(post => {
+        likedMap[post.id] = true;
       });
-  }, [userId]);
+      setLikedPosts(likedMap);
+
+      return getFavoritedPosts(userId);
+    })
+    .then((favoritedRes) => {
+      const favoritedMap = {};
+      favoritedRes.data.forEach(post => {
+        favoritedMap[post.id] = true;
+      });
+      setFavoritedPosts(favoritedMap);
+    })
+    .catch((error) => {
+      console.error('Erro ao carregar feed, curtidas ou favoritos:', error);
+    });
+}, [userId]);
+
 
   const handleCriarPost = () => {
-    if (!novoPost.trim() || !userId) return;
+  if (!novoPost.trim() || !userId) return;
 
-    const post = {
-      content: novoPost,
-      postType: 'text',
-    };
-
-    createPost(userId, post)
-      .then((res) => {
-        console.log('Post criado com sucesso:', res.data);
-        setNovoPost('');
-        setMostrarFormulario(false);
-        return getGeneralFeed();
-      })
-      .then((res) => {
-        setPosts(res.data);
-      })
-      .catch((err) => {
-        console.error('Erro ao criar post:', err);
-        alert('Erro ao criar post.');
-      });
+  const post = {
+    content: novoPost,
+    postType: 'text',
   };
+
+  createPost(userId, post)
+    .then((res) => {
+      console.log('Post criado com sucesso:', res.data);
+      setNovoPost('');
+      setMostrarFormulario(false);
+      return getGeneralFeed();
+    })
+    .then((res) => {
+      const novosPosts = res.data;
+      setPosts(novosPosts);
+
+      return getLikedPosts(userId); // ✅ chamada correta
+    })
+    .then((likedRes) => {
+      const likedMap = {};
+      likedRes.data.forEach(post => {
+        likedMap[post.id] = true;
+      });
+      setLikedPosts(likedMap); // ✅ atualização correta
+    })
+    .catch((err) => {
+      console.error('Erro ao criar post:', err);
+      alert('Erro ao criar post.');
+    });
+};
+
 
   const handleMostrarCurtidos = () => {
-    if (!userId) return;
+  if (!userId) return;
 
-    getLikedPosts(userId)
-      .then((res) => {
-        setPosts(res.data);
-      })
-      .catch((err) => {
-        console.error("Erro ao buscar posts curtidos:", err);
-        alert("Erro ao buscar posts curtidos.");
-      });
-  };
+  getLikedPosts(userId)
+    .then((res) => {
+      console.log("Posts curtidos recebidos:", res.data);  // <-- CONFIRME QUE ESSA LINHA EXISTE
+      setPosts(res.data);
+    })
+    .catch((err) => {
+      console.error("Erro ao buscar posts curtidos:", err);
+      alert("Erro ao buscar posts curtidos.");
+    });
+};
+
 
   const handleMostrarFavoritos = () => {
-    if (!userId) return;
+  if (!userId) return;
 
-    Promise.all([
-      getFavoritedPosts(userId),
-      getLikedPosts(userId)
-    ])
-      .then(([favoritedRes, likedRes]) => {
-        const favoritedMap = {};
-        favoritedRes.data.forEach(post => {
-          favoritedMap[post.id] = true;
-        });
+  getFavoritedPosts(userId)
+    .then((favoritedRes) => {
+      const savedPosts = favoritedRes.data;
 
-        const likedMap = {};
-        likedRes.data.forEach(post => {
-          likedMap[post.id] = true;
-        });
+      const favoritedMap = {};
+      const likedMap = {};
 
-        setPosts(favoritedRes.data);
-        setFavoritedPosts(favoritedMap);
-        setLikedPosts(likedMap);
-      })
-      .catch((err) => {
-        console.error("Erro ao buscar posts salvos:", err);
-        alert("Erro ao buscar posts salvos.");
+      savedPosts.forEach(post => {
+        favoritedMap[post.id] = true;
+        // Se o post também foi curtido, o backend já vai incluir isso no objeto
+        likedMap[post.id] = post.likedBy?.some(u => u.id === userId) ?? true; // fallback para true
       });
-  };
+
+      setPosts(savedPosts);
+      setFavoritedPosts(favoritedMap);
+      setLikedPosts(likedMap);
+    })
+    .catch((err) => {
+      console.error("Erro ao buscar posts salvos:", err);
+      alert("Erro ao buscar posts salvos.");
+    });
+};
+
 
   const toggleLike = (postId) => {
     toggleLikeAPI(userId, postId)
@@ -210,7 +223,7 @@ const Feed = () => {
           <div className="post-card" key={post.id}>
             <div className="user-info">
               <span className="user-name">
-                <strong>{post.user?.username || 'Usuário'}</strong> | <span>{post.user?.email || ''}</span>
+<strong>{post.username || 'Usuário'}</strong> | <span>{post.email || ''}</span>
               </span>
             </div>
 
