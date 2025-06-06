@@ -1,4 +1,3 @@
-// Eventos.jsx
 import React, { useState, useEffect } from 'react';
 import './Eventos.css';
 import Evento1 from '../images/Evento1.png';
@@ -184,8 +183,6 @@ function ModalDetalhesEvento({ evento, onClose }) {
   );
 }
 
-
-
 function SecaoEventos({ titulo, eventos, onEventoClick, somenteFavoritos }) {
   const INITIAL_ITEMS_COUNT = 4;
   const [mostrarTodos, setMostrarTodos] = useState(false);
@@ -255,8 +252,6 @@ function SecaoEventos({ titulo, eventos, onEventoClick, somenteFavoritos }) {
   );
 }
 
-
-// Eventos
 function Eventos() {
   const [mostrarModalAdicionar, setMostrarModalAdicionar] = useState(false);
   const [mostrarModalDetalhes, setMostrarModalDetalhes] = useState(false);
@@ -268,7 +263,6 @@ function Eventos() {
 const toggleFiltroFavoritos = () => {
   setFiltroFavoritos(prev => !prev);
 };
-
 
   const buscarEventos = async () => {
     try {
@@ -431,7 +425,7 @@ setTodosEventos(eventosComImagens);
       xmlns="http://www.w3.org/2000/svg"
       className="bookmark-icon"
       viewBox="0 0 24 24"
-      fill="#1B5E20"  // Verde escuro quando ativo
+      fill="#1B5E20"
     >
       <path d="M6 2a2 2 0 0 0-2 2v18l8-4 8 4V4a2 2 0 0 0-2-2H6z" />
     </svg>
@@ -441,7 +435,7 @@ setTodosEventos(eventosComImagens);
       className="bookmark-icon"
       viewBox="0 0 24 24"
       fill="none"
-      stroke="#2E7D32"  // Verde claro quando inativo
+      stroke="#2E7D32"
       strokeWidth="2"
     >
       <path d="M6 2a2 2 0 0 0-2 2v18l8-4 8 4V4a2 2 0 0 0-2-2H6z" />
@@ -479,7 +473,6 @@ setTodosEventos(eventosComImagens);
       somenteFavoritos={filtroFavoritos}
     />
 
-    {/* Modais */}
     {mostrarModalAdicionar && (
       <div className="modal-overlay">
         <div className="modal">

@@ -1,10 +1,9 @@
-/* Estilos Globais e do CODIGO 1 (base) */
 body {
-   font-family: sans-serif;
-   margin: 0;
-   padding: 20px;
-   background-color: #f4f4f4;
-   color: #333;
+  font-family: sans-serif;
+  margin: 0;
+  padding: 20px;
+  background-color: #f4f4f4;
+  color: #333;
 }
 
 main {
@@ -13,18 +12,17 @@ main {
   padding: 20px;
 }
 
-/* Barra Superior e Pesquisa (do CODIGO 1) */
-.top-bar-eventos { /* Mantido do codigo1, mas o input pode usar a estilização do codigo2 que é igual */
+.top-bar-eventos {
   margin-top: 84px;
+  margin-bottom: 16px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 16px; /* Era 30px, ajustado como no JSX do codigo1 */
 }
 
-.top-bar-eventos input[type="text"] { /* Estilo do codigo1 e codigo2 são bem parecidos, usando um deles */
-  width: 250px; /* Ajustado como no JSX do codigo1 */
-  padding: 10px 15px; /* Aumentado um pouco para melhor aparência */
+.top-bar-eventos input[type="text"] {
+  width: 250px;
+  padding: 10px 15px;
   border: 2px solid #2E7D32;
   border-radius: 25px;
   font-size: 1rem;
@@ -38,7 +36,6 @@ main {
   box-shadow: 0 0 8px rgba(76, 175, 80, 0.3);
 }
 
-/* Botão "+" de Adicionar Evento (do CODIGO 1) */
 .add-event-btn {
   background-color: #2E7D32;
   color: white;
@@ -60,29 +57,28 @@ main {
   transform: scale(1.1);
 }
 
-/* Seção de Eventos e Títulos (comum, priorizando codigo1/2 onde similar) */
 .events {
-   margin-bottom: 40px;
-   background-color: #fff;
-   padding: 20px;
-   border-radius: 8px;
-   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 40px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-.events h2 { /* Estilo do codigo1/2 */
+
+.events h2 {
   text-align: center;
   margin-bottom: 24px;
   font-size: 1.5rem;
   color: #2E7D32;
-  border-bottom: 2px solid #eee; 
+  border-bottom: 2px solid #eee;
   padding-bottom: 8px;
 }
 
-/* Grid e Itens de Evento (do CODIGO 2 - com imagens) */
 .grid-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 24px; /* Espaçamento do codigo1/2 */
-  padding: 0 16px; /* Padding do codigo1/2 */
+  gap: 24px;
+  padding: 0 16px;
   margin-bottom: 20px;
 }
 
@@ -98,13 +94,11 @@ main {
   align-items: center;
 }
 
-
-.item:hover { /* Efeito hover do codigo1/2 */
+.item:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
 }
 
-/* Aplicação das imagens de fundo aos itens (do CODIGO 2) */
 .item::before {
   content: '';
   position: absolute;
@@ -115,31 +109,19 @@ main {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  z-index: 1; /* Para ficar abaixo do conteúdo textual, se houver */
+  z-index: 1;
 }
 
-/* Assegure que os caminhos para as imagens estejam corretos */
 .item[data-imagem="0"]::before { background-image: url('../images/Evento1.png'); }
 .item[data-imagem="1"]::before { background-image: url('../images/Evento2.png'); }
 .item[data-imagem="2"]::before { background-image: url('../images/Evento3.png'); }
 .item[data-imagem="3"]::before { background-image: url('../images/Evento4.png'); }
 
-/* Oculta título e data DENTRO do card para priorizar imagem (do CODIGO 2) */
-/* Se quiser mostrar texto SOBRE a imagem, remova ou ajuste esta regra */
 .item .evento-titulo,
 .item .evento-data {
-  display: none; 
-  /* Se quiser mostrar sobre a imagem, pode estilizá-los assim:
-  position: relative;
-  z-index: 2;
-  color: white;
-  padding: 10px;
-  background-color: rgba(0,0,0,0.4);
-  */
+  display: none;
 }
 
-
-/* Botão "Ver mais" (do CODIGO 1, que é similar ao do codigo2) */
 .view-more {
   display: block;
   margin: 20px auto;
@@ -160,7 +142,7 @@ main {
   background-color: #2E7D32;
 }
 
-.view-more svg { /* Estilo do SVG do botão do codigo1 */
+.view-more svg {
   width: 16px;
   height: 16px;
   fill: currentColor;
@@ -169,323 +151,241 @@ main {
   transition: fill 0.3s;
 }
 
-/* Modal de ADICIONAR EVENTO (Overlay e Modal base - do CODIGO 1) */
-.modal-overlay {
-   position: fixed;
-   top: 0;
-   left: 0;
-   width: 100vw;
-   height: 100vh;
-   background-color: rgba(0, 0, 0, 0.4); /* Opacidade do codigo1 */
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   z-index: 1000;
-   backdrop-filter: blur(3px); /* Efeito do codigo1 */
+.modal-overlay,
+.modal-overlay-detalhe-evento {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(3px);
+  z-index: 1000;
 }
 
-/* Estilo para o modal de ADICIONAR EVENTO (do CODIGO 1) */
-.modal { /* Esta é a classe .modal usada pelo modal de adicionar do codigo1 */
-   background-color: #ffffff;
-   padding: 2rem; /* Padding do codigo1 */
-   border-radius: 12px; /* Raio do codigo1 */
-   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Sombra do codigo1 */
-   width: 90%;
-   max-width: 480px; /* Largura do codigo1 */
-   font-family: sans-serif;
-   animation: fadeIn 0.3s ease; /* Animação do codigo1 */
-   text-align: left; /* Adicionado para consistência, original do codigo1 não especificava */
-   position: relative; /* Adicionado para consistência */
+.modal {
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  width: 90%;
+  max-width: 480px;
+  font-family: sans-serif;
+  animation: fadeIn 0.3s ease;
+  text-align: left;
+  position: relative;
 }
 
-.modal h3 { /* Título do modal de adicionar */
-  margin-top: 0;
-  font-size: 1.5rem; /* Tamanho do codigo1 para h2, adaptado para h3 */
-  color: #222; /* Cor do codigo1 */
-  margin-bottom: 15px; /* Margem do h2/h3 do codigo1 */
-  border-bottom: 2px solid #eee; /* Borda do h2/h3 do codigo1 */
-  padding-bottom: 8px; /* Padding do h2/h3 do codigo1 */
+.modal h3 {
+  margin: 0 0 15px;
+  font-size: 1.5rem;
+  color: #222;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 8px;
 }
 
 .modal input[type="text"],
 .modal input[type="date"],
-.modal textarea { /* Inputs do modal de adicionar (do CODIGO 1) */
-   width: 100%; /* Garante que ocupe 100% da largura do form */
-   box-sizing: border-box; /* Para padding não aumentar a largura total */
-   margin-top: 10px;
-   margin-bottom: 20px;
-   padding: 10px 12px;
-   border: 1px solid #ccc;
-   border-radius: 6px;
-   font-size: 1rem;
-   background-color: #f9f9f9;
-   transition: border-color 0.2s;
+.modal textarea {
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  background-color: #f9f9f9;
+  transition: border-color 0.2s;
 }
 
 .modal input:focus,
-.modal textarea:focus { /* Foco dos inputs do modal de adicionar (do CODIGO 1) */
-   border-color: #888; /* Cor do codigo1, era #2E7D32, mas #888 é mais sutil */
-   outline: none;
+.modal textarea:focus {
+  border-color: #888;
+  outline: none;
 }
 
-.modal h5 { /* Para os títulos "Data de início/término" */
-    margin-top: 10px;
-    margin-bottom: 5px;
-    font-size: 0.9rem;
-    color: #333;
-    font-weight: 500;
+.modal h5 {
+  margin: 10px 0 5px;
+  font-size: 0.9rem;
+  color: #333;
+  font-weight: 500;
 }
 
-.modal-actions { /* Ações do modal de adicionar (do CODIGO 1) */
-   display: flex;
-   justify-content: flex-end;
-   gap: 10px;
-   margin-top: 20px; /* Adiciona espaço acima dos botões */
-}
-
-.modal-actions button { /* Botões base do modal de adicionar (do CODIGO 1) */
-   padding: 10px 16px;
-   font-size: 1rem;
-   border: none;
-   border-radius: 6px;
-   cursor: pointer;
-   transition: background-color 0.2s;
-}
-
-.modal-actions .cancel-btn { /* Botão cancelar do modal de adicionar (do CODIGO 1) */
-   background-color: #eee;
-   color: #333;
-}
-.modal-actions .cancel-btn:hover { background-color: #ddd; }
-
-
-.modal-actions .save-btn { /* Botão salvar do modal de adicionar (do CODIGO 1) */
-   background-color: #2E7D32; /* Verde do tema */
-   color: #fff;
-}
-.modal-actions .save-btn:hover { background-color: #4CAF50; } /* Verde mais claro */
-
-
-/* Modal de DETALHES DO EVENTO (Overlay - do CODIGO 1, usado por ambos) */
-.modal-overlay-detalhe-evento { /* Do codigo1, mas usado pelo modal de detalhes do codigo2 */
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Opacidade do codigo1 */
+.modal-actions {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 999; /* z-index do codigo1 */
-  /* backdrop-filter: blur(3px); Opcional, se quiser o mesmo efeito do modal de adicionar */
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
 }
 
-/* Estilo para o modal DETALHADO (do CODIGO 2) */
-.modal-detalhado { /* Classe específica do modal de detalhes do CODIGO 2 */
+.modal-actions button {
+  padding: 10px 16px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.cancel-btn {
+  background-color: #eee;
+  color: #333;
+}
+
+.cancel-btn:hover {
+  background-color: #ddd;
+}
+
+.save-btn {
+  background-color: #2E7D32;
+  color: #fff;
+}
+
+.save-btn:hover {
+  background-color: #4CAF50;
+}
+
+.modal-detalhado {
   background-color: white;
   border-radius: 12px;
-  padding: 24px 32px; /* Padding do codigo2 (ajustado de 32px geral) */
-  max-width: 900px; /* Largura do codigo2 */
-  width: 90%; /* Largura responsiva do codigo1/2 */
+  padding: 24px 32px;
+  max-width: 900px;
+  width: 90%;
   display: flex;
   flex-direction: column;
   font-family: sans-serif;
   position: relative;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25); /* Sombra do codigo2 */
-  animation: fadeInUp 0.3s ease; /* Animação do codigo1/2 */
-  text-align: left; /* Garantir alinhamento */
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+  animation: fadeInUp 0.3s ease;
+  text-align: left;
 }
 
-.modal-detalhado .modal-header { /* Cabeçalho interno do modal de detalhes (CODIGO 2) */
+.modal-header {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  margin-bottom: 1rem; /* Espaçamento do codigo2 */
+  margin-bottom: 1rem;
 }
 
-.modal-detalhado .botao-voltar-modal { /* Botão voltar (CODIGO 2) */
+.botao-voltar-modal {
   background: none;
   border: none;
   font-size: 1rem;
   font-weight: bold;
   color: #333;
   cursor: pointer;
-  padding: 0; /* Remover padding extra */
-  /* margin-bottom: 20px; Removido, pois o .modal-header já tem margin */
+  padding: 0;
 }
 
-.modal-detalhado .cabecalho-modal { /* Seção com texto e imagem (CODIGO 2) */
+.cabecalho-modal {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start; /* Alinha itens ao topo */
-  gap: 2rem; /* Espaçamento do codigo2 */
-  margin-bottom: 1.5rem; /* Espaçamento entre seções do codigo2 (era 1rem, aumentado) */
+  align-items: flex-start;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
 }
 
-.modal-detalhado .texto-cabecalho { /* Container do texto no cabeçalho (CODIGO 2) */
+.texto-cabecalho {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem; /* Espaçamento entre título, subtítulo, descrição */
+  gap: 0.5rem;
 }
 
-.modal-detalhado .titulo-evento { /* Título do evento no modal de detalhes (CODIGO 2) */
-  font-size: 1.8rem; /* Aumentado um pouco para destaque */
+.titulo-evento {
+  font-size: 1.8rem;
   margin: 0;
-  color: #2E7D32; /* Cor do tema */
+  color: #2E7D32;
   font-weight: bold;
 }
 
-.modal-detalhado .subtitulo-brasfi { /* Subtítulo (CODIGO 2) */
+.subtitulo-brasfi {
   font-style: italic;
   color: #555;
-  margin: 0; /* Removido margin-top */
+  margin: 0;
 }
 
-.modal-detalhado .descricao-evento { /* Descrição (CODIGO 2) */
-  margin-top: 0.5rem; /* Pequeno espaço acima */
-  margin-bottom: 1rem; /* Espaço abaixo */
-  line-height: 1.6; /* Melhor legibilidade */
-}
-.modal-detalhado .descricao-evento h4,
-.modal-detalhado .topicos-evento h4 {
-    font-size: 1.1rem;
-    color: #333;
-    margin-bottom: 8px;
-    font-weight: 600;
+.descricao-evento {
+  margin: 0.5rem 0 1rem;
+  line-height: 1.6;
 }
 
+.descricao-evento h4,
+.topicos-evento h4 {
+  font-size: 1.1rem;
+  color: #333;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
 
-.modal-detalhado .imagem-evento-direita { /* Imagem (CODIGO 2) */
-  width: 280px; /* Largura do codigo2 (era 300px) */
-  max-height: 250px; /* Limita altura da imagem */
+.imagem-evento-direita {
+  width: 280px;
+  max-height: 250px;
   border-radius: 8px;
   object-fit: cover;
 }
 
-.modal-detalhado .topicos-evento { /* Seção de tópicos (CODIGO 2) */
-  margin-top: 0.5rem; /* ou até 0 se quiser colado */
-  margin-bottom: 1.5rem;
-}
-.modal-detalhado .topicos-evento ul {
-    list-style: none;
-    padding-left: 0;
-    margin-top: 0.5rem;
-    line-height: 1.6;
-}
-.modal-detalhado .topicos-evento li {
-    margin-bottom: 6px;
-    color: #444;
+.topicos-evento {
+  margin: 0.5rem 0 1.5rem;
 }
 
+.topicos-evento ul {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 0.5rem;
+  line-height: 1.6;
+}
 
-.modal-detalhado .rodape-evento { /* Rodapé com data e link (CODIGO 2) */
+.topicos-evento li {
+  margin-bottom: 6px;
+  color: #444;
+}
+
+.rodape-evento {
   text-align: center;
-  margin-top: 2rem; /* Espaço acima */
-  margin-bottom: 0; /* Remover margem inferior se for o último elemento */
-}
-.modal-detalhado .rodape-evento p {
-    font-size: 0.95rem;
-    color: #333;
-}
-.modal-detalhado .rodape-evento p strong {
-    font-weight: 600;
+  margin-top: 2rem;
 }
 
+.rodape-evento p {
+  font-size: 0.95rem;
+  color: #333;
+}
 
-.modal-detalhado .link-evento { /* Estilo do link (CODIGO 2) */
-  background-color: #e0f2f1; /* Tom de verde mais claro e suave */
+.rodape-evento p strong {
+  font-weight: 600;
+}
+
+.link-evento {
+  background-color: #e0f2f1;
   text-align: center;
   padding: 10px 15px;
-  border-radius: 20px; /* Mais arredondado */
+  border-radius: 20px;
   margin-top: 12px;
-  font-weight: 500; /* Menos bold que o original */
+  font-weight: 500;
   overflow-wrap: break-word;
-  border: 1px solid #b2dfdb; /* Borda sutil */
+  border: 1px solid #b2dfdb;
 }
 
-.modal-detalhado .link-evento a {
-  color: #00695c; /* Verde escuro para contraste */
+.link-evento a {
+  color: #00695c;
   text-decoration: none;
   font-weight: 600;
 }
-.modal-detalhado .link-evento a:hover {
-    text-decoration: underline;
+
+.link-evento a:hover {
+  text-decoration: underline;
 }
 
-
-/* Animações (Comum, do CODIGO 1) */
-@keyframes fadeIn {
-   from { opacity: 0; transform: translateY(-10px); }
-   to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes fadeInUp { /* Usada pelo modal-detalhado */
-  from {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Responsividade (do CODIGO 1 - para o grid inicial, mas SecaoEventos foi alterada) */
-/* O grid agora é sempre responsivo com auto-fill, então essa regra específica pode não ser mais necessária
-   a menos que queira um comportamento diferente em telas menores para os primeiros 4 itens.
-   A lógica de "mostrarTodos" agora controla quantos itens são renderizados, não as colunas do CSS. */
-@media (max-width: 1200px) {
-  /* .grid-container.inicial { Antiga classe do codigo1
-    grid-template-columns: repeat(2, 1fr);
-  } */
-  .modal-detalhado .cabecalho-modal {
-    flex-direction: column;
-    align-items: center;
-  }
-  .modal-detalhado .imagem-evento-direita {
-    width: 100%;
-    max-width: 300px; /* Limita em telas menores */
-    margin-top: 1rem;
-  }
-  .modal-detalhado .texto-cabecalho {
-    text-align: center;
-  }
-}
-
-@media (max-width: 600px) {
-    .top-bar-eventos {
-        flex-direction: column-reverse; /* Input em cima, botão + em baixo */
-        gap: 10px;
-        align-items: stretch; /* Estica o input e o botão */
-    }
-    .top-bar-eventos input[type="text"] {
-        width: 100%; /* Ocupa toda a largura */
-    }
-    .add-event-btn {
-        align-self: flex-end; /* Alinha o botão + à direita */
-    }
-
-    .modal-detalhado {
-        padding: 16px;
-    }
-    .modal-detalhado .titulo-evento {
-        font-size: 1.5rem;
-    }
-    .modal-detalhado .imagem-evento-direita {
-        max-height: 200px;
-    }
-}
-
-.modal-detalhado .tempo-restante-evento {
+.tempo-restante-evento {
   font-size: 1rem;
-  color: #000000; 
+  color: #000;
   font-weight: 500;
-  margin-top: 0.5rem;
-  margin-bottom: 1rem;
+  margin: 0.5rem 0 1rem;
 }
-
 
 .imagem-e-icone {
   display: flex;
@@ -503,13 +403,10 @@ main {
   justify-content: center;
   margin-top: 4px;
   user-select: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
 }
 
 .icone-notificacao {
-  margin-top: 7px; /* ajuste personalizado apenas para o sino */
+  margin-top: 7px;
 }
 
 .icone-notificacao.ativo .sino-icon {
@@ -529,13 +426,6 @@ main {
   white-space: nowrap;
 }
 
-.imagem-evento-direita {
-  width: 180px;
-  border-radius: 8px;
-  object-fit: cover;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-}
-
 .bookmark-filter-btn {
   background: none;
   border: none;
@@ -549,7 +439,6 @@ main {
 .bookmark-filter-btn:hover {
   opacity: 0.8;
 }
-
 
 .bookmark-icon {
   width: 26px;
@@ -566,51 +455,42 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
-
   margin: 30px auto;
   padding: 16px 24px;
-
   max-width: 500px;
   width: fit-content;
-
   font-size: 1.1rem;
   font-style: italic;
   font-weight: 500;
   text-align: center;
-
   background-color: #e8f5e9;
   border: 1px solid #c8e6c9;
   color: #2E7D32;
   border-radius: 10px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
-.grid-container .mensagem-sem-eventos {
-  grid-column: 1 / -1; /* Ocupa todas as colunas */
-  justify-self: center; /* Centraliza horizontalmente */
-}
 
+.grid-container .mensagem-sem-eventos {
+  grid-column: 1 / -1;
+  justify-self: center;
+}
 
 .titulo-abaixo {
   font-size: 1rem;
   font-weight: 600;
   color: #2E7D32;
-  text-align: center;
   background-color: white;
   width: 100%;
   padding: 0 12px;
-  height: 60px; /* altura fixa para todos */
+  height: 60px;
   display: flex;
-  align-items: center;     /* centraliza verticalmente */
-  justify-content: center; /* centraliza horizontalmente */
+  align-items: center;
+  justify-content: center;
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
   box-sizing: border-box;
-  text-align: center;
-  text-wrap: wrap;
   line-height: 1.2;
 }
-
-
 
 .imagem-capa-evento {
   width: 100%;
@@ -618,4 +498,59 @@ main {
   object-fit: cover;
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 1200px) {
+  .cabecalho-modal {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .imagem-evento-direita {
+    width: 100%;
+    max-width: 300px;
+    margin-top: 1rem;
+  }
+
+  .texto-cabecalho {
+    text-align: center;
+  }
+}
+
+@media (max-width: 600px) {
+  .top-bar-eventos {
+    flex-direction: column-reverse;
+    gap: 10px;
+    align-items: stretch;
+  }
+
+  .top-bar-eventos input[type="text"] {
+    width: 100%;
+  }
+
+  .add-event-btn {
+    align-self: flex-end;
+  }
+
+  .modal-detalhado {
+    padding: 16px;
+  }
+
+  .titulo-evento {
+    font-size: 1.5rem;
+  }
+
+  .imagem-evento-direita {
+    max-height: 200px;
+  }
 }
