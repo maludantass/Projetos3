@@ -35,10 +35,20 @@ Este é o repositório do projeto desenvolvido para a BRASFI (Aliança Brasileir
   </li>
 </ul>
 
+## 💻 SR2
+
+***Links relevantes:***
+<ul>
+    <li> 
+    <a  href="https://drive.google.com/file/d/1v16k4n7xN4z4-cpOQYAG2ZoLoL227AG5/view"
+      >Diagrama de classes</a>
+  </li>
+</ul>
+
 ***Histórias:***
 
 <details>
-    <summary>No total fizemos 16 histórias. 👆</summary>
+    <summary>No total fizemos 14 histórias. 👆</summary>
 
         - 1. Conhecer a BRASFI
 *Como* visitante do site
@@ -109,42 +119,20 @@ Feed com listagem cronológica ou categorizada de postagens.
 Postagens devem conter título, descrição, data e autor.
 Feed acessível apenas a usuários logados.
 
-         - 7. Fazer comentários no feed 
+         - 7. Visualizar Feed de Postagens
 *Como* usuário da plataforma 
-
-*Quero* poder comentar nas postagens do feed
-
-*Para* expressar minha opinião e trocar ideias 
-
-*Critérios de Aceitação:*
-Espaço de comentários funcional. 
-Botão de envio.
-Interações visíveis apenas para usuários logado. 
-
-         - 8. Visualizar Feed de Postagens
-*Como* usuário da plataforma
 
 *Quero* acessar uma aba com um feed de postagens
 
-*Para* visualizar informações relevantes sobre palestras, eventos e outros tópicos discutidos pela BRASFI
+*Para* visualizar informações relevantes sobre palestras, eventos e outros tópicos discutidos
+pela BRASFI 
 
 *Critérios de Aceitação:*
 O feed deve estar acessível apenas para usuários logados.
-O feed deve exibir as postagens de forma cronológica ou categorizada.
+O feed deve exibir as postagens de forma cronológica ou categorizada. 
 
-          - 9. Visualizar Detalhes de uma Postagem
-*Como* usuário logado
-
-*Quero* visualizar detalhes de uma postagem
-
-*Para* entender melhor o conteúdo relacionado ao evento ou tópico compartilhado
-
-*Critérios de Aceitação:*
-Cada postagem deve exibir as informações dela mesma.
-O usuário pode clicar em uma postagem para ver mais detalhes, se aplicável.
-
-          - 10. Curtir uma Postagem do feed
-*Como* usuário logado da plataforma
+         - 8. Curtir uma Postagem do feed
+*Como* usuário da plataforma
 
 *Quero* poder curtir uma postagem no feed
 
@@ -153,77 +141,99 @@ O usuário pode clicar em uma postagem para ver mais detalhes, se aplicável.
 *Critérios de Aceitação:*
 O botão de "curtir" deve estar visível para usuários logados.
 O usuário pode curtir e descurtir (curtir novamente remove o like).
-A ação de curtir deve ser registrada sem a necessidade de recarregar a página (se possível).
+A ação de curtir deve ser registrada sem a necessidade de recarregar a página (se
+possível).
 
-          - 11.  Acesso a palestras ao vivo
+          - 9. Salvar uma postagem do feed
+*Como* usuário logado
+
+*Quero* poder salvar uma história do feed
+
+*Para* que eu possa acessá-la facilmente mais tarde ou revisitá-la quando quiser
+
+*Critérios de Aceitação:*
+O botão de "salvar" deve estar visível para usuários logados.
+O botão deve indicar visualmente se a história já está salva (ex: ícone preenchido ou
+destaque).
+O usuário pode salvar e desfazer o salvamento da história (salvar novamente remove
+dos salvos).
+A ação de salvar deve ser registrada sem a necessidade de recarregar a página (se
+possível).
+As histórias salvas devem poder ser acessadas por meio de uma seção específica no
+perfil do usuário.
+
+          - 10. Acesso a palestras ao vivo (eventos)
+*Como* usuário logado da plataforma
+
+*Quero* ter acesso a palestras ao vivo ministradas por profissionais e também poder publicar
+minhas próprias palestras,
+
+*Para* que eu possa tanto aprender com especialistas quanto compartilhar conhecimentos com a
+comunidade.
+
+*Critérios de Aceitação:*
+Página de eventos e palestras ao vivo.
+Palestras listadas com título, descrição, data/hora e link de acesso.
+
+          - 11.  Criar Evento
 *Como* usuário da plataforma
 
-*Quero* ter acesso a transmissões ao vivo de palestras ministradas por profissionais de uma área específica
+*Quero* poder criar e publicar eventos ou palestras ao vivo
 
-*Para* aprender mais sobre temas relevantes e interagir com os palestrantes
-
-*Critérios de Aceitação:*
-Página com calendário de eventos e palestras ao vivo.
-Transmissões ao vivo integradas (por exemplo, via YouTube ou sistema próprio).
-Chat ou canal para envio de perguntas durante as palestras.
-
-          - 12. Criar Categorias no Fórum
-*Como* moderador da plataforma
-
-*Quero* criar e gerenciar categorias de discussão no fórum
-
-*Para* organizar os tópicos por temas como ESG, Finanças Sustentáveis, Eventos, etc.
+*Para* compartilhar conhecimento e permitir que outros participem das transmissões que eu
+organizar
 
 *Critérios de Aceitação:*
-Moderadores podem criar, editar e excluir categorias.
-As categorias devem ser exibidas de forma clara para os usuários.
-Apenas moderadores têm permissão para essa ação.
+O botão "Criar Evento" (+) deve estar visível apenas para usuários logados.
+● O botão deve redirecionar para um formulário com os seguintes campos:
+○ Título da palestra/evento
+○ Descrição
+○ Link para a transmissão 
+○ Data e horário do evento
+● Após a submissão, o evento deve ser salvo e exibido automaticamente na lista pública
+de eventos/palestras.
+● O evento criado deve ser associado ao usuário criador (para exibição no perfil e futuras
+edições, se aplicável).
 
-          - 13. Moderar Postagens
-*Como* moderador da plataforma
+          - 12. Salvar Evento
+*Como* usuário da plataforma
 
-*Quero* editar comentários e tópicos
+*Quero* poder salvar eventos ou palestras que me interessem
 
-*Para* garantir que o conteúdo do fórum siga as diretrizes da comunidade
+*Para* acessá-los facilmente depois e não perder a data de transmissão.
 
 *Critérios de Aceitação:*
-Moderadores podem editar ou excluir postagens inadequadas.
+Um botão de "Salvar Evento" deve estar visível para usuários logados ao lado de cada
+evento listado.
+O botão deve indicar visualmente se o evento já foi salvo (ex: estrela preenchida,
+coração, etc.).
+O usuário pode salvar e desfazer o salvamento de um evento (clicar novamente remove
+dos salvos).
+A ação deve ser registrada sem recarregar a página (se possível).
+Os eventos salvos devem ser acessíveis em uma seção exclusiva no perfil do usuário.
 
-          - 14. Acessar o Fórum de Discussão
+          - 13. Acessar o Fórum de Discussão
 *Como* usuário logado
 
 *Quero* acessar o fórum de discussão
 
-*Para* ler tópicos e acompanhar os debates da comunidade
+*Para* ler tópicos e acompanhar os debates da comunidade.
 
 *Critérios de Aceitação:*
 O fórum deve ser acessível apenas para usuários logados.
 Tópicos e categorias devem estar organizados e visíveis.
 
-
-          - 15. Seção de Perguntas Frequentes (FAQ)
+          - 14. Seção de Perguntas Frequentes (FAQ)
 *Como* visitante do site
 
-*Quer*o acessar uma seção de perguntas frequentes
+*Quero* acessar uma seção de perguntas frequentes
 
-*Para* esclarecer dúvidas rapidamente sem precisar entrar em contato com a equipe
+*Para* esclarecer dúvidas rapidamente sem precisar entrar em contato com a equipe.
 
 *Critérios de Aceitação:*
 Página com listagem de perguntas e respostas organizadas por tema.
 Deve ser de fácil acesso no menu ou rodapé.
 Deve permitir busca por palavra-chave.
-
-          - 16.  Acesso a artigos sobre ESG e Finanças Sustentáveis
-*Como* usuário da plataforma
-
-*Quero* acessar uma biblioteca ou seção com artigos sobre ESG e Finanças Sustentáveis
-
-*Para* me aprofundar nos conteúdos e ampliar meu conhecimento
-
-*Critérios de Aceitação:*
-Página com listagem de artigos (título, resumo, autor, data).
-Possibilidade de filtrar por tema ou autor.
-Artigos acessíveis apenas para usuários logados (se necessário).
    
 </details>
 

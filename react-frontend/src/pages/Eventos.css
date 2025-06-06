@@ -15,6 +15,7 @@ main {
 
 /* Barra Superior e Pesquisa (do CODIGO 1) */
 .top-bar-eventos { /* Mantido do codigo1, mas o input pode usar a estilização do codigo2 que é igual */
+  margin-top: 84px;
   display: flex;
   justify-content: space-between;
   align-items: center;

@@ -109,3 +109,14 @@ export const createCommunity = async (authorId, communityData) => {
   return res.data;
 };
 
+export const joinCommunity = async (communityId) => {
+  const res = await axios.post(
+    `${API}/communities/${communityId}/join`,
+    {},
+    {
+      headers: getAuthHeader(),
+    }
+  );
+  return res.data;
+};
+

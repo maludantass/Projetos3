@@ -9,9 +9,9 @@
 
 .faq-container {
     max-width: 900px;
-    margin: 40px auto;
+    margin: 80px auto 40px auto; /* margem superior aumentada de 40px para 80px */
     padding: 30px;
-    background-color: #A8D5BA; /* cor mais neutra como no protótipo */
+    background-color: #A8D5BA;
     border-radius: 8px;
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
     font-family: Arial, sans-serif;
@@ -72,7 +72,6 @@ body {
     background-color: #ffffff;  /* ⚠️ garante que o fundo geral fique branco */
     font-family: Arial, sans-serif;
     color: #111;
-    padding-top: 80px; /* espaço para navbar fixa */
 }
 
 
