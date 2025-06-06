@@ -17,15 +17,16 @@
 }
 
 .user-info {
+  font-weight: bold;
+  margin-bottom: 12px;
   display: flex;
   align-items: center;
   gap: 6px;
   font-size: 14px;
-  font-weight: bold;
-  margin-bottom: 12px;
 }
 
 .user-name {
+  font-weight: bold;
   color: black;
 }
 
@@ -55,39 +56,16 @@
 .actions {
   display: flex;
   justify-content: space-between;
-  margin: 8px 0;
+  margin-top: 8px;
   padding: 4px 0;
   border-top: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
+  margin-bottom: 8px;
 }
 
-.actions-left,
-.actions-right {
+.actions-left, .actions-right {
   display: flex;
   align-items: center;
-}
-
-.action-icon {
-  font-size: 20px;
-  cursor: pointer;
-  padding: 6px;
-  border-radius: 50%;
-  transition: transform 0.2s ease, color 0.3s ease;
-}
-
-.action-icon:hover {
-  transform: scale(1.2);
-  background-color: rgba(46, 125, 50, 0.15);
-}
-
-.icon-liked {
-  color: red !important;
-  background-color: rgba(255, 0, 0, 0.1);
-}
-
-.icon-favorited {
-  color: #2E7D32 !important;
-  background-color: rgba(46, 125, 50, 0.1);
 }
 
 .comment-section {
@@ -174,19 +152,18 @@
 }
 
 .search-input {
-  flex: 1;
-  min-width: 200px;
   padding: 8px 12px;
   border: none;
   border-radius: 30px;
   background-color: transparent;
   color: #2e5e36;
   font-size: 16px;
+  flex: 1;
+  min-width: 200px;
   outline: none;
 }
 
-.search-select,
-.search-btn {
+.search-select {
   background-color: #4a804b;
   color: white;
   border: none;
@@ -197,23 +174,24 @@
 }
 
 .search-btn {
+  background-color: #4a804b;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: background-color 0.2s ease;
 }
 
-.top-search-bar {
-  margin: 110px auto 20px;
-  padding: 10px 40px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 20px;
-  max-width: 900px;
-  width: 90%;
+.feed.dark-mode .search-btn {
+  background-color: #b7d7be;
+  color: #2e5e36;
 }
 
+/* === Botão "+" Criar Post === */
 .add-post-btn {
   background-color: #2E7D32;
   color: white;
@@ -222,10 +200,10 @@
   height: 40px;
   border-radius: 50%;
   font-size: 1.5rem;
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   transition: all 0.3s;
 }
@@ -235,6 +213,67 @@
   transform: scale(1.1);
 }
 
+.feed.dark-mode .add-post-btn {
+  background-color: #66bb6a;
+  color: #1b1b1b;
+}
+
+.feed.dark-mode .add-post-btn:hover {
+  background-color: #81c784;
+}
+
+/* === Modo Escuro === */
+.feed.dark-mode {
+  background-color: #48844B;
+  color: #E0F2E9;
+  min-height: 100vh;
+}
+
+.feed.dark-mode .feed-container {
+  background-color: transparent;
+  padding: 20px 0;
+}
+
+.feed.dark-mode .post-card {
+  background-color: #90B89B;
+  color: #111;
+}
+
+/* === Ícones de ação: Curtida e Favorito === */
+.action-icon {
+  font-size: 20px;
+  cursor: pointer;
+  transition: transform 0.2s ease, color 0.3s ease;
+  padding: 6px;
+  border-radius: 50%;
+}
+
+.action-icon:hover {
+  transform: scale(1.2);
+  background-color: rgba(46, 125, 50, 0.15);
+}
+
+.icon-liked {
+  color: red !important;
+  background-color: rgba(255, 0, 0, 0.1);
+}
+
+.feed.dark-mode .icon-liked {
+  color: #ff8a80 !important;
+  background-color: rgba(255, 138, 128, 0.2);
+}
+
+.icon-favorited {
+  color: #2E7D32 !important;
+  background-color: rgba(46, 125, 50, 0.1);
+}
+
+.feed.dark-mode .icon-favorited {
+  color: #a5d6a7 !important;
+  background-color: rgba(165, 214, 167, 0.2);
+}
+
+/* === Formulário de Novo Post === */
 .form-novo-post {
   background-color: #f0f0f0;
   margin: 20px auto;
@@ -259,42 +298,20 @@
   cursor: pointer;
 }
 
-.feed.dark-mode {
-  background-color: #48844B;
-  color: #E0F2E9;
-  min-height: 100vh;
-}
-
-.feed.dark-mode .feed-container {
+/* === Barra superior === */
+.top-search-bar {
+  margin-top: 110px;
+  margin-bottom: 20px;
+  padding: 10px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
   background-color: transparent;
-  padding: 20px 0;
-}
-
-.feed.dark-mode .post-card {
-  background-color: #90B89B;
-  color: #111;
-}
-
-.feed.dark-mode .add-post-btn {
-  background-color: #66bb6a;
-  color: #1b1b1b;
-}
-
-.feed.dark-mode .add-post-btn:hover {
-  background-color: #81c784;
-}
-
-.feed.dark-mode .icon-liked {
-  color: #ff8a80 !important;
-  background-color: rgba(255, 138, 128, 0.2);
-}
-
-.feed.dark-mode .icon-favorited {
-  color: #a5d6a7 !important;
-  background-color: rgba(165, 214, 167, 0.2);
-}
-
-.feed.dark-mode .search-btn {
-  background-color: #b7d7be;
-  color: #2e5e36;
+  border-radius: 0;
+  box-shadow: none;
+  width: 90%;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
 }

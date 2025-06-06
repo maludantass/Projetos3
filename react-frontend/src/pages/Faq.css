@@ -1,14 +1,15 @@
+
 .ajuda-container {
     font-family: Arial, sans-serif;
     margin-top: 40px;
     padding: 0;
-    background-color: #ffffff;
+    background-color: #ffffff;  /* ✅ fundo branco */
     min-height: 100vh;
 }
 
 .faq-container {
     max-width: 900px;
-    margin: 80px auto 40px auto;
+    margin: 80px auto 40px auto; /* margem superior aumentada de 40px para 80px */
     padding: 30px;
     background-color: #A8D5BA;
     border-radius: 8px;
@@ -62,18 +63,23 @@
     animation: aparecer 0.3s ease-in;
 }
 .faq-wrapper {
-  margin-top: 120px;
+  margin-top: 120px; /* abaixo do header e navbar */
   padding: 40px 10%;
   background-color: #ffffff;
   min-height: 100vh;
 }
 body {
-    background-color: #ffffff;
+    background-color: #ffffff;  /* ⚠️ garante que o fundo geral fique branco */
     font-family: Arial, sans-serif;
     color: #111;
 }
+
+
+
 
 @keyframes aparecer {
     from { opacity: 0; transform: translateY(-5px); }
     to { opacity: 1; transform: translateY(0); }
 }
+
+

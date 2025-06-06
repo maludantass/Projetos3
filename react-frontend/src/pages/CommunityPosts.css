@@ -1,10 +1,12 @@
+/* Container principal da página da comunidade */
 .community-posts-container {
   background-color: #c0e3cd;
   min-height: 100vh;
-  padding: 5rem 2rem 6rem;
+  padding: 5rem 2rem 6rem; /* margem superior + inferior para o input fixo */
   font-family: sans-serif;
 }
 
+/* Banner de preview com botão "Entrar" */
 .community-banner {
   background-color: #2E7D32;
   color: white;
@@ -27,6 +29,7 @@
   cursor: pointer;
 }
 
+/* Cabeçalho da comunidade */
 .community-header {
   display: flex;
   align-items: center;
@@ -34,7 +37,7 @@
   padding: 1.5rem;
   border-radius: 10px;
   margin-bottom: 2rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
 .forum-avatar-large {
@@ -56,21 +59,24 @@
   font-size: 1rem;
 }
 
+/* Posts da comunidade */
 h2 {
   margin-bottom: 1rem;
 }
 
+/* Card de post */
 .post-card {
   background-color: white;
   border-radius: 10px;
   padding: 1.5rem;
   margin-bottom: 1.5rem;
   border: 1px solid #bbb;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
 }
 
 .post-card h3 {
-  margin: 0 0 0.4rem;
+  margin-top: 0;
+  margin-bottom: 0.4rem;
   font-size: 1.2rem;
 }
 
@@ -109,13 +115,14 @@ h2 {
   background-color: #1b5e20;
 }
 
+/* Comentários */
 .comment-section {
   margin-top: 1rem;
 }
 
 .comment-section ul {
   list-style: none;
-  padding: 0;
+  padding-left: 0;
 }
 
 .comment-section li {
@@ -154,10 +161,11 @@ h2 {
   cursor: pointer;
 }
 
+/* Input fixo no rodapé */
 .community-input {
   position: fixed;
   bottom: 0;
-  left: 60px;
+  left: 60px; /* respeita sidebar */
   right: 0;
   padding: 1rem;
   background-color: #f4f4f4;
