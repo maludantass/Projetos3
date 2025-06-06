@@ -156,7 +156,14 @@ const handleAddComment = async (postId) => {
         post.id === postId
           ? {
               ...post,
-              comments: [...(post.comments || []), { username: 'Você', commentText: text }],
+              comments: [
+  ...(post.comments || []),
+  {
+    username: 'Você',
+    commentText: text,
+    createdAt: new Date().toISOString()
+  }
+],
             }
           : post
       )
@@ -248,16 +255,14 @@ const handleAddComment = async (postId) => {
   };
 
   return (
-    <div className={darkMode ? 'feed dark-mode' : 'feed light-mode'}>
+<div className={darkMode ? 'feed dark-mode' : 'feed light-mode'}>
       <button className="toggle-theme" onClick={() => setDarkMode(!darkMode)}>
         <FontAwesomeIcon icon={faCircleHalfStroke} />
       </button>
 
       <div className="top-search-bar">
         <div className="icon-group">
-          <button className="icon-btn" onClick={() => setMostrarFormulario(true)}>
-            <img src="/static/images/postar.png" alt="Postar" className="icon-image" />
-          </button>
+          <button className="add-post-btn" onClick={() => setMostrarFormulario(true)}>+</button>
           <button className="icon-btn heart-btn" onClick={handleMostrarCurtidos}>
             <FontAwesomeIcon icon={regularHeart} style={{ fontSize: '22px' }} />
           </button>
@@ -312,8 +317,7 @@ const handleAddComment = async (postId) => {
               <div className="actions-left">
                 <FontAwesomeIcon
                   icon={likedPosts[post.id] ? solidHeart : regularHeart}
-                  className="action-icon"
-                  style={{ color: likedPosts[post.id] ? 'red' : 'black', cursor: 'pointer' }}
+                  className={`action-icon ${likedPosts[post.id] ? 'icon-liked' : ''}`}
                   onClick={() => toggleLike(post.id)}
                 />
                 <FontAwesomeIcon
@@ -326,20 +330,30 @@ const handleAddComment = async (postId) => {
               </div>
               <div className="actions-right">
                 <FontAwesomeIcon
-                  icon={favoritedPosts[post.id] ? solidBookmark : regularBookmark}
-                  className="action-icon"
-                  style={{ cursor: 'pointer' }}
-                  onClick={() => toggleFavorite(post.id)}
-                />
+                    icon={favoritedPosts[post.id] ? solidBookmark : regularBookmark}
+                    className={`action-icon ${favoritedPosts[post.id] ? 'icon-favorited' : ''}`}
+                    onClick={() => toggleFavorite(post.id)}
+                  />
               </div>
             </div>
 
             <div className="comment-section">
-{(expandedPosts[post.id] ? (post.comments || []) : (post.comments || []).slice(0, 1)).map((c, i) => (
-  <p key={i}>
-    <strong>{c.username}</strong> {c.commentText}
-  </p>
-))}
+              {(expandedPosts[post.id] ? (post.comments || []) : (post.comments || []).slice(0, 1)).map((c, i) => (
+                <p key={i}>
+                  <strong>{c.username}</strong> {c.commentText}
+                  <br />
+                  <span style={{ fontSize: '12px', color: '#777' }}>
+                    {new Date(c.createdAt).toLocaleString('pt-BR', {
+                      day: '2-digit',
+                      month: '2-digit',
+                      year: 'numeric',
+                      hour: '2-digit',
+                      minute: '2-digit',
+                      hour12: false
+                    })}
+                  </span>
+                </p>
+              ))}
 
               {(post.comments || []).length > 1 && (
                 <span className="ver-mais" onClick={() => toggleComments(post.id)}>
