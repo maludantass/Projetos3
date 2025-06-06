@@ -14,7 +14,6 @@ Este é o repositório do projeto desenvolvido para a BRASFI (Aliança Brasileir
 
 - **Frontend**:<br>![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)![HTML](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)![CSS](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
   
-- **Testes Automatizados**:<br>![Cypress](https://img.shields.io/badge/Cypress-17202C?style=for-the-badge&logo=cypress&logoColor=white)
 
 ## 🌐 Links importantes
 <li> <a href="https://sites.google.com/d/160TZStC0z45z00JOCtXTacXJTA-50Maa/p/1_0ykZFiJkg_7hoWD9UHTHfG7fip96Oay/edit">Google Sites</a> </li>
