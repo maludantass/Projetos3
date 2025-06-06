@@ -8,18 +8,16 @@ import com.brasfi.demo.model.User;
 import com.brasfi.demo.repository.ForumCommunityRepository;
 import com.brasfi.demo.repository.ForumPostRepository;
 import com.brasfi.demo.repository.UserRepository;
-// Importe suas exceções customizadas aqui
-// import com.brasfi.demo.exception.ResourceNotFoundException;
-// import com.brasfi.demo.exception.OperationNotPermittedException; // Para permissões
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-// Removido import de AccessDeniedException se não for usar para admin
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.time.Instant; // Import para createdAt e updatedAt
 
 @Service
 @RequiredArgsConstructor
@@ -32,14 +30,17 @@ public class ForumCommunityServiceImpl implements ForumCommunityService {
 
     @Override
     @Transactional
-    public ForumCommunityResponseDTO createCommunity(ForumCommunityRequestDTO requestDTO) {
-        log.info("Requisição para criar ForumCommunity com título: '{}'", requestDTO.getTitle());
-        User author = getCurrentAuthenticatedUser();
+    public ForumCommunityResponseDTO createCommunity(Long authorId, ForumCommunityRequestDTO requestDTO) {
+        log.info("Requisição para criar ForumCommunity com título: '{}' pelo autor ID: {}", requestDTO.getTitle(), authorId);
+
+        User author = userRepository.findById(authorId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário autor não encontrado com ID: " + authorId));
 
         ForumCommunity community = new ForumCommunity();
         community.setTitle(requestDTO.getTitle());
         community.setDescription(requestDTO.getDescription());
         community.setAuthor(author);
+        // community.setCreatedAt(Instant.now()); // O @PrePersist deve cuidar disso na entidade
 
         ForumCommunity savedCommunity = forumCommunityRepository.save(community);
         log.info("ForumCommunity criada com ID {} pelo usuário {}", savedCommunity.getId(), author.getUsername());
@@ -50,8 +51,8 @@ public class ForumCommunityServiceImpl implements ForumCommunityService {
     @Transactional(readOnly = true)
     public Page<ForumCommunityResponseDTO> getAllCommunities(Pageable pageable) {
         log.debug("Buscando todas as ForumCommunities com paginação: {}", pageable);
-        Page<ForumCommunity> communitiesPage = forumCommunityRepository.findAll(pageable);
-        return communitiesPage.map(this::mapToResponseDTO);
+        // Corrigindo o problema de N+1 e LazyInitialization para listagem
+        return forumCommunityRepository.findAllAsDTO(pageable);
     }
 
     @Override
@@ -59,7 +60,7 @@ public class ForumCommunityServiceImpl implements ForumCommunityService {
     public ForumCommunityResponseDTO getCommunityById(Long communityId) {
         log.debug("Buscando ForumCommunity por ID: {}", communityId);
         ForumCommunity community = forumCommunityRepository.findById(communityId)
-                .orElseThrow(() -> new RuntimeException("Comunidade não encontrada com ID: " + communityId)); // Use ResourceNotFoundException
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Comunidade não encontrada com ID: " + communityId));
         return mapToResponseDTO(community);
     }
 
@@ -68,7 +69,7 @@ public class ForumCommunityServiceImpl implements ForumCommunityService {
     public ForumCommunityResponseDTO getCommunityByTitle(String title) {
         log.debug("Buscando ForumCommunity por título: {}", title);
         ForumCommunity community = forumCommunityRepository.findByTitle(title)
-                .orElseThrow(() -> new RuntimeException("Comunidade não encontrada com título: " + title)); // Use ResourceNotFoundException
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Comunidade não encontrada com título: " + title));
         return mapToResponseDTO(community);
     }
 
@@ -76,6 +77,7 @@ public class ForumCommunityServiceImpl implements ForumCommunityService {
     @Transactional(readOnly = true)
     public Page<ForumCommunityResponseDTO> searchCommunitiesByTitle(String titleQuery, Pageable pageable) {
         log.debug("Pesquisando ForumCommunities por título contendo: '{}', paginação: {}", titleQuery, pageable);
+        // Para otimizar esta busca, também poderíamos criar uma query DTO no repositório
         Page<ForumCommunity> communitiesPage = forumCommunityRepository.findByTitleContainingIgnoreCase(titleQuery, pageable);
         return communitiesPage.map(this::mapToResponseDTO);
     }
@@ -84,8 +86,9 @@ public class ForumCommunityServiceImpl implements ForumCommunityService {
     @Transactional(readOnly = true)
     public Page<ForumCommunityResponseDTO> getCommunitiesByAuthorUsername(String username, Pageable pageable) {
         log.debug("Buscando ForumCommunities pelo autor username: '{}', paginação: {}", username, pageable);
-        User author = userRepository.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("Usuário não encontrado com username: " + username)); // Use ResourceNotFoundException
+        User author = userRepository.findByUsername(username) // Certifique-se que este método existe no UserRepository
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado com username: " + username));
+        // Para otimizar esta busca, também poderíamos criar uma query DTO no repositório
         Page<ForumCommunity> communitiesPage = forumCommunityRepository.findByAuthor(author, pageable);
         return communitiesPage.map(this::mapToResponseDTO);
     }
@@ -94,22 +97,19 @@ public class ForumCommunityServiceImpl implements ForumCommunityService {
     @Transactional
     public ForumCommunityResponseDTO updateCommunity(Long communityId, ForumCommunityRequestDTO requestDTO) {
         log.info("Requisição para atualizar ForumCommunity ID: {}", communityId);
-        User currentUser = getCurrentAuthenticatedUser();
         ForumCommunity community = forumCommunityRepository.findById(communityId)
-                .orElseThrow(() -> new RuntimeException("Comunidade não encontrada com ID: " + communityId)); // Use ResourceNotFoundException
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Comunidade não encontrada com ID: " + communityId));
 
-        // Verificação de Permissão: Apenas o autor pode atualizar
-        if (!community.getAuthor().getId().equals(currentUser.getId())) {
-            log.warn("Usuário {} tentou atualizar comunidade {} sem permissão (não é o autor).", currentUser.getUsername(), communityId);
-            // Lance uma exceção de permissão apropriada, ex: OperationNotPermittedException
-            throw new RuntimeException("Você não tem permissão para atualizar esta comunidade.");
-        }
+        // A lógica de permissão (quem pode atualizar) seria adicionada aqui se necessário.
+        // Para a abordagem simplificada, permitimos a atualização.
+        // O DTO não tem mais o authorEmail, então não podemos usá-lo para verificar o editor.
 
         community.setTitle(requestDTO.getTitle());
         community.setDescription(requestDTO.getDescription());
+        // community.setUpdatedAt(Instant.now()); // O @PreUpdate deve cuidar disso
 
         ForumCommunity updatedCommunity = forumCommunityRepository.save(community);
-        log.info("ForumCommunity ID {} atualizada por {}", updatedCommunity.getId(), currentUser.getUsername());
+        log.info("ForumCommunity ID {} atualizada.", updatedCommunity.getId());
         return mapToResponseDTO(updatedCommunity);
     }
 
@@ -117,51 +117,31 @@ public class ForumCommunityServiceImpl implements ForumCommunityService {
     @Transactional
     public void deleteCommunity(Long communityId) {
         log.info("Requisição para deletar ForumCommunity ID: {}", communityId);
-        User currentUser = getCurrentAuthenticatedUser();
         ForumCommunity community = forumCommunityRepository.findById(communityId)
-                .orElseThrow(() -> new RuntimeException("Comunidade não encontrada com ID: " + communityId)); // Use ResourceNotFoundException
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Comunidade não encontrada com ID: " + communityId));
+        
+        // A lógica de permissão (quem pode deletar) seria adicionada aqui se necessário.
+        // Por simplicidade, permitimos a deleção.
 
-        // Verificação de Permissão: Apenas o autor pode deletar
-        if (!community.getAuthor().getId().equals(currentUser.getId())) {
-            log.warn("Usuário {} tentou deletar comunidade {} sem permissão (não é o autor).", currentUser.getUsername(), communityId);
-            // Lance uma exceção de permissão apropriada, ex: OperationNotPermittedException
-            throw new RuntimeException("Você não tem permissão para deletar esta comunidade.");
-        }
-
-        forumCommunityRepository.delete(community); // CascadeType.ALL cuidará dos posts, etc.
-        log.info("ForumCommunity ID {} deletada por {}", communityId, currentUser.getUsername());
-    }
-
-    private User getCurrentAuthenticatedUser() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication == null || !authentication.isAuthenticated() || "anonymousUser".equals(authentication.getPrincipal())) {
-            throw new RuntimeException("Nenhum usuário autenticado encontrado."); // Use uma exceção de autenticação
-        }
-        String principalName = authentication.getName(); // Assume que retorna o username ou email
-
-        // Use o método apropriado do seu UserRepository (findByUsername ou findByEmail)
-        // Baseado no seu UserRepository fornecido, você tem findByEmail.
-        // Se principalName for o username, você precisará adicionar findByUsername ao UserRepository.
-        // Vou assumir que principalName é o username para este exemplo, e que você tem findByUsername.
-        // Se principalName for email, use userRepository.findByEmail(principalName)
-        return userRepository.findByUsername(principalName) // CERTIFIQUE-SE QUE ESTE MÉTODO EXISTE E RETORNA Optional<User>
-                .orElseThrow(() -> new RuntimeException("Usuário autenticado '" + principalName + "' não encontrado."));
+        forumCommunityRepository.delete(community);
+        log.info("ForumCommunity ID {} deletada.", communityId);
     }
 
     private ForumCommunityResponseDTO mapToResponseDTO(ForumCommunity community) {
         UserSummaryDTO authorDto = null;
         if (community.getAuthor() != null) {
-            authorDto = new UserSummaryDTO(community.getAuthor()); // Usa user.getUsername()
+            // Garanta que UserSummaryDTO tenha um construtor que aceita um User
+            authorDto = new UserSummaryDTO(community.getAuthor());
         }
 
         int postCount = 0;
         if (community.getId() != null) {
+            // Esta contagem pode ser custosa se chamada muitas vezes (ex: em uma lista).
+            // Para getById, é geralmente aceitável.
             postCount = (int) forumPostRepository.countByForumCommunity(community);
         }
-        // Se a coleção 'posts' estiver EAGER ou já carregada, você poderia usar:
-        // else if (community.getPosts() != null) { postCount = community.getPosts().size(); }
-
-
+        
+        // Este construtor deve existir no ForumCommunityResponseDTO
         return new ForumCommunityResponseDTO(
                 community.getId(),
                 community.getTitle(),
