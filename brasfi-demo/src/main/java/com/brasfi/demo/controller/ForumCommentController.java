@@ -63,10 +63,6 @@ public class ForumCommentController {
         return ResponseEntity.ok(comment);
     }
 
-
-    // Endpoint para ATUALIZAR o texto de um comentário existente
-    // Para atualização, geralmente só permitimos mudar o texto.
-    // Vamos criar um DTO específico para isso.
     @PutMapping("/comments/{commentId}")
     public ResponseEntity<ForumCommentResponseDTO> updateComment(
             @PathVariable Long commentId,
@@ -81,6 +77,6 @@ public class ForumCommentController {
     public ResponseEntity<Void> deleteComment(@PathVariable Long commentId) {
         log.info("API request para deletar ForumComment ID: {}", commentId);
         forumCommentService.deleteComment(commentId);
-        return ResponseEntity.noContent().build(); // Retorna 204 No Content
+        return ResponseEntity.noContent().build(); 
     }
 }
